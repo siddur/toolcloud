@@ -75,6 +75,7 @@ public class ToolLoader {
 						if(ITool.class.isAssignableFrom(claz)){
 							jtw.setClassname(claz.getName());
 							jtw.setToolfile(j.getCanonicalPath());
+							jtw.setDescriptor(td);
 							return jtw;
 						}
 					}

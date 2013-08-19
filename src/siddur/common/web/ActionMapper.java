@@ -150,7 +150,6 @@ public class ActionMapper{
 			emWrapper.rollback(req);
 			log4j.error("An error occurs when invoking the action: " + path, e);
 			r = Result.error(e.getMessage());
-			req.getRequestDispatcher("/error.jsp").forward(req, resp);
 		} finally{
 			emWrapper.closeEntityManager(req);
 		}
@@ -161,14 +160,14 @@ public class ActionMapper{
 		else if(r.isForward()){
 			req.getRequestDispatcher(r.message).forward(req, resp);
 		}
-		else if(r.isOK()){
+		else if(r.isSuccessful()){
 			req.setAttribute("msg", r.message);
 			req.getRequestDispatcher("/success.jsp").forward(req, resp);
 		}
 		else if(r.isRedirect()){
 			resp.sendRedirect("/toolcloud/ctrl/" + r.message);
 		}
-		if(r.isAjax){
+		else if(r.isAjax){
 			resp.setContentType("text/html; charset=utf-8");
 			Writer w = resp.getWriter();
 			w.write(r.getMessage());
@@ -245,7 +244,7 @@ public class ActionMapper{
 	}
 	
 	public enum ResultType{
-		ok,error, redirect, forward, invoke
+		ok, success, error, redirect, forward, invoke
 	}
 	
 	
@@ -271,6 +270,10 @@ public class ActionMapper{
 			return new Result(msg, ResultType.ok);
 		}
 		
+		public static Result success(String msg){
+			return new Result(msg, ResultType.success);
+		}
+		
 		public static Result error(String msg){
 			return new Result(msg, ResultType.error);
 		}
@@ -285,6 +288,10 @@ public class ActionMapper{
 		
 		public static Result ok(){
 			return ok(null);
+		}
+		
+		public static Result success(){
+			return success(null);
 		}
 		
 		public static Result error(){
@@ -316,6 +323,10 @@ public class ActionMapper{
 		
 		public boolean isOK(){
 			return type == ResultType.ok;
+		}
+		
+		public boolean isSuccessful(){
+			return type == ResultType.success;
 		}
 		
 		public boolean isError(){

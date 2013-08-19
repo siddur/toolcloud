@@ -2,3 +2,4 @@ siddur.tool.cloud.action.UserAction=/user
 siddur.tool.cloud.action.RoleAction=/role
 siddur.tool.cloud.action.ToolAction=/tool
 siddur.tool.cloud.action.UtilAction=/util
+siddur.tool.cloud.action.QueryAction=/query

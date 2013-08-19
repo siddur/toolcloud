@@ -1,5 +1,5 @@
 <%@ tag language="java" pageEncoding="UTF-8"%>
-<%@ attribute name="inputModel" type="siddur.tool.core.data.ToolData"%>
+<%@ attribute name="inputModel" type="siddur.tool.core.data.DataTemplate"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib tagdir="/WEB-INF/tags" prefix="s" %>
 <c:set var="type" value="${inputModel.dataType}"/>

@@ -16,13 +16,11 @@
 		}
 		.comment_content {
 		    font-size: 16px;
-		    max-height: 40px;
 		    overflow: hidden;
 		}
 		.comment_detail{
 			font-size: 14px;
 		    font-style: italic;
-		    text-indent: 5px;
 		}
 		.close_btn{
 			float:right;
@@ -43,11 +41,10 @@
 				onclick="location.href='/toolcloud/ctrl/tool/delcomment?id=${comment.commentId}&toolId=${toolId}'">
 			</span>
 		</c:if>
-		${comment.content }
+		<pre style="margin:0">${comment.preContent }</pre>
 	</div>
 	<div class='comment_detail'>
-		asked 
-		by <font color='#FAA732'>${comment.saidBy }</font> 
-		at <font color='#5BB75B'><f:formatDate value="${comment.saidAt}" pattern="yyyy-MM-dd hh:mm"/></font>
+		<font color='#FAA732'>${comment.saidBy }</font> 
+		<font color='#5BB75B'><f:formatDate value="${comment.saidAt}" pattern="yyyy-MM-dd hh:mm"/></font>
 	</div>
 </div>

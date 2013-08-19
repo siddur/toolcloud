@@ -146,12 +146,6 @@ body{
     white-space: nowrap;
 }
 
-.comment_detail{
-	text-indent: 5px;
-	font-size:14px;
-	font-style: italic;
-}
-
 .asterisk{
 	color:red;
 	font-size: 9px;

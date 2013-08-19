@@ -9,6 +9,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -18,6 +20,7 @@ import siddur.common.miscellaneous.Comment;
 import siddur.common.miscellaneous.Constants;
 import siddur.common.miscellaneous.FileSystemUtil;
 import siddur.common.miscellaneous.Paging;
+import siddur.common.miscellaneous.QueryInfo;
 import siddur.common.miscellaneous.RunInfo;
 import siddur.common.security.DoNotAuthenticate;
 import siddur.common.security.Permission;
@@ -47,6 +50,35 @@ public class ToolAction extends DBAction<Comment>{
 	}
 
 	@DoNotAuthenticate
+	public Result home(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
+		int maxRecord = 10;
+		EntityManager em = getEntityManager(req);
+		TypedQuery<String> hotQ = em.createQuery("select t.id from ToolInfo t order by t.clicks desc", String.class);
+		TypedQuery<String> lateQ = em.createQuery("select t.id from ToolInfo t order by t.publishAt desc", String.class);
+		TypedQuery<String> likeQ = null;
+		UserInfo u = (UserInfo)req.getSession().getAttribute("user");
+		if(u != null){
+			likeQ = em.createQuery("select r.target from RunInfo r where r.who = '"+u.getUsername()+"' order by r.startAt desc", String.class);
+		}else{
+			String ip = req.getRemoteAddr();
+			likeQ = em.createQuery("select r.target from RunInfo r where r.ip = '"+ip+"' order by r.startAt desc", String.class);
+		}
+		TypedQuery<QueryInfo> queryQ = em.createQuery("from QueryInfo q order by q.publishAt desc", QueryInfo.class);
+		
+		hotQ.setMaxResults(maxRecord);
+		lateQ.setMaxResults(maxRecord);
+		likeQ.setMaxResults(maxRecord);
+		queryQ.setMaxResults(maxRecord);
+		
+		req.setAttribute("hottest", getVisitor().findAll(hotQ.getResultList()));
+		req.setAttribute("latest", getVisitor().findAll(lateQ.getResultList()));
+		req.setAttribute("favorite", getVisitor().findAll(likeQ.getResultList()));
+		req.setAttribute("queries", queryQ.getResultList());
+		
+		return Result.forward("/jsp/tool/home.jsp");
+	}
+	
+	@DoNotAuthenticate
 	public Result list(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
 		String key = req.getParameter("key");
 		int pageSize = 10;
@@ -72,16 +104,16 @@ public class ToolAction extends DBAction<Comment>{
 		
 		IToolWrapper tpu = getVisitor().findById(id);
 		req.setAttribute("tool", tpu);
-		req.getRequestDispatcher("/jsp/tool/tool-detail.jsp").forward(req, resp);
 		
 		ClickInfo c = new ClickInfo();
+		c.setTarget(id);
 		c.setIp(req.getRemoteAddr());
 		UserInfo u = (UserInfo)req.getSession().getAttribute("user");
 		if(u != null){
 			c.setWho(u.getUsername());
 		}
-		getEntityManager(req).persist(c);
-		return Result.ok();
+		getEntityManager(req, true).persist(c);
+		return Result.forward("/jsp/tool/tool-detail.jsp");
 	}
 	
 	@Perm(Permission.TOOL_EDIT)
@@ -89,8 +121,7 @@ public class ToolAction extends DBAction<Comment>{
 		String id = req.getParameter("toolId");
 		IToolWrapper tpu = getVisitor().findById(id);
 		req.setAttribute("tool", tpu);
-		req.getRequestDispatcher("/jsp/tool/tool-update.jsp").forward(req, resp);
-		return Result.ok();
+		return Result.forward("/jsp/tool/tool-update.jsp");
 	}
 	
 	public Result save(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
@@ -177,8 +208,8 @@ public class ToolAction extends DBAction<Comment>{
 		context.put(Constants.TICKET, req.getParameter(Constants.TICKET));
 		String[] results = null;
 		
-		
 		RunInfo run = new RunInfo();
+		run.setTarget(toolID);
 		UserInfo u = (UserInfo)req.getSession().getAttribute("user");
 		if(u != null){
 			run.setWho(u.getUsername());
@@ -189,7 +220,7 @@ public class ToolAction extends DBAction<Comment>{
 		} finally{
 			run.setEndAt(new Date());
 			run.setSuccess(results != null);
-			getEntityManager(req).persist(run);
+			getEntityManager(req, true).persist(run);
 		}
 		return Result.ajax(new Gson().toJson(results));
 	}
@@ -205,9 +236,10 @@ public class ToolAction extends DBAction<Comment>{
 		Comment c = new Comment();
 		c.setSaidBy(saidBy);
 		c.setContent(req.getParameter("comment"));
-		c.setSubject(req.getParameter("toolId"));
+		String toolId = req.getParameter("toolId");
+		c.setSubject(toolId);
 		add(c, req);
-		return detail(req, resp);
+		return Result.redirect("tool/detail?toolId=" + toolId);
 	}
 	
 	@Perm(Permission.COMMENT_DEL)

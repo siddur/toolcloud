@@ -98,10 +98,10 @@ public class BasicToolManager implements IToolManager{
 			throw new ToolNotFoundException(toolID);
 		}
 		
-		boolean approved = (tw.getStatus() == 1);
-		if(!approved){
-			throw new ToolNotApprovedException(toolID);
-		}
+//		boolean approved = (tw.getStatus() == 1);
+//		if(!approved){
+//			throw new ToolNotApprovedException(toolID);
+//		}
 
 		String[] output = null;
 		ToolDescriptor td = tw.getDescriptor();

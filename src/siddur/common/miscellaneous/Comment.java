@@ -12,7 +12,7 @@ import javax.persistence.Id;
 public class Comment {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Integer commentId;
 	
 	@Column
@@ -53,6 +53,10 @@ public class Comment {
 
 	public String getContent() {
 		return content;
+	}
+	
+	public String getPreContent(){
+		return StringUtil.escape(this.content);
 	}
 
 	public void setContent(String content) {

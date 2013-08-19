@@ -3,5 +3,7 @@
 <%@taglib prefix="s" tagdir="/WEB-INF/tags"%>
 
 <s:site>
+<div class="body">
 	${msg}
+</div>
 </s:site>

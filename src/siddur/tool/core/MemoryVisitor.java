@@ -16,6 +16,14 @@ public class MemoryVisitor extends MapVisitor<String, IToolWrapper>{
 		return map.get(id);
 	}
 	
+	public List<IToolWrapper> findAll(List<String> ids){
+		List<IToolWrapper> list = new ArrayList<IToolWrapper>(ids.size());
+		for (String id : ids) {
+			list.add(findById(id));
+		}
+		return list;
+	}
+	
 	public List<IToolWrapper> findByKeyword(String key){
 		List<IToolWrapper> list = new ArrayList<IToolWrapper>();
 		for(Entry<String, IToolWrapper> entry : map.entrySet()){

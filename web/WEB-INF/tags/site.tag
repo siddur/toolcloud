@@ -40,8 +40,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="body">
-		<jsp:doBody/>
-	</div>
+	
+	<jsp:doBody/>
 </body>
 </html>

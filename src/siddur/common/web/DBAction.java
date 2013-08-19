@@ -67,9 +67,16 @@ public abstract class DBAction<E> extends Action{
 		String pageIndex = req.getParameter("pageIndex");
 		String pageSize = req.getParameter("pageSize");
 		
-		int	index = Integer.parseInt(pageIndex);
-		int size = Integer.parseInt(pageSize);
 		
+		int index = 1, size = 20;
+		try {
+			index = Integer.parseInt(pageIndex);
+		} catch (NumberFormatException e) {
+		}
+		try {
+			size = Integer.parseInt(pageSize);
+		} catch (NumberFormatException e) {
+		}
 		TypedQuery<E> query = getEntityManager(req)
 				.createQuery("from " + getClassName(), getEntityClass());
 			
@@ -86,7 +93,7 @@ public abstract class DBAction<E> extends Action{
 		p.setPageSize(size);
 		
 		TypedQuery<Long> countQuery = getEntityManager(req)
-				.createQuery("Count " + getClassName(), Long.class);
+				.createQuery("select Count(c) from " + getClassName() + " c", Long.class);
 		p.setTotal(countQuery.getSingleResult().intValue());
 		
 		return p;
