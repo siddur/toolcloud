@@ -1,0 +1,17 @@
+//check TOOL_HOME in toolcloud.conf
+grant codeBase "file:${{java.ext.dirs}}/*" {
+	permission java.security.AllPermission;
+};
+grant codeBase "file:/C:/Users/hisoft/git/toolcloud/toolcloud/lib/-" {  
+    permission java.security.AllPermission;
+};
+grant codeBase "file:/C:/Users/hisoft/git/toolcloud/toolcloud/bin/-" {  
+    permission java.security.AllPermission;
+};
+grant codeBase "file:/C:/Users/hisoft/git/toolcloud/toolcloud/web/-" {  
+    permission java.security.AllPermission;
+};
+grant codeBase "file:/C:/Users/hisoft/git/toolcloud/toolcloud/tools/-" {  
+    permission java.io.FilePermission "C:/Users/hisoft/Documents/toolcloud/temp/*", "read,write";
+    
+};

@@ -1,0 +1,24 @@
+.paging span{
+	padding: 3px 10px;
+	background-color: #61824B;
+	vertical-align: middle;
+	cursor: pointer;
+	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+	color:white;
+}
+
+.paging{
+	margin-top:50px;
+	float: left;
+}
+
+span.selected{
+	background-color: #DBC59E;
+	color:red;
+}
+
+.ui-datepicker{
+	font-size: 62.5%;
+	font-family: "Trebuchet MS", "Arial", "Helvetica", "Verdana", "sans-serif"; 
+}
+

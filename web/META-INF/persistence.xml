@@ -1,0 +1,39 @@
+<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
+        version="2.0">
+    <persistence-unit name="toolcloud" transaction-type="RESOURCE_LOCAL" >
+    	<provider>org.hibernate.ejb.HibernatePersistence</provider>
+	    	<class>siddur.common.security.UserInfo</class>
+	    	<class>siddur.common.security.RoleInfo</class>
+	    	<class>siddur.common.miscellaneous.Comment</class>
+	    	<class>siddur.common.miscellaneous.ClickInfo</class>
+	    	<class>siddur.common.miscellaneous.RunInfo</class>
+	    	<class>siddur.tool.cloud.ToolInfo</class>
+    	<properties>
+    		<!-- SQL dialect -->
+        	<property name="hibernate.dialect" value="org.hibernate.dialect.DerbyTenSevenDialect"></property>
+        	
+    		<!-- Database connection settings -->
+	        <property name="hibernate.connection.driver_class" value="org.apache.derby.jdbc.EmbeddedDriver"></property>
+	       	<property name="hibernate.connection.url" value="jdbc:derby:db"></property>
+	        <property name="hibernate.connection.username" value=""></property>
+	        <property name="hibernate.connection.password" value=""></property>
+	        
+	        <!-- JDBC connection pool (use the built-in) -->
+        	<!-- <property name="hibernate.connection.pool_size" value="1"></property> -->
+        	
+        	<!-- Echo all executed SQL to stdout -->
+        	<property name="hibernate.show_sql" value="true"></property>
+        	
+        	<property name="hibernate.hbm2ddl.auto" value="update"></property>
+        	
+        	<!-- c3p0 -->
+        	<property name="org.hibernate.service.jdbc.connections.internal.C3P0ConnectionProvider" value="org.hibernate.connection.C3P0ConnectionProvider"/>
+        	<property name="hibernate.c3p0.min_size" value="3"/>
+        	<property name="hibernate.c3p0.max_size" value="10"/>
+        	<property name="hibernate.c3p0.timeout" value="120"/>
+        	<property name="hibernate.c3p0.max_statements" value="50"/>
+        </properties>
+    </persistence-unit>
+</persistence>

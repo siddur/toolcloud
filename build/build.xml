@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<project name="project" default="standalone">
+	<property name="dist_dir" value="${basedir}/dist"/>
+	<property name="src" value="${basedir}/../src"/>
+	<property name="web" value="${basedir}/../web"/>
+	<property name="srclib" value="${basedir}/../lib"/>
+	<property name="classes" value="${dist_dir}/classes"/>
+	
+	<property name="standalone" value="${dist_dir}/standalone"/>
+	<property name="samples" value="${dist_dir}/samples"/>
+	<property name="warfile" value="${dist_dir}/toolcloud.war"/>
+	<property name="jarfile" value="toolcloud.jar"/>
+	
+	<fileset id="libset" dir="${srclib}" includes="**/*.jar"></fileset>
+	<path id="classpath">
+		<fileset refid="libset" />
+	</path>
+	
+	<dirname file="${dist_dir}" property="c"/>
+	<target name="all" depends="standalone, samples" />
+	
+	<target name="standalone" depends="jar">
+		<mkdir dir="${standalone}"/>
+		<move todir="${standalone}" file="${dist_dir}/${jarfile}"/>
+		
+		<pathconvert property="win.mf.classpath" pathsep=";">
+			<mapper>
+				<chainedmapper>
+	                <flattenmapper/>
+	                <globmapper from="*" to="lib/*"/>
+            	</chainedmapper>
+			</mapper>
+			<path refid="classpath" />
+		</pathconvert>
+		<touch file="${standalone}/start.bat"/>
+		<echo file="${standalone}/start.bat">set server_lib_dir=file:/%cd:\=/%/lib/-
+set server_web_dir=file:/%cd:\=/%/web/-
+set toolcloud_jarfile=file:/%cd:\=/%/toolcloud.jar
+set client_code_dir=file:/%cd:\=/%/tools/-
+set policy_file=my.policy
+
+echo grant codeBase "%server_lib_dir%" { > %policy_file%
+echo ^    permission java.security.AllPermission; >> %policy_file%
+echo }; >>%policy_file%
+			
+echo grant codeBase "%server_web_dir%" { >> %policy_file%
+echo ^    permission java.security.AllPermission; >> %policy_file%
+echo }; >>%policy_file%
+
+echo grant codeBase "%toolcloud_jarfile%" { >>%policy_file%
+echo ^    permission java.security.AllPermission; >> %policy_file%
+echo }; >>%policy_file%
+
+echo grant codeBase "%client_code_dir%" { >>%policy_file%
+echo ^    permission java.io.FilePermission "%cd:\=/%/temp/*", "read,write"; >> %policy_file%
+echo }; >>%policy_file%
+			
+set LIB=${win.mf.classpath}
+java -Djava.security.manager -Djava.security.policy=%policy_file% -cp %LIB%;${jarfile} siddur.tool.jetty.JettyStart</echo>
+		
+		<pathconvert property="linux.mf.classpath" pathsep=":">
+			<mapper>
+				<chainedmapper>
+	                <flattenmapper/>
+	                <globmapper from="*" to="lib/*"/>
+            	</chainedmapper>
+			</mapper>
+			<path refid="classpath" />
+		</pathconvert>
+		<touch file="${standalone}/start.sh"/>
+		<echo file="${standalone}/start.sh">LIB="${linux.mf.classpath}"
+java -Djava.security.manager -Djava.security.policy="my.policy" -cp "$LIB:${jarfile}" siddur.tool.jetty.JettyStart</echo>
+		
+		
+		<copy todir="${standalone}/lib">
+			<fileset dir="${srclib}" includes="*.jar"/>
+			<fileset dir="${srclib}/jetty" includes="*.jar"/>
+		</copy>
+		<copy todir="${standalone}/web">
+			<fileset dir="${web}" excludes="**/persistence.xml"/>
+		</copy>
+	</target>
+	
+	
+	<target name="jar" depends="compile">
+		<jar destfile="${dist_dir}/${jarfile}" basedir="${classes}">
+			<metainf dir="${web}/META-INF"></metainf>
+		</jar>
+	</target>
+	
+	<target name="samples">
+		<mkdir dir="${samples}"/>
+		<jar destfile="${samples}/Cal24.jar" basedir="${classes}">
+			<include name="**/Combination*.class"/>
+			<include name="**/Cal24*.class"/>
+		</jar>
+		<jar destfile="${samples}/HelloWorld.jar" basedir="${classes}" includes="**/HelloWorld*.class"/>
+		<jar destfile="${samples}/FromFile.jar" basedir="${classes}" includes="**/FromFile*.class"/>
+		<jar destfile="${samples}/ToFile.jar" basedir="${classes}" includes="**/ToFile*.class"/>
+	</target>
+
+	<target name="compile" depends="clean">
+		<mkdir dir="${dist_dir}"/>
+		<mkdir dir="${classes}"/>
+		
+		<javac srcdir="${src}" destdir="${classes}" includeantruntime="false" encoding="UTF-8">
+			<classpath refid="classpath"/>
+		</javac>
+		
+		<copy todir="${classes}">
+			<fileset dir="${src}" excludes="**/*.java"/>
+		</copy>
+	</target>
+	
+	<target name="clean">
+		<delete dir="${dist_dir}"></delete>
+	</target>
+	
+</project>

@@ -1,0 +1,23 @@
+.console{
+	width:100%;
+	height:100%;
+	border: 1px solid #CCCCCC; 
+	padding:1px 1px 16px 1px;
+}
+.console-body{
+	background-color:#000000;
+	color: white;
+	width:100%;
+	height:100%;
+	font-size: 12px;
+	overflow: auto;
+}
+.console-body a:LINK, .console-body a:VISITED{
+	text-decoration: underline;
+	color: white;
+}
+
+.console-head{
+	background : url(../img/favicon.ico) no-repeat #0077B3;
+	height:16px;
+}

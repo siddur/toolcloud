@@ -1,0 +1,4 @@
+siddur.common 公共类
+siddur.tool.core tool核心类
+siddur.tool.cloud 云平台包，是一个完整的开源项目
+siddur.tool.platform 网站，集成云平台。
