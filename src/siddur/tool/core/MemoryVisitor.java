@@ -24,6 +24,16 @@ public class MemoryVisitor extends MapVisitor<String, IToolWrapper>{
 		return list;
 	}
 	
+	public List<IToolWrapper> findLatestOnes(int num){
+		List<IToolWrapper> list = new ArrayList<IToolWrapper>(map.size());
+		for (Entry<String, IToolWrapper> entry : map.entrySet()) {
+			list.add(entry.getValue());
+		}
+		Collections.sort(list);
+		int size = list.size();
+		return list.subList(0, num > size ? size : num);
+	}
+	
 	public List<IToolWrapper> findByKeyword(String key){
 		List<IToolWrapper> list = new ArrayList<IToolWrapper>();
 		for(Entry<String, IToolWrapper> entry : map.entrySet()){

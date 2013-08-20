@@ -54,7 +54,6 @@ public class ToolAction extends DBAction<Comment>{
 		int maxRecord = 10;
 		EntityManager em = getEntityManager(req);
 		TypedQuery<String> hotQ = em.createQuery("select t.id from ToolInfo t order by t.clicks desc", String.class);
-		TypedQuery<String> lateQ = em.createQuery("select t.id from ToolInfo t order by t.publishAt desc", String.class);
 		TypedQuery<String> likeQ = null;
 		UserInfo u = (UserInfo)req.getSession().getAttribute("user");
 		if(u != null){
@@ -66,12 +65,11 @@ public class ToolAction extends DBAction<Comment>{
 		TypedQuery<QueryInfo> queryQ = em.createQuery("from QueryInfo q order by q.publishAt desc", QueryInfo.class);
 		
 		hotQ.setMaxResults(maxRecord);
-		lateQ.setMaxResults(maxRecord);
 		likeQ.setMaxResults(maxRecord);
 		queryQ.setMaxResults(maxRecord);
 		
 		req.setAttribute("hottest", getVisitor().findAll(hotQ.getResultList()));
-		req.setAttribute("latest", getVisitor().findAll(lateQ.getResultList()));
+		req.setAttribute("latest", getVisitor().findLatestOnes(maxRecord));
 		req.setAttribute("favorite", getVisitor().findAll(likeQ.getResultList()));
 		req.setAttribute("queries", queryQ.getResultList());
 		
@@ -250,7 +248,7 @@ public class ToolAction extends DBAction<Comment>{
 			int commentId = Integer.parseInt(s);
 			delete(commentId, req);
 		}
-		return detail(req, resp);
+		return Result.redirect("tool/detail?toolId=" + req.getParameter("toolId"));
 	}
 	
 	private MemoryVisitor getVisitor(){

@@ -1,27 +1,39 @@
 <%@ tag language="java" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ attribute name="fieldname" required="true"%>
-<%@ attribute name="displayname" required="true"%>
-<%@ attribute name="isImg" required="false" type="java.lang.Boolean"%>
-<%@ attribute name="url" required="false"%>
-<c:choose>
-	<c:when test="${url == null }">
-		<c:set var="url" value=""></c:set>
-	</c:when>
-</c:choose>
-
-<div class='upload_item'>
-	<button class="btn1" onclick='upload(this<c:if test="${isImg==true}">, true</c:if>); return false;'>
-		<span class="left_float ui-icon ui-icon-folder-open"></span>
-		<span>${displayname}</span>
-	</button>
-	<input type='hidden' name='${fieldname}' value="${url}">
-	<c:choose>
-		<c:when test="${true == isImg}">
-			<img src='${url}' style='display:block'>
-		</c:when>
-		<c:otherwise>
-			<span style='margin-left:20px;padding: 0 5px;background-color:#FCF8E3;'>uploaded file</span>
-		</c:otherwise>
-	</c:choose>
+<%@ attribute name="fieldname" required="false" %>
+<%@ attribute name="files" required="false" %>
+<%@ attribute name="isImage" required="false"%>
+<%@ attribute name="displayname" required="false"%>
+<c:if test="${fieldname == null }">
+	<c:set var="fieldname" value="file"></c:set>
+</c:if>
+<c:if test="${isImage == null }">
+	<c:set var="isImage" value="false"></c:set>
+</c:if>
+<c:if test="${displayname == null }">
+	<c:set var="displayname" value="Attach Files.."></c:set>
+</c:if>
+<div class="file-container">
+	<div class="btn-container">
+		<div class="upload_btn">
+			<span class="ui-icon ui-icon-folder-open" style="float:left; position: relative; top:-2px;"></span>
+			<span style="font-size:12px; color:blue;float:left ;width: 90px; ">${displayname}</span>
+		</div>
+		
+		<input type="file" class="file_input" name='${fieldname}' onchange="selectFile(this, ${isImage})">
+	</div>
+	<c:forEach var="f" items="${files}">
+		<div class="file_item">
+			<input type='hidden' name='file' value="${f}">
+			<c:choose>
+				<c:when test="${isImage}">
+					<a href="/pacquery/ctrl/fileio/download?path=${f}"></a>
+				</c:when>
+				<c:otherwise>
+					<img src="/pacquery/ctrl/fileio/download?path=${f}">
+				</c:otherwise>
+			</c:choose>
+			<span class="ui-icon ui-icon-close" onclick="close(this)"></span>
+		</div>
+	</c:forEach>
 </div>

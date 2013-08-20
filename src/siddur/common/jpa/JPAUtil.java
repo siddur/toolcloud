@@ -6,7 +6,10 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
+import javax.persistence.TypedQuery;
+import javax.servlet.http.HttpServletRequest;
 
+import siddur.common.miscellaneous.Paging;
 import siddur.common.security.PermissionManager;
 import siddur.common.security.RoleInfo;
 import siddur.common.security.UserInfo;
@@ -93,6 +96,38 @@ public class JPAUtil {
 		}
 		em.close();
 		return u;
+	}
+	
+	public static <E> Paging<E> getPageData(HttpServletRequest req, TypedQuery<E> query, TypedQuery<Long> totalQuery){
+		String pageIndex = req.getParameter("pageIndex");
+		String pageSize = req.getParameter("pageSize");
+		
+		
+		int index = 1, size = 20;
+		try {
+			index = Integer.parseInt(pageIndex);
+		} catch (NumberFormatException e) {
+		}
+		try {
+			size = Integer.parseInt(pageSize);
+		} catch (NumberFormatException e) {
+		}
+			
+		if(index >= 0 && size > 0){
+			int start = (index - 1) * size + 1;
+			int end = index * size;
+			query.setFirstResult(start);
+			query.setMaxResults(end);
+		}
+		
+		Paging<E> p = new Paging<E>();
+		p.setData(query.getResultList());
+		p.setPageIndex(index);
+		p.setPageSize(size);
+		
+		p.setTotal(totalQuery.getSingleResult().intValue());
+		
+		return p;
 	}
 	
 	

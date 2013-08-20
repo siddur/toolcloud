@@ -8,7 +8,19 @@
 <c:if test="${input_parts_loaded != true }">
 	<c:set var="input_parts_loaded" value="true" scope="request"></c:set>
 	
+	<style>
+		.ui-datepicker{
+			font-size: 62.5%;
+			font-family: "Trebuchet MS", "Arial", "Helvetica", "Verdana", "sans-serif"; 
+		}
+	</style>
+	<script type="text/javascript" src="/toolcloud/jqueryui/jquery-ui-1.10.3.custom.min.js"></script>
 	<script>
+		$(function(){
+			$( ".dateField" ).datepicker({
+				dateFormat: "yy-mm-dd"
+			});
+		});
 		var validateResult;
 		function validate(){
 			validateResult = true;
@@ -62,20 +74,23 @@
 		<span class="label">${tag}</span>
 	</c:if>
 	<c:choose>
-		<c:when test="${'string' == type
-			||'integer' == type
-			||'double' == type
+		<c:when test="${'STRING' == type
+			||'INTEGER' == type
+			||'DOUBLE' == type
 			}">
 			<input type="text" class="input ${type}" name="input">
 		</c:when>
-		<c:when test="${'boolean' == type }">
+		<c:when test="${'BOOLEAN' == type }">
 			<input type="checkbox" class="input" value="${tag}" name="input" style="position: relative; top: 2px;">
 		</c:when>
-		<c:when test="${'text' == type}">
+		<c:when test="${'TEXT' == type}">
 			<div><textarea class="input" cols="40" rows="3" name="input"></textarea></div>
 		</c:when>
-		<c:when test="${'file' == type || 'zipfile' == type}">
-			<s:file_upload fieldname="input" displayname="upload tool file.."/>
+		<c:when test="${'FILE' == type || 'ZIPFILE' == type}">
+			<s:file_upload fieldname="input" displayname="upload tool.."/>
+		</c:when>
+		<c:when test="${'DATE' == type}">
+			<input type="text" class="dateField" readonly="readonly">
 		</c:when>
 	</c:choose>
 </div>

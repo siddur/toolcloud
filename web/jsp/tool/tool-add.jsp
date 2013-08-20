@@ -59,7 +59,7 @@
 </head>
 <body>
 	<%@include file="/jsp/common/head.jsp" %>
-	<s:file_upload_common/>
+	<s:file_upload_head multiple="false"></s:file_upload_head>
 	<div class="body attr-item-container">
 		<form method="post" action="/toolcloud/ctrl/tool/save" >
 			<div>
@@ -80,7 +80,7 @@
 			<s:file_upload fieldname="toolfile" displayname="upload tool file.."/>
 			<div><span class="label">name:</span><input name="name"></div>
 			<div><span class="label">catalog:</span><input name="catelog"></div>
-			<s:file_upload fieldname="icon" displayname="upload image.." isImg="true"/>
+			<s:file_upload fieldname="icon" displayname="upload image.." isImage="true"/>
 			<div>
 				<span class="label">description:</span>
 				<br>

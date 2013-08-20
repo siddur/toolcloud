@@ -108,7 +108,7 @@
 </head>
 <body>
 	<%@include file="/jsp/common/head.jsp" %>
-	<s:file_upload_common/>
+	<s:file_upload_head/>
 	<div class="body">
 		<div class="tool_description">
 			<s:tool_detail toolDescriptor="<%=tool.getDescriptor()%>"/>

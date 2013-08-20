@@ -41,7 +41,7 @@ public class FileServlet extends HttpServlet{
 		DiskFileItemFactory ff = new DiskFileItemFactory();
 		ff.setSizeThreshold(THRESHOLD);
 		uploader = new ServletFileUpload(ff);
-		uploader.setFileSizeMax(IMAGE_SIZE_MAX);
+		uploader.setFileSizeMax(TEMP_SIZE_MAX);
 	}
 	
 	@Override
@@ -53,9 +53,13 @@ public class FileServlet extends HttpServlet{
 			return;
 		}
 		
-		File f = new File(FileSystemUtil.getOutputDir(), path);
-		
-		if(f.exists() && FileSystemUtil.containedInOutputDir(f)){
+		File f = null;
+		if(path.startsWith("/fileserver")){
+			f = new File(FileSystemUtil.getHome(), path);
+		}else{
+			f = new File(FileSystemUtil.getOutputDir(), path);
+		}
+		if(f.exists() /*&& FileSystemUtil.containedInOutputDir(f)*/){
 			if(f.isDirectory()){
 				f = ZipUtil.zipDir(f);
 			}
@@ -106,7 +110,6 @@ public class FileServlet extends HttpServlet{
 				items = uploader.parseRequest(req);
 			} catch (FileUploadException e) {
 				Log.warn(e);
-				e.printStackTrace();
 			}
 			if(items != null){
 				JsonArray ja = new JsonArray();

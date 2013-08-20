@@ -35,24 +35,13 @@
 	<span class="label">${desc}</span>
 </c:if>
 <c:choose>
-	<c:when test="${'string' == type
-		||'int' == type
-		||'double' == type
-		||'text' == type
-		}">
+	<c:when test="${'STRING' == type}">
 		<span class="output"></span>
 	</c:when>
-	<c:when test="${'file' == type}">
+	<c:when test="${'FILE' == type}">
 		<a class="output"></a>
 	</c:when>
-	<c:when test="${'html.table' == type}">
-		<table class="output">
-		</table>
-	</c:when>
-	<c:when test="${'diagram' == type}">
-	
-	</c:when>
-	<c:when test="${'image' == type}">
+	<c:when test="${'IMAGE' == type}">
 		<img src='#'/>
 	</c:when>
 </c:choose>

@@ -8,7 +8,8 @@ public enum DataType {
 	INT("integer", false, true),
 	DOUBLE("double", false, true),
 	BOOLEAN("boolean", false, true),
-	TEXT("boolean", true, true),
+	DATE("date", false, true),
+	TEXT("boolean", false, true),
 	FILE("file", true, true),
 	ZIPFILE("zipfile", false, true),
 	IMAGE("image", true, false);

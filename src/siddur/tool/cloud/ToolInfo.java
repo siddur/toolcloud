@@ -1,7 +1,5 @@
 package siddur.tool.cloud;
 
-import java.util.Date;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -14,9 +12,6 @@ public class ToolInfo {
 	
 	@Column(length=1)
 	private int status = 0;
-	
-	@Column
-	private Date publishAt = new Date();
 	
 	@Column
 	private long clicks = 0;
@@ -56,12 +51,5 @@ public class ToolInfo {
 		this.runs = runs;
 	}
 
-	public Date getPublishAt() {
-		return publishAt;
-	}
-
-	public void setPublishAt(Date publishAt) {
-		this.publishAt = publishAt;
-	}
 
 }

@@ -51,10 +51,11 @@
 	<div>
 		<span class="label">type:</span>
 		<select name="i_dataType" >
+			<option value="string" <c:if test="${item.dataType == 'string'}">selected="selected"</c:if> >string</option>
 			<option value="integer" <c:if test="${item.dataType == 'integer'}">selected="selected"</c:if> >integer</option>
 			<option value="double" <c:if test="${item.dataType == 'double'}">selected="selected"</c:if> >double</option>
-			<option value="string" <c:if test="${item.dataType == 'string'}">selected="selected"</c:if> >string</option>
 			<option value="boolean" <c:if test="${item.dataType == 'boolean'}">selected="selected"</c:if> >boolean</option>
+			<option value="date" <c:if test="${item.dataType == 'date'}">selected="selected"</c:if> >date</option>
 			<option value="file" <c:if test="${item.dataType == 'file'}">selected="selected"</c:if> >file</option>
 			<option value="zipfile" <c:if test="${item.dataType == 'zipfile'}">selected="selected"</c:if> >zipfile</option>
 		</select>
