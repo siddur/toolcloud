@@ -43,12 +43,10 @@ public class UserAction extends DBAction<UserInfo>{
 				c.setPath("/toolcloud");
 				c.setMaxAge(60 * 60 * 24 * 7);
 				resp.addCookie(c);
-				req.getRequestDispatcher("/index.jsp").forward(req, resp);
-				return Result.ok();
+				return Result.redirect("tool/home");
 			}
 		}
-		req.getRequestDispatcher("/jsp/login.jsp").forward(req, resp);
-		return Result.error("login failed");
+		return Result.redirect("/user/login.jsp");
 	}
 	
 	public Result logout(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
@@ -61,9 +59,7 @@ public class UserAction extends DBAction<UserInfo>{
 		}
 		req.getSession().invalidate();
 		req.getSession().setAttribute(Constants.CHECHED, Constants.CHECHED_FLAG);
-		req.getRequestDispatcher("/index.jsp").forward(req, resp);
-		
-		return Result.ok();
+		return Result.redirect("/jsp/user/login.jsp");
 	}
 	
 	@Perm(Permission.USER_ADD)

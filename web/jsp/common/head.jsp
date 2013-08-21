@@ -3,8 +3,8 @@
 <%@taglib prefix="s" tagdir="/WEB-INF/tags"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<link rel="stylesheet" type="text/css" href="/toolcloud/css/common.css" />
-<link rel="stylesheet" type="text/css" href="/toolcloud/jqueryui/jquery-ui-1.10.3.custom.min.css" />
+<!-- <link rel="stylesheet" type="text/css" href="/toolcloud/css/common.css" />
+ --><link rel="stylesheet" type="text/css" href="/toolcloud/jqueryui/jquery-ui-1.10.3.custom.min.css" />
 <div class="header">
 	<div class="user">
 	<c:choose>

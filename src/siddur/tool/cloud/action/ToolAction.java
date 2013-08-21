@@ -15,6 +15,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.io.FileUtils;
+
 import siddur.common.miscellaneous.ClickInfo;
 import siddur.common.miscellaneous.Comment;
 import siddur.common.miscellaneous.Constants;
@@ -32,6 +34,7 @@ import siddur.common.web.Perm;
 import siddur.tool.core.IToolManager;
 import siddur.tool.core.IToolWrapper;
 import siddur.tool.core.MemoryVisitor;
+import siddur.tool.core.TempFileUtil;
 import siddur.tool.core.data.DataTemplate;
 import siddur.tool.core.data.ToolDescriptor;
 
@@ -73,7 +76,7 @@ public class ToolAction extends DBAction<Comment>{
 		req.setAttribute("favorite", getVisitor().findAll(likeQ.getResultList()));
 		req.setAttribute("queries", queryQ.getResultList());
 		
-		return Result.forward("/jsp/tool/home.jsp");
+		return Result.forward("/home.jsp");
 	}
 	
 	@DoNotAuthenticate
@@ -111,7 +114,16 @@ public class ToolAction extends DBAction<Comment>{
 			c.setWho(u.getUsername());
 		}
 		getEntityManager(req, true).persist(c);
-		return Result.forward("/jsp/tool/tool-detail.jsp");
+		
+		if(tpu.getDescriptor().getLang().equals("client-side")){
+			File f = new File(tpu.getToolfile());
+			File desc = TempFileUtil.createEmptyFile();
+			FileUtils.copyFile(f, desc);
+			req.setAttribute("toolFile", desc.getName());
+			return Result.forward("/jsp/tool/tool-cs-detail.jsp");
+		}else{
+			return Result.forward("/jsp/tool/tool-ss-detail.jsp");
+		}
 	}
 	
 	@Perm(Permission.TOOL_EDIT)

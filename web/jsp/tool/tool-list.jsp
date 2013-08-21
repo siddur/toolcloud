@@ -9,7 +9,7 @@
 </head>
 <body>
 	<%@include file="/jsp/common/head.jsp" %>
-	<div class="body">
+	<div class="screen">
 		<a class="add_tool" href="/toolcloud/jsp/tool/tool-add.jsp"><b>Add a tool</b></a>
 		<br/>
 		<br/>

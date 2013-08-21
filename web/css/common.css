@@ -52,6 +52,11 @@ body{
    	background: none repeat scroll 0 0 #B83A10
    }
 
+.screen{
+	margin: 10px auto;
+	width: 998px;
+}
+
 .body{
 	padding:20px 50px;
 }

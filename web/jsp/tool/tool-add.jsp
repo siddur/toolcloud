@@ -22,15 +22,17 @@
 		}
 	}
 
-/*	
+	
  	function selectLang(lang){
-		if(lang == "java"){
+		if(lang == "client-side"){
 			$(".input_tag").css("display", "none");
+			$(".output_tag").css("display", "none");
 		}else{
 			$(".input_tag").css("display", "block");
+			$(".output_tag").css("display", "block");
 		}
 	}
-*/
+
 
 	function validate(){
 		$(".error").removeClass("error");
@@ -63,7 +65,7 @@
 	<div class="body attr-item-container">
 		<form method="post" action="/toolcloud/ctrl/tool/save" >
 			<div>
-				<span class="label">language:</span>
+				<span class="label">编程语言:</span>
 				<select name="lang">
 				<%
 					for(String lang : ScriptUtil.getLangs())
@@ -75,23 +77,21 @@
 				<%
 					}
 				%>
+					<option value="client-side">js</option>
 				</select>
 			</div>
-			<s:file_upload fieldname="toolfile" displayname="upload tool file.."/>
-			<div><span class="label">name:</span><input name="name"></div>
-			<div><span class="label">catalog:</span><input name="catelog"></div>
-			<s:file_upload fieldname="icon" displayname="upload image.." isImage="true"/>
+			<s:file_upload fieldname="toolfile" displayname="上传工具文件.."/>
+			<div><span class="label">名称:</span><input name="name"></div>
+			<div><span class="label">类别:</span><input name="catelog"></div>
+			<s:file_upload fieldname="icon" displayname="上传图标.." isImage="true"/>
 			<div>
-				<span class="label">description:</span>
+				<span class="label">描述:</span>
 				<br>
 				<textarea cols="40" rows="3" name="description"></textarea>
 			</div>
 			<div class="input">
-				<span class="label" class="title">input</span>
-				<button class="btn1" onclick="add(0); return false">
-					<span class="left_float ui-icon ui-icon-plus"></span>
-					<span>one more</span>
-				</button>
+				<span class="label" class="title">输入</span>
+				<input type="button" value="增加一个输入框" class="btn" onclick="add(0)">
 				<div class="input_container">
 					<s:meta_input></s:meta_input>
 				</div>
@@ -99,8 +99,8 @@
 			</div>
 			
 			<div class="output">
-				<span class="label" class="title">output</span>
-				<input type="button" value="add one more" class="btn1" onclick="add(1)">
+				<span class="label" class="title">输出</span>
+				<input type="button" value="增加一个输出框" class="btn" onclick="add(1)">
 				<div class="output_container">
 					<s:meta_output></s:meta_output>
 				</div>

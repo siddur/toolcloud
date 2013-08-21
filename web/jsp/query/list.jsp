@@ -21,7 +21,7 @@
 	}
 </style>
 <s:site>
-<div class="body">
+<div class="screen">
 	<script>
 		function changePage(){
 			location.href = "/toolcloud/ctrl/query/list?pageIndex=" + pageIndex + "&pageSize=" + pageSize;

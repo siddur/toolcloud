@@ -12,10 +12,9 @@
 			<a href="">更多</a>
 		</div>
 	</div>
-	<ul type="square" >
 	<c:forEach var="item" items="${tools}">
-		<li><s:tool_item toolDescriptor="${item.descriptor}"></s:tool_item></li>
+		<s:tool_item toolDescriptor="${item.descriptor}"></s:tool_item>
 	</c:forEach>
-	</ul>
+	<div style="clear:left;"></div>
 </div>
 

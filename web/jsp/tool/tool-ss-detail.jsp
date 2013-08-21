@@ -80,7 +80,7 @@
 		padding-left: 10px;
 		margin-left:10px;
 		min-height: 400px;
-		min-width: 800px;
+		min-width: 695px;
 	}
 	
 	.input_container{
@@ -109,7 +109,7 @@
 <body>
 	<%@include file="/jsp/common/head.jsp" %>
 	<s:file_upload_head/>
-	<div class="body">
+	<div class="screen">
 		<div class="tool_description">
 			<s:tool_detail toolDescriptor="<%=tool.getDescriptor()%>"/>
 			<div class="comments">

@@ -3,7 +3,7 @@
 <%@taglib prefix="s" tagdir="/WEB-INF/tags"%>
 
 <s:site>
-<div class="body">
+<div class="screen">
 	<form method="post" action="/toolcloud/ctrl/query/doask">
 		<div>
 			<span>标题</span>

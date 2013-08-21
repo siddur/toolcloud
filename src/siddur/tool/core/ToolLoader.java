@@ -40,7 +40,11 @@ public class ToolLoader {
 		
 		if("java".equals(td.getLang())){
 			return loadJavaTool(toolDir, td);
-		}else{
+		}
+		else if("client-side".equals(td.getLang())){
+			return loadClientSideTool(toolDir, td);
+		}
+		else{
 			return loadScriptTool(toolDir, td);
 		}
 	}
@@ -83,6 +87,7 @@ public class ToolLoader {
 			}
 		} catch (Exception e) {
 			log4j.warn(e);
+			throw new Exception("Cannot find tool class from directory " + toolDir.getName());
 		} 
 		throw new Exception("Cannot find tool class from directory " + toolDir.getName());
 	}
@@ -97,5 +102,17 @@ public class ToolLoader {
 			}
 		}
 		throw new Exception("Cannot find script file from directory " + toolDir.getName());
+	}
+	
+	private ClientSideToolWrapper loadClientSideTool(File toolDir, ToolDescriptor td) throws Exception{
+		ClientSideToolWrapper cstw = new ClientSideToolWrapper();
+		File[] files = toolDir.listFiles();
+		for (File file : files) {
+			if(!file.getName().equals(Constants.TOOL_PLUGIN_FILENAME)){
+				cstw.setToolfile(file.getCanonicalPath());
+				return cstw;
+			}
+		}
+		throw new Exception("Cannot find client-side file from directory " + toolDir.getName());
 	}
 }

@@ -165,7 +165,14 @@ public class ActionMapper{
 			req.getRequestDispatcher("/success.jsp").forward(req, resp);
 		}
 		else if(r.isRedirect()){
-			resp.sendRedirect("/toolcloud/ctrl/" + r.message);
+			String url = r.message;
+			if(url.startsWith("/")){
+				url = "/toolcloud" + url;
+			}
+			else if(!url.startsWith("http")){
+				url = "/toolcloud/ctrl/" + url;
+			}
+			resp.sendRedirect(url);
 		}
 		else if(r.isAjax){
 			resp.setContentType("text/html; charset=utf-8");

@@ -3,7 +3,6 @@ package siddur.tool.core;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.persistence.EntityManager;
@@ -14,11 +13,9 @@ import org.apache.log4j.Logger;
 
 import siddur.common.jpa.JPAUtil;
 import siddur.common.miscellaneous.FileSystemUtil;
-import siddur.tool.cloud.ToolInfo;
 import siddur.tool.core.data.DataTemplate;
 import siddur.tool.core.data.ToolDescriptor;
 import siddur.tool.core.exception.ExecuteException;
-import siddur.tool.core.exception.ToolNotApprovedException;
 import siddur.tool.core.exception.ToolNotFoundException;
 
 public class BasicToolManager implements IToolManager{
@@ -31,9 +28,12 @@ public class BasicToolManager implements IToolManager{
 	
 	@Override
 	public void loadAll() {
-		List<ToolInfo> tools = JPAUtil.findAll(ToolInfo.class);
-		for(ToolInfo t : tools){
-			load(t.getId());
+		File[] files = FileSystemUtil.getToolDir().listFiles();
+		for (File file : files) {
+			String name = file.getName();
+			if(name.length() == 13 && file.isDirectory()){
+				load(name);
+			}
 		}
 	}
 
