@@ -53,7 +53,10 @@
 </style>
 </head>
 <body>
-	<%@include file="/jsp/common/head.jsp" %>
+	<%@include file="/jsp/common/manage.jsp" %>
+	<div class="crumb">
+		${crumb}
+	</div>
 	<s:file_upload_head multiple="false"/>
 	<div class="body attr-item-container">
 		<form method="post" action="/toolcloud/ctrl/tool/save" >

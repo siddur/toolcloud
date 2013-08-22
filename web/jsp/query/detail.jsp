@@ -8,9 +8,8 @@
 <style>
 	.query_item{
 		padding: 10px;
-		background: #DDDDDD;
-		margin: 10px;
-		width: 600px;
+		border-bottom: solid 1px blue;
+		margin-bottom: 20px;
 	}
 	
 	.query_title{
@@ -82,10 +81,12 @@
 	
 	<s:paging pageIndex="${comments.pageIndex }" pageSize="20" total="${comments.total }"></s:paging>
 	
-	<form method="post" action="/toolcloud/ctrl/query/comment">
-		<textarea name="comment" id="comment" rows="6" cols="35"></textarea>
-		<input type="hidden" name="queryId" value="${query.id}">
-		<input type="submit" class="btn" value="say">
-	</form>
+	<div style="clear:left; padding-top:50px;">
+		<form method="post" action="/toolcloud/ctrl/query/comment">
+			<textarea name="comment" id="comment" rows="6" cols="35"></textarea>
+			<input type="hidden" name="queryId" value="${query.id}">
+			<input type="submit" class="btn" value="评论">
+		</form>
+	</div>
 </div>
 </s:site>

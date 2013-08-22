@@ -5,7 +5,7 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>Tool Cloud</title>
-	<link rel="stylesheet" type="text/css" href="/toolcloud/css/common.css" />
+	<!-- <link rel="stylesheet" type="text/css" href="/toolcloud/css/common.css" /> -->
 	<link rel="stylesheet" type="text/css" href="/toolcloud/css/icon_sets.css" />
 </head>
 <body>

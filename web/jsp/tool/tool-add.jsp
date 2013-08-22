@@ -12,6 +12,8 @@
 		inputDiv = $("div.input div.unit").clone();
 		outputDiv = $("div.output div.unit").clone();
 		//$(":text").addClass("txt");
+
+		selectLang($("#lang").val());
 	});
 
 	function add(flag){
@@ -20,17 +22,33 @@
 		}else{
 			$(".output_container").append(outputDiv.clone());
 		}
+		selectLang($("#lang").val());
 	}
 
 	
  	function selectLang(lang){
 		if(lang == "client-side"){
-			$(".input_tag").css("display", "none");
-			$(".output_tag").css("display", "none");
+			$(".input").css("display", "none");
+			$(".output").css("display", "none");
 		}else{
-			$(".input_tag").css("display", "block");
-			$(".output_tag").css("display", "block");
+			$(".input").css("display", "block");
+			$(".output").css("display", "block");
+
+			if(lang == "java"){
+				$(".input_tag").css("display", "none");
+				$(".output_tag").css("display", "none");
+				
+				$(".out_default").css("display", "none");
+				$(".out_type").css("display", "block");
+			}else{
+				$(".input_tag").css("display", "block");
+				$(".output_tag").css("display", "block");
+				
+				$(".out_default").css("display", "block");
+				$(".out_type").css("display", "none");
+			}
 		}
+
 	}
 
 
@@ -66,7 +84,7 @@
 		<form method="post" action="/toolcloud/ctrl/tool/save" >
 			<div>
 				<span class="label">编程语言:</span>
-				<select name="lang">
+				<select id="lang" name="lang" onchange="selectLang(this.value)">
 				<%
 					for(String lang : ScriptUtil.getLangs())
 					{
@@ -77,7 +95,7 @@
 				<%
 					}
 				%>
-					<option value="client-side">js</option>
+					<option value="client-side">javascript</option>
 				</select>
 			</div>
 			<s:file_upload fieldname="toolfile" displayname="上传工具文件.."/>

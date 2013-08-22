@@ -34,6 +34,17 @@ public class MemoryVisitor extends MapVisitor<String, IToolWrapper>{
 		return list.subList(0, num > size ? size : num);
 	}
 	
+	public List<IToolWrapper> findByAuthor(String userId){
+		List<IToolWrapper> list = new ArrayList<IToolWrapper>();
+		for(Entry<String, IToolWrapper> entry : map.entrySet()){
+			IToolWrapper tpu = entry.getValue();
+			if(tpu.getDescriptor().getAuthorId().equals(userId)){
+				list.add(tpu);
+			}
+		}
+		return list;
+	}
+	
 	public List<IToolWrapper> findByKeyword(String key){
 		List<IToolWrapper> list = new ArrayList<IToolWrapper>();
 		for(Entry<String, IToolWrapper> entry : map.entrySet()){
@@ -56,11 +67,20 @@ public class MemoryVisitor extends MapVisitor<String, IToolWrapper>{
 		return list;
 	}
 	
+	public Paging<IToolWrapper> findMine(String userId, int pageSize, int pageIndex){
+		return getCurrentPage(findByAuthor(userId), pageSize, pageIndex);
+		
+	}
+	
+	
 	public Paging<IToolWrapper> findAll(String key, int pageSize, int pageIndex){
+		return getCurrentPage(findByKeyword(key), pageSize, pageIndex);
+	}
+	
+	private Paging<IToolWrapper> getCurrentPage(List<IToolWrapper> list, int pageSize, int pageIndex){
 		Paging<IToolWrapper> p = new Paging<IToolWrapper>();
 		p.setPageIndex(pageIndex);
 		p.setPageSize(pageSize);
-		List<IToolWrapper> list = findByKeyword(key);
 		p.setTotal(list.size());
 		Collections.sort(list);
 		int size = list.size();

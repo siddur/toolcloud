@@ -105,19 +105,20 @@ public class JPAUtil {
 		
 		int index = 1, size = 20;
 		try {
-			index = Integer.parseInt(pageIndex);
+			if(pageIndex != null)
+				index = Integer.parseInt(pageIndex);
 		} catch (NumberFormatException e) {
 		}
 		try {
-			size = Integer.parseInt(pageSize);
+			if(pageSize != null)
+				size = Integer.parseInt(pageSize);
 		} catch (NumberFormatException e) {
 		}
 			
 		if(index >= 0 && size > 0){
-			int start = (index - 1) * size + 1;
-			int end = index * size;
+			int start = (index - 1) * size;
 			query.setFirstResult(start);
-			query.setMaxResults(end);
+			query.setMaxResults(size);
 		}
 		
 		Paging<E> p = new Paging<E>();

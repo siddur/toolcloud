@@ -36,26 +36,21 @@
 
 <div class="unit unit_output">
 	<span class="close_btn ui-icon ui-icon-closethick" onclick="del(this)"></span>
-	<div>
-		<c:choose>
-			<c:when test="${isScript == true}">
-				<span class="label">file:</span>
-				<input name="o_default" value="${item.defaultValue}" size="10">
-			</c:when>
-			<c:otherwise>
-				<span class="label">type:</span>
-				<select name="o_dataType">
-					<option value="text" <c:if test="${item.dataType == 'text'}">selected="selected"</c:if> >text</option>
-					<option value="file" <c:if test="${item.dataType == 'file'}">selected="selected"</c:if> >file</option>
-					<option value="diagram" <c:if test="${item.dataType == 'diagram'}">selected="selected"</c:if> >diagram</option>
-					<option value="table" <c:if test="${item.dataType == 'table'}">selected="selected"</c:if> >table</option>
-				</select>
-			</c:otherwise>
-		</c:choose>
-		
+	
+	<div class="out_default" <c:if test="${isScript != true}"> style="display: none" </c:if> >
+		<span class="label" title="系统会根据该文件名查找脚本生成的文件">文件名</span>
+		<input name="o_default" value="${item.defaultValue}" size="10">
+	</div>
+	<div class="out_type" <c:if test="${isScript == true}"> style="display: none" </c:if> >
+		<span class="label">类型:</span>
+		<select name="o_dataType">
+			<option value="STRING" <c:if test="${item.dataType == 'STRING'}">selected="selected"</c:if> >文字</option>
+			<option value="FILE" <c:if test="${item.dataType == 'FILE'}">selected="selected"</c:if> >文件</option>
+			<option value="IMAGE" <c:if test="${item.dataType == 'IMAGE'}">selected="selected"</c:if> >图片</option>
+		</select>
 	</div>
 	<div>
-		<span class="label">description:</span>
+		<span class="label">描述:</span>
 		<br>
 		<textarea cols="22" rows="1" name="o_description">${item.description}</textarea>
 	</div>

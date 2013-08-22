@@ -22,6 +22,9 @@
 			.file_item{
 				font-size:12px;
 				display: inline-block;
+				position: relative;
+				top:-15px;
+				left:5px;
 			}
 			
 			.file_item .ui-icon{
@@ -62,7 +65,7 @@
 			});
 
 			function appendFile(file, container){
-				var url = "file/" + file.filepath;
+				var url = "/toolcloud/file/" + file.filepath;
 				if(container.children().length == 1 || multiple){
 					var fileItemDiv = createFileComponent();
 					container.append(fileItemDiv);

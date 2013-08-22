@@ -82,7 +82,7 @@ public class ToolAction extends DBAction<Comment>{
 	@DoNotAuthenticate
 	public Result list(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
 		String key = req.getParameter("key");
-		int pageSize = 10;
+		int pageSize = 20;
 		int pageIndex = 1;
 		try {
 			pageSize = Integer.parseInt(req.getParameter("pageSize"));
@@ -126,11 +126,33 @@ public class ToolAction extends DBAction<Comment>{
 		}
 	}
 	
+	public Result toAdd(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
+		return Result.forward("/jsp/tool/tool-add.jsp");
+	}
+	
+	public Result mine(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
+		int pageSize = 20;
+		int pageIndex = 1;
+		try {
+			pageSize = Integer.parseInt(req.getParameter("pageSize"));
+			pageIndex = Integer.parseInt(req.getParameter("pageIndex"));
+		} catch (NumberFormatException e) {
+		}
+		
+		UserInfo u = (UserInfo)req.getSession().getAttribute("user");
+		Paging<IToolWrapper> paging = getVisitor().findMine(u.getUserId() + "", pageSize, pageIndex);
+		req.setAttribute("paging", paging);
+		
+		req.setAttribute("crumb", "manage > mytools");
+		return Result.forward("/jsp/tool/mytool.jsp");
+	}
+	
 	@Perm(Permission.TOOL_EDIT)
 	public Result update(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
 		String id = req.getParameter("toolId");
 		IToolWrapper tpu = getVisitor().findById(id);
 		req.setAttribute("tool", tpu);
+		req.setAttribute("crumb", "manage > mytools > update");
 		return Result.forward("/jsp/tool/tool-update.jsp");
 	}
 	

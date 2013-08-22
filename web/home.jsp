@@ -20,7 +20,7 @@
 	overflow: hidden;
 	text-overflow: ellipsis;
 }
-.tool_list, .right, .comment_list{
+.tool_list, .favorite, .comment_list{
 	border: 1px solid #CFCFCF;
 	margin-bottom: 20px;
 }
@@ -84,19 +84,24 @@
 				</c:forEach>
 			</div>
 		</div>
+		
+		
 		<div class="right">
-			<div style="float:right;" class="home_title">
-				您使用过的：
-			</div>
-			<div style="clear:right;"></div>
-			<c:forEach items="${favorite}" var="item">
-				<div class="favorite_item">
-					<a href="/toolcloud/ctrl/tool/detail?toolId=${item.descriptor.pluginID }">
-						<span class="ui-icon ui-icon-gear"></span>
-						${item.descriptor.pluginName }
-					</a>
+			<div style="margin-bottom:10px;"><input type="button" class='btn' value="发布工具" onclick="location.href='/toolcloud/ctrl/tool/toadd'"></div>
+			<div class="favorite">
+				<div class="home_title">
+					您使用过的：
 				</div>
-			</c:forEach>
+				<div style="clear:right;"></div>
+				<c:forEach items="${favorite}" var="item">
+					<div class="favorite_item">
+						<a href="/toolcloud/ctrl/tool/detail?toolId=${item.descriptor.pluginID }">
+							<span class="ui-icon ui-icon-gear"></span>
+							${item.descriptor.pluginName }
+						</a>
+					</div>
+				</c:forEach>
+			</div>
 		</div>
 	</div>
 </body>

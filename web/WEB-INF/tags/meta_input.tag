@@ -45,23 +45,24 @@
 <div class="unit unit_input">
 	<span class="close_btn ui-icon ui-icon-closethick" onclick="del(this)"></span>
 	<div class="input_tag">
-		<span class="label">tag:</span>
+		<span class="label">前缀:</span>
 		<input name="i_tag" size="5" value="${item.tag }">
 	</div>
 	<div>
-		<span class="label">type:</span>
+		<span class="label">类型:</span>
 		<select name="i_dataType" >
-			<option value="string" <c:if test="${item.dataType == 'string'}">selected="selected"</c:if> >string</option>
-			<option value="integer" <c:if test="${item.dataType == 'integer'}">selected="selected"</c:if> >integer</option>
-			<option value="double" <c:if test="${item.dataType == 'double'}">selected="selected"</c:if> >double</option>
-			<option value="boolean" <c:if test="${item.dataType == 'boolean'}">selected="selected"</c:if> >boolean</option>
-			<option value="date" <c:if test="${item.dataType == 'date'}">selected="selected"</c:if> >date</option>
-			<option value="file" <c:if test="${item.dataType == 'file'}">selected="selected"</c:if> >file</option>
-			<option value="zipfile" <c:if test="${item.dataType == 'zipfile'}">selected="selected"</c:if> >zipfile</option>
+			<option value="STRING" <c:if test="${item.dataType == 'STRING'}">selected="selected"</c:if> >字符串</option>
+			<option value="INTEGER" <c:if test="${item.dataType == 'INTEGER'}">selected="selected"</c:if> >整数</option>
+			<option value="DOUBLE" <c:if test="${item.dataType == 'DOUBLE'}">selected="selected"</c:if> >双精度</option>
+			<option value="BOOLEAN" <c:if test="${item.dataType == 'BOOLEAN'}">selected="selected"</c:if> >布尔</option>
+			<option value="DATE" <c:if test="${item.dataType == 'DATE'}">selected="selected"</c:if> >日期</option>
+			<option value="TEXT" <c:if test="${item.dataType == 'TEXT'}">selected="selected"</c:if> >文本</option>
+			<option value="FILE" <c:if test="${item.dataType == 'FILE'}">selected="selected"</c:if> >文件</option>
+			<option value="ZIPFILE" <c:if test="${item.dataType == 'ZIPFILE'}">selected="selected"</c:if> >zip文件</option>
 		</select>
 	</div>
 	<div>
-		<span class="label">description:</span>
+		<span class="label">描述:</span>
 		<br>
 		<textarea cols="22" rows="1" name="i_description">${item.description }</textarea>
 	</div>
