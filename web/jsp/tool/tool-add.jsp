@@ -95,6 +95,8 @@
 				<%
 					}
 				%>
+					<option value="cmd">cmd</option>
+					<option value="bash">bash</option>
 					<option value="client-side">javascript</option>
 				</select>
 			</div>

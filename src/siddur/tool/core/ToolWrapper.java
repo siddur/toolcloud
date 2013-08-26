@@ -12,8 +12,8 @@ public abstract class ToolWrapper implements IToolWrapper{
 	
 	@Override
 	public int compareTo(IToolWrapper o) {
-		return o.getDescriptor().getPublishAt()
-						.compareTo(this.descriptor.getPublishAt());
+		return o.getDescriptor().getAuthorId()
+						.compareTo(this.descriptor.getAuthorId());
 	}
 
 	@Override

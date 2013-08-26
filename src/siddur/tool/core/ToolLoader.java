@@ -92,8 +92,9 @@ public class ToolLoader {
 		throw new Exception("Cannot find tool class from directory " + toolDir.getName());
 	}
 	
-	private ScriptToolWrapper loadScriptTool(File toolDir, ToolDescriptor td) throws Exception{
-		ScriptToolWrapper stw = new ScriptToolWrapper();
+	private CommandToolWrapper loadScriptTool(File toolDir, ToolDescriptor td) throws Exception{
+		CommandToolWrapper stw = new CommandToolWrapper();
+		stw.setDescriptor(td);
 		File[] files = toolDir.listFiles();
 		for (File file : files) {
 			if(!file.getName().equals(Constants.TOOL_PLUGIN_FILENAME)){
@@ -106,6 +107,7 @@ public class ToolLoader {
 	
 	private ClientSideToolWrapper loadClientSideTool(File toolDir, ToolDescriptor td) throws Exception{
 		ClientSideToolWrapper cstw = new ClientSideToolWrapper();
+		cstw.setDescriptor(td);
 		File[] files = toolDir.listFiles();
 		for (File file : files) {
 			if(!file.getName().equals(Constants.TOOL_PLUGIN_FILENAME)){

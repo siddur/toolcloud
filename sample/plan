@@ -1,0 +1,54 @@
+编码转换
+	Native转UTF-8
+		用于Java Properties文件
+	JBK转UTF-8
+		可用户检查错误编码
+	URL转码
+	进制转换
+	条形码
+	Base64
+		图片、文字转Base64
+	加密解密
+		AES、DES、RC4、Rabbit、TripleDes
+	散列哈希
+		SHA1、SHA224、SHA256、SHA384、SHA512、MD5
+	Escape
+
+时间处理
+	时间戳
+	时区换算	
+	
+文本处理
+	甄别编码
+	矫正编码
+	查看编码
+		2、16进制
+	
+文件转换
+	HTML、Word、PDF
+	
+网站工具
+	网页快照
+	文档制作工具
+	网站内容查找工具
+	
+文字处理
+	拼音
+	
+Excel功能扩展
+	
+Java编译与反编译
+	
+开发工具
+	取色器
+	渐变色生成工具
+	从html中抽提JS和CSS
+	压缩
+		css、js
+	正则表达式
+	格式化
+		JS、HTML、XML、JSON、CSS
+	
+	
+	
+	

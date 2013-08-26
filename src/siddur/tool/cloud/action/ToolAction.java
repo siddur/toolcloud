@@ -60,10 +60,10 @@ public class ToolAction extends DBAction<Comment>{
 		TypedQuery<String> likeQ = null;
 		UserInfo u = (UserInfo)req.getSession().getAttribute("user");
 		if(u != null){
-			likeQ = em.createQuery("select r.target from RunInfo r where r.who = '"+u.getUsername()+"' order by r.startAt desc", String.class);
+			likeQ = em.createQuery("select r.target from RunInfo r where r.who = '"+u.getUsername()+"' group by r.target order by max(r.startAt) desc", String.class);
 		}else{
 			String ip = req.getRemoteAddr();
-			likeQ = em.createQuery("select r.target from RunInfo r where r.ip = '"+ip+"' order by r.startAt desc", String.class);
+			likeQ = em.createQuery("select r.target from RunInfo r where r.ip = '"+ip+"' group by r.target order by max(r.startAt) desc", String.class);
 		}
 		TypedQuery<QueryInfo> queryQ = em.createQuery("from QueryInfo q order by q.publishAt desc", QueryInfo.class);
 		

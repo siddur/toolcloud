@@ -72,14 +72,26 @@ public class ScriptUtil {
 		appendQuot(sb);
 		sb.append(scriptFile);
 		appendQuot(sb);
-		sb.append(" ");
+		appendParams(sb, params, tooldatas);
+		return sb.toString();
+	}
+	
+	
+	public static String getExecuteString(String orderName, 
+			String[] params, DataTemplate[] tooldatas) throws Exception{
+		StringBuilder sb = new StringBuilder();
+		sb.append("cmd /c ");
+		sb.append(orderName);
+		appendParams(sb, params, tooldatas);
+		return sb.toString();
+	}
+	
+	private static void appendParams(StringBuilder sb, String[]params, DataTemplate[] tooldatas){
 		if(tooldatas != null){
 			for (int i = 0; i < tooldatas.length; i++) {
 				sb.append(" ");
 				sb.append(tooldatas[i].getTag() + " " + params[i]);
 			}
 		}
-		return sb.toString();
 	}
-	
 }

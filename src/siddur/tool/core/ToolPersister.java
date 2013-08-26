@@ -1,7 +1,6 @@
 package siddur.tool.core;
 
 import java.io.File;
-
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 
@@ -26,8 +25,23 @@ public class ToolPersister {
 		ToolInfo tool = em.find(ToolInfo.class, td.getPluginID());
 		if(tool == null){
 			//13=new Date().toString().length
-			FileUtils.copyFile(toolFile, new File(parent, toolFile.getName().substring(13)));
-			
+			if(toolFile.getName().endsWith(".zip")){
+				File dir = null;
+				File unzipped = ZipUtil.unZip(toolFile);
+				File[] list = unzipped.listFiles();
+				if(list.length == 0){
+					File f = list[0];
+					if(f.isDirectory()){
+						dir = f;
+					}else{
+						dir = unzipped;
+					}
+				}
+				FileUtils.copyDirectory(dir, parent);
+			}else{
+				File dest = new File(parent, toolFile.getName().substring(13));
+				FileUtils.copyFile(toolFile, dest);
+			}
 			tool = new ToolInfo();
 			tool.setId(td.getPluginID());
 			EntityTransaction et = em.getTransaction();
@@ -68,4 +82,5 @@ public class ToolPersister {
 		ToolInfo tool = em.find(ToolInfo.class, toolID);
 		tool.setStatus(status);
 	}
+	
 }

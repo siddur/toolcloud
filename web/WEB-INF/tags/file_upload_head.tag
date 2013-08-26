@@ -88,7 +88,7 @@
 					return;
 				}
 				who = $(obj);
-				fieldname = obj.name;
+				fieldname = obj.id;
 				isImage = _isImage;
 				oldParent = $(obj).parent();
 				var theForm = $("#file_form");

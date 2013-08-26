@@ -16,7 +16,7 @@ import siddur.common.miscellaneous.FileSystemUtil;
  */
 public class FileLinkFilter implements LogFilter{
 	private static Logger log4j = Logger.getLogger(FileLinkFilter.class);
-	private static final Pattern p = Pattern.compile("(([CDEFcdef]:)?[\\\\/])?\\w+([\\\\/]+\\w+)*(\\.\\w+)?");
+	private static final Pattern p = Pattern.compile("(([CDEFcdef]:)?[\\\\/])?\\w+([\\\\/]+\\w+)+(\\.\\w+)?");
 	private String namespace;
 	
 	public FileLinkFilter(String namespace) {

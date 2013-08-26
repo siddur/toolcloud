@@ -1,12 +1,9 @@
 <%@ tag language="java" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ attribute name="fieldname" required="false" %>
+<%@ attribute name="fieldname" required="true" %>
 <%@ attribute name="files" required="false" %>
 <%@ attribute name="isImage" required="false"%>
 <%@ attribute name="displayname" required="false"%>
-<c:if test="${fieldname == null }">
-	<c:set var="fieldname" value="file"></c:set>
-</c:if>
 <c:if test="${isImage == null }">
 	<c:set var="isImage" value="false"></c:set>
 </c:if>
@@ -20,7 +17,7 @@
 			<span style="font-size:12px; color:blue;float:left ;width: 90px; ">${displayname}</span>
 		</div>
 		
-		<input type="file" class="file_input" name='${fieldname}' onchange="selectFile(this, ${isImage})">
+		<input type="file" class="file_input" id='${fieldname}' name="file" onchange="selectFile(this, ${isImage})">
 	</div>
 	<c:forEach var="f" items="${files}">
 		<div class="file_item">

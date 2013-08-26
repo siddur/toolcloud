@@ -19,9 +19,11 @@ public class ToolDescriptor {
 	public void setLang(String lang) {
 		this.lang = lang;
 	}
+	
 	public Date getPublishAt() {
 		return publishAt;
 	}
+	
 	public void setPublishAt(Date publishAt) {
 		this.publishAt = publishAt;
 	}

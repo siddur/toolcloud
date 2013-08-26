@@ -26,9 +26,13 @@ public class ConsoleServlet extends HttpServlet {
 			List<String> logs = logCache.getLogs();
 			StringBuilder sb = new StringBuilder();
 			for(String log : logs){
-				sb.append("<div>");
-				sb.append(log);
-				sb.append("</div>");
+				if("".equals(log)){
+					sb.append("<br>");
+				}else{
+					sb.append("<div>");
+					sb.append(log);
+					sb.append("</div>");
+				}
 			}
 			OutputStream o = resp.getOutputStream();
 			o.write(sb.toString().getBytes());

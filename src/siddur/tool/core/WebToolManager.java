@@ -20,13 +20,13 @@ public class WebToolManager extends BasicToolManager{
 			if(ticket != null){
 				useLog = true;
 				LogCache logCache = LogCache.newInstance(ticket);
-				logCache.addFilter(new NewLineFilter());
+				logCache.addFilter(new EscapeFilter());
 				logCache.addFilter(new FileLinkFilter(tw.getDescriptor().getPluginID()));
 				ct.setLogQueue(logCache);
 			}
 		}
 		
-		String[] output = super.execute(tw, params, context);
+		String[] output = tool.execute(params);
 		
 		if(useLog){
 			LogCache.dispose(ticket);

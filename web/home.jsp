@@ -10,7 +10,10 @@
 <title>home</title>
 <style>
 .tool_item {
+	float:left;
 	width:100%;
+	padding-top:5px;
+	border-bottom:dashed 1px grey;
 }
 .screen .ui-icon{
 	float:left;
@@ -44,7 +47,7 @@
 }
 .query_item{
 	padding:3px;
-	border-bottom: dashed 1px grey
+	border-bottom: dashed 1px grey;
 }
 .query_item a{
 	text-decoration: none;

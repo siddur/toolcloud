@@ -8,7 +8,7 @@ Console = function(url){
 	}
 	
 	this.log = function(msg){
-		msg = msg.replace(/<file-url>/g, "/output/")
+		msg = msg.replace(/<file-url>/g, "/file/output/")
 		this.console.append(msg);
 		this.console.scrollTop(this.console[0].scrollHeight);
 	};
