@@ -38,14 +38,14 @@
 			}
 
 			var i = $(item);
-			if(i.hasClass("integer")){
+			if(i.hasClass("INTEGER")){
 				if(isNaN(v) || v.indexOf(".") > -1){
 					showError(item);
 					alert("Not a integer input");
 					return false;
 				}
 			}
-			else if(i.hasClass("double")){
+			else if(i.hasClass("DOUBLE")){
 				if(isNaN(v)){
 					showError(item);
 					alert("Not a double input");

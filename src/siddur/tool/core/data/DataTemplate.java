@@ -39,11 +39,11 @@ public class DataTemplate {
 	}
 	
 	public boolean isFile(){
-		return DataType.FILE.equals(dataType);
+		return DataType.FILE.name().equals(dataType);
 	}
 	
 	public boolean isZip(){
-		return DataType.ZIPFILE.equals(dataType);
+		return DataType.ZIPFILE.name().equals(dataType);
 	}
 
 	public String getDefaultValue() {

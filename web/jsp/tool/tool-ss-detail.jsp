@@ -80,7 +80,7 @@
 		padding-left: 10px;
 		margin-left:10px;
 		min-height: 400px;
-		min-width: 695px;
+		min-width: 675px;
 	}
 	
 	.input_container{
@@ -97,7 +97,6 @@
 	.comments{
 		float:left;
 		position: relative;
-		left:-20px;
 	}
 	.input_item{
 		background-color: #EEEEEE;
@@ -125,7 +124,7 @@
 				%>
 				
 				<form method="post" action="/toolcloud/ctrl/tool/comment">
-					<textarea name="comment" id="comment" rows="6" cols="35"></textarea>
+					<textarea name="comment" id="comment" rows="6" cols="33"></textarea>
 					<input type="hidden" name="toolId" value="<%=tool.getDescriptor().getPluginID()%>">
 					<input type="submit" class="btn" value="say">
 				</form>
@@ -144,7 +143,9 @@
 				}
 					}
 			%>
-				<input type="button" id="run_btn" value="run"  onclick="doSubmit()" style="float:right; position: relative; bottom: 30px; right: 300px;">
+				<div>
+					<input type="button" id="run_btn" value="run"  onclick="doSubmit()" style="float:right; position: relative; bottom: 10px; right: 10px;">
+				</div>
 			</div>
 			<div class="output_container">
 			<%

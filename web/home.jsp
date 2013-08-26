@@ -22,6 +22,8 @@
 	float:left;
 	overflow: hidden;
 	text-overflow: ellipsis;
+	white-space: nowrap;
+    width: 95%;
 }
 .tool_list, .favorite, .comment_list{
 	border: 1px solid #CFCFCF;
