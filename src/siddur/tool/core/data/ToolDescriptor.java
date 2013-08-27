@@ -67,11 +67,18 @@ public class ToolDescriptor {
 		this.description = description;
 	}
 	public String getIcon() {
+		return icon;
+	}
+	public String getDisplayIcon(){
 		if(icon == null || icon.equals("")){
 			return "/toolcloud/ctrl/util/icon?words=" + pluginName;
 		}
+		if(!icon.startsWith("/")){
+			return "/toolcloud/file/" + icon;
+		}
 		return icon;
 	}
+	
 	public void setIcon(String icon) {
 		this.icon = icon;
 	}

@@ -9,8 +9,8 @@
 <script>
 	var inputDiv, outputDiv;
 	$(document).ready(function(){
-		inputDiv = $("div.input div.unit").clone();
-		outputDiv = $("div.output div.unit").clone();
+		inputDiv = $("div.input div.instance div.unit");
+		outputDiv = $("div.output div.instance div.unit");
 		//$(":text").addClass("txt");
 
 		selectLang($("#lang").val());
@@ -75,6 +75,9 @@
 	.title{
 	    padding : 3px 5px;
 	}
+	.instance{
+		display: none;
+	}
 </style>
 </head>
 <body>
@@ -112,8 +115,10 @@
 			<div class="input">
 				<span class="label" class="title">输入</span>
 				<input type="button" value="增加一个输入框" class="btn" onclick="add(0)">
-				<div class="input_container">
+				<div class="instance">
 					<s:meta_input></s:meta_input>
+				</div>
+				<div class="input_container">
 				</div>
 				<div style="clear: left;"></div>
 			</div>
@@ -121,8 +126,10 @@
 			<div class="output">
 				<span class="label" class="title">输出</span>
 				<input type="button" value="增加一个输出框" class="btn" onclick="add(1)">
-				<div class="output_container">
+				<div class="instance">
 					<s:meta_output></s:meta_output>
+				</div>
+				<div class="output_container">
 				</div>
 				<div style="clear: left;"></div>
 			</div>

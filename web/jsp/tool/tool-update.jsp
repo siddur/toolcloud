@@ -9,12 +9,14 @@
 <head>
 <script type="text/javascript" src="/toolcloud/jquery/js/jquery-1.9.1.js"></script>
 <script>
-<c:if test="${td.lang == 'client-side' }">
+<c:if test="${td.lang != 'client-side' }">
 	var inputDiv, outputDiv;
 	$(document).ready(function(){
-		inputDiv = $("div.input div.unit").clone();
-		outputDiv = $("div.output div.unit").clone();
+		inputDiv = $("div.input div.instance div.unit").clone();
+		outputDiv = $("div.output div.instance div.unit").clone();
 		//$(":text").addClass("txt");
+	
+		selectLang('${td.lang}');
 	});
 	
 	function add(flag){
@@ -23,15 +25,29 @@
 		}else{
 			$(".output_container").append(outputDiv.clone());
 		}
+		selectLang('${td.lang}');
+	}
+	
+	
+	function selectLang(lang){
+		if(lang == "java"){
+			$(".input_tag").css("display", "none");
+			$(".output_tag").css("display", "none");
+			
+			$(".out_default").css("display", "none");
+			$(".out_type").css("display", "block");
+		}else{
+			$(".input_tag").css("display", "block");
+			$(".output_tag").css("display", "block");
+			
+			$(".out_default").css("display", "block");
+			$(".out_type").css("display", "none");
+		}
+	
 	}
 </c:if>
 	function validate(){
 		$(".error").removeClass("error");
-		var file = $("[name='toolfile']");
-		if(!file.val()){
-			file.next().addClass("error")
-			return false;
-		}
 		var name = $("[name='name']");
 		if(!name.val()){
 			name.addClass("error");
@@ -49,7 +65,9 @@
 	.title{
 	    padding : 3px 5px;
 	}
-	
+	.instance{
+		display: none;
+	}
 </style>
 </head>
 <body>
@@ -70,21 +88,23 @@
 				<input name="catelog" value="${td.catalog}">
 			</div>
 			<br/>
-			<s:file_upload fieldname="icon" displayname="上传图标.." isImg="true" url="${td.icon}"/>
+			<s:file_upload fieldname="icon" displayname="上传图标.." isImage="true" file="${td.icon}"/>
 			<div>
 				<span class="label">描述:</span>
 				<br>
 				<textarea cols="40" rows="3" name="description">${td.description}</textarea>
 			</div>
-			<c:if test="${td.lang == 'client-side' }">
+			<c:if test="${td.lang != 'client-side' }">
 				<div class="input">
 					<span class="label" class="title">输入</span>
 					<input type="button" value="增加一个输入框" class="btn" onclick="add(0)">
+					<div class="instance">
+						<s:meta_input></s:meta_input>
+					</div>
 					<div class="input_container">
 					<c:forEach var="i" items="${td.inputModel}">
 						<s:meta_input item="${i}"></s:meta_input>
 					</c:forEach>
-						<s:meta_input></s:meta_input>
 					</div>
 					<div style="clear: left;"></div>
 				</div>
@@ -92,11 +112,13 @@
 				<div class="output">
 					<span class="label" class="title">输出</span>
 					<input type="button" value="增加一个输出框" class="btn" onclick="add(1)">
+					<div class="instance">
+						<s:meta_output></s:meta_output>
+					</div>
 					<div class="output_container">
 					<c:forEach var="o" items="${td.outputModel}">
 						<s:meta_output item="${o}"></s:meta_output>
 					</c:forEach>
-						<s:meta_output></s:meta_output>
 					</div>
 					<div style="clear: left;"></div>
 				</div>

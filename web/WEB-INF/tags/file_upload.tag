@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ attribute name="fieldname" required="true" %>
 <%@ attribute name="files" required="false" %>
+<%@ attribute name="file" required="false" %>
 <%@ attribute name="isImage" required="false"%>
 <%@ attribute name="displayname" required="false"%>
 <c:if test="${isImage == null }">
@@ -24,13 +25,27 @@
 			<input type='hidden' name='file' value="${f}">
 			<c:choose>
 				<c:when test="${isImage}">
-					<a href="/pacquery/ctrl/fileio/download?path=${f}"></a>
+					<img src="/toolcloud/file/${f}">
 				</c:when>
 				<c:otherwise>
-					<img src="/pacquery/ctrl/fileio/download?path=${f}">
+					<a href="/toolcloud/file/${f}"></a>
 				</c:otherwise>
 			</c:choose>
 			<span class="ui-icon ui-icon-close" onclick="close(this)"></span>
 		</div>
 	</c:forEach>
+	<c:if test="${file != null}">
+		<div class="file_item">
+			<input type='hidden' name='file' value="${file}">
+			<c:choose>
+				<c:when test="${isImage}">
+					<img src="/toolcloud/file/${file}">
+				</c:when>
+				<c:otherwise>
+					<a href="/toolcloud/file/${file}"></a>
+				</c:otherwise>
+			</c:choose>
+			<span class="ui-icon ui-icon-close" onclick="close(this)"></span>
+		</div>
+	</c:if>
 </div>

@@ -67,29 +67,24 @@
 	}
 </script>
 <style>
-	.tool_description, .input_output{
-		float:left;
+	.detail_head:AFTER{
+		content: ".";
+		visibility: hidden;
+		clear:both;  
+  		display:block; 
+  		height: 0;
 	}
-	
-	.tool_description{
-		width: 300px;
-	}
-	
 	.input_output{
 		border-left: solid 2px green;
 		padding-left: 10px;
 		margin-left:10px;
 		min-height: 400px;
-		min-width: 675px;
 	}
 	
 	.input_container{
 		border-bottom: solid 2px green;
 		margin-bottom: 20px;
 		padding-bottom: 20px;
-	}
-	.tool_item{
-		float:left;
 	}
 	.upload_item{
 		display: inline;
@@ -109,27 +104,9 @@
 	<%@include file="/jsp/common/head.jsp" %>
 	<s:file_upload_head/>
 	<div class="screen">
-		<div class="tool_description">
+		<div class="detail_head">
+			<input type="button" id="run_btn" value="运行" onclick="doSubmit()" style="float:right; position:relative; top:20px; right:50px;">
 			<s:tool_detail toolDescriptor="<%=tool.getDescriptor()%>"/>
-			<div class="comments">
-				<%
-					List<Comment> list = (List<Comment>)request.getAttribute("comments");
-											for(Comment c: list){
-				%>
-						<s:comment comment="<%=c%>" 
-							toolId="<%=tool.getDescriptor().getPluginID()%>"
-							closable="<%=RequestUtil.hasPerm(request, Permission.COMMENT_DEL)%>" ></s:comment>
-				<%
-					}
-				%>
-				
-				<form method="post" action="/toolcloud/ctrl/tool/comment">
-					<textarea name="comment" id="comment" rows="6" cols="33"></textarea>
-					<input type="hidden" name="toolId" value="<%=tool.getDescriptor().getPluginID()%>">
-					<input type="submit" class="btn" value="say">
-				</form>
-			</div>
-			
 		</div>
 		<div class="input_output">
 			<div class="input_container">
@@ -140,12 +117,9 @@
 			%>
 					<s:input inputModel="<%=input%>"></s:input>
 			<%
-				}
 					}
+				}
 			%>
-				<div>
-					<input type="button" id="run_btn" value="run"  onclick="doSubmit()" style="float:right; position: relative; bottom: 10px; right: 10px;">
-				</div>
 			</div>
 			<div class="output_container">
 			<%
@@ -164,6 +138,24 @@
 					<s:console></s:console>
 				</div>
 			<%} %>
+		</div>
+		<div class="comments">
+			<%
+				List<Comment> list = (List<Comment>)request.getAttribute("comments");
+										for(Comment c: list){
+			%>
+					<s:comment comment="<%=c%>" 
+						toolId="<%=tool.getDescriptor().getPluginID()%>"
+						closable="<%=RequestUtil.hasPerm(request, Permission.COMMENT_DEL)%>" ></s:comment>
+			<%
+				}
+			%>
+			
+			<form method="post" action="/toolcloud/ctrl/tool/comment">
+				<textarea name="comment" id="comment" rows="6" cols="33"></textarea>
+				<input type="hidden" name="toolId" value="<%=tool.getDescriptor().getPluginID()%>">
+				<input type="submit" class="btn" value="say">
+			</form>
 		</div>
 	</div>
 </body>

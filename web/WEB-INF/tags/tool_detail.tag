@@ -6,7 +6,7 @@
 
 <div class="left_float" style="padding-right:5px; padding-bottom:5px;">
 	<a href="/toolcloud/ctrl/tool/detail?toolId=${toolDescriptor.pluginID }">
-		<img src="${toolDescriptor.icon}" style="border:1px #333333 inset;"/>
+		<img src="${toolDescriptor.displayIcon}" style="border:1px #333333 inset;"/>
 	</a>
 </div>
 <div class="left_float">

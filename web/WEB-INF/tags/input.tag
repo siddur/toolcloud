@@ -14,7 +14,6 @@
 			font-family: "Trebuchet MS", "Arial", "Helvetica", "Verdana", "sans-serif"; 
 		}
 	</style>
-	<script type="text/javascript" src="/toolcloud/jqueryui/jquery-ui-1.10.3.custom.min.js"></script>
 	<script>
 		$(function(){
 			$( ".dateField" ).datepicker({
@@ -81,7 +80,7 @@
 			<input type="text" class="input ${type}" name="input">
 		</c:when>
 		<c:when test="${'BOOLEAN' == type }">
-			<input type="checkbox" class="input" value="${tag}" name="input" style="position: relative; top: 2px;">
+			<input type="checkbox" class="input" value="1" name="input" style="position: relative; top: 2px;">
 		</c:when>
 		<c:when test="${'TEXT' == type}">
 			<div><textarea class="input" cols="40" rows="3" name="input"></textarea></div>
