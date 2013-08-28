@@ -9,7 +9,10 @@
 	Base64
 		图片、文字转Base64
 	加密解密
-		AES、DES、RC4、Rabbit、TripleDes
+		AES、DES、RC4、Rabbit、TripleDes、Blowfish
+		1)DES/RC2/IDEA
+		2)RC4
+		3)
 	散列哈希
 		SHA1、SHA224、SHA256、SHA384、SHA512、MD5
 	Escape
@@ -24,7 +27,7 @@
 	查看编码
 		2、16进制
 	DOS格式转Unix
-	
+	正则表达式
 	
 文件转换
 	HTML、Word、PDF
@@ -58,7 +61,7 @@ Java编译与反编译
 	一元二次方程式
 	概率应用
 	角度转换
-	
+物理力学模拟	
 	
 	
 	

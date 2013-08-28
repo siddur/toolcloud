@@ -43,14 +43,14 @@ public class Native2ASCII implements ITool {
 	}
 	
 	public static void main(String[] args) throws Exception {
-//		Native2ASCII n = new Native2ASCII();
-//		String content = "fasdfasfa；分类是就算啦；“abc”" + '\u4068';
-//		String[] inputs = new String[]{content, "0"};
-//		String[] outputs = n.execute(inputs);
-//		System.out.println(outputs[0]);
-		Properties p = new Properties();
-		p.load(Native2ASCII.class.getResourceAsStream("test.properties"));
-		System.out.println(p.get("test"));
+		Native2ASCII n = new Native2ASCII();
+		String content = "言";
+		String[] inputs = new String[]{content, "0"};
+		String[] outputs = n.execute(inputs);
+		System.out.println(outputs[0]);
+//		Properties p = new Properties();
+//		p.load(Native2ASCII.class.getResourceAsStream("test.properties"));
+//		System.out.println(p.get("test"));
 	}
 
 }
