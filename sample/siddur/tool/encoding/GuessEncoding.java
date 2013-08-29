@@ -49,6 +49,6 @@ public class GuessEncoding implements ITool{
 
 	public static void main(String[] args) throws Exception {
 		GuessEncoding ce = new GuessEncoding();
-		System.out.println(ce.execute(new String[]{"-76, -94, -69, -37"})[0]);
+		System.out.println(ce.execute(new String[]{"-50, -46, -61, -57, -54, -57, -42, -48, -71, -6, -56, -53"})[0]);
 	}
 }

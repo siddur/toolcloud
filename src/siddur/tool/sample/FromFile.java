@@ -14,11 +14,19 @@ public class FromFile implements ITool{
 	@Override
 	public String[] execute(String[] inputs) throws Exception {
 		String filepath = inputs[0];
+		String encoding = "UTF-8";
+		if(inputs.length > 1){
+			encoding = inputs[1];
+		}
 		File f = TempFileUtil.findFile(filepath);
-		BufferedReader r = new BufferedReader(new InputStreamReader(new FileInputStream(f)));
-		String result = r.readLine();
+		BufferedReader r = new BufferedReader(new InputStreamReader(new FileInputStream(f), encoding));
+		String line = null;
+		StringBuffer sb = new StringBuffer();
+		while((line = r.readLine()) != null){
+			sb.append(line);
+		}
 		r.close();
-		return new String[]{result};
+		return new String[]{sb.toString()};
 	}
 
 	@Override
@@ -33,4 +41,9 @@ public class FromFile implements ITool{
 		
 	}
 	
+	public static void main(String[] args) throws Exception {
+		FromFile f = new FromFile();
+		String r = f.execute(new String[]{"temp\\test.txt"})[0];
+		System.out.println(r);
+	}
 }

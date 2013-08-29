@@ -1,23 +1,28 @@
 package siddur.tool.encoding;
 
 import java.io.File;
+import java.util.Arrays;
 
 import siddur.common.miscellaneous.ToolUtil;
 import siddur.tool.core.ITool;
 import siddur.tool.core.TempFileUtil;
 
-public class Base64 implements ITool{
+public class File2Byte implements ITool{
 
 	@Override
 	public String[] execute(String[] inputs) throws Exception {
 		String filepath = inputs[0];
 		File f = TempFileUtil.findFile(filepath);
-		
 		byte[] data = ToolUtil.read(f);
+		System.out.println(Arrays.toString(data));
+		StringBuffer sb = new StringBuffer(data.length * 3);
+		for (int i = 0; i < data.length; i++) {
+			int b = data[i] & 0xff;
+			sb.append(Integer.toHexString(b));
+			sb.append(" ");
+		}
+		String result = sb.substring(0, sb.length() - 1);
 		
-		org.apache.commons.codec.binary.Base64 b = new org.apache.commons.codec.binary.Base64();
-		String result = b.encodeAsString(data);
-		result = "data:img/jpg;base64," + result;
 		return new String[]{result};
 	}
 
@@ -34,8 +39,8 @@ public class Base64 implements ITool{
 	}
 
 	public static void main(String[] args) throws Exception {
-		Base64 b = new Base64();
-		String r = b.execute(new String[]{"temp\\favicon.ico"})[0];
+		File2Byte b = new File2Byte();
+		String r = b.execute(new String[]{"temp\\test.txt"})[0];
 		System.out.println(r);
 	}
 }
