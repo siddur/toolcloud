@@ -62,6 +62,11 @@
 		</select>
 	</div>
 	<div>
+		<span class="label">约束</span>
+		<br>
+		<textarea cols="22" rows="1" name="i_constraint">${item.constraint }</textarea>
+	</div>
+	<div>
 		<span class="label">描述:</span>
 		<br>
 		<textarea cols="22" rows="1" name="i_description">${item.description }</textarea>

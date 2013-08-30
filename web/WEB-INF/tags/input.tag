@@ -62,6 +62,16 @@
 				$(item).addClass("error");
 			}
 		}
+<c:if test="${type.constrantType=='ENUM'}">
+	var options = [];
+	<c:forEach var="item" items="$(type.options)">
+		options.push(${item[1]});
+	</c:forEach>
+		function changeOption(obj){
+			var i = obj.selectedIndex;
+			obj.nextSibling.innerHTML = options[i];
+		}
+</c:if>
 	</script>
 </c:if>
 
@@ -73,23 +83,35 @@
 		<span class="label">${tag}</span>
 	</c:if>
 	<c:choose>
-		<c:when test="${'STRING' == type
-			||'INTEGER' == type
-			||'DOUBLE' == type
-			}">
-			<input type="text" class="input ${type}" name="input">
+		<c:when test="${type.constrantType=='ENUM'}">
+			<select name="input" class="input" onselect="changeOption(this)">
+			<c:forEach var="item" items="$(type.options)">
+				<option value="${item[0]}">${item[0]}</option>
+			</c:forEach>
+			</select>
+			<span></span>
 		</c:when>
-		<c:when test="${'BOOLEAN' == type }">
-			<input type="checkbox" class="input" value="1" name="input" style="position: relative; top: 2px;">
-		</c:when>
-		<c:when test="${'TEXT' == type}">
-			<div><textarea class="input" cols="40" rows="3" name="input"></textarea></div>
-		</c:when>
-		<c:when test="${'FILE' == type || 'ZIPFILE' == type}">
-			<s:file_upload fieldname="input" displayname="upload tool.."/>
-		</c:when>
-		<c:when test="${'DATE' == type}">
-			<input type="text" class="dateField" readonly="readonly">
-		</c:when>
+		<c:otherwise>
+			<c:choose>
+				<c:when test="${'STRING' == type
+					||'INTEGER' == type
+					||'DOUBLE' == type
+					}">
+					<input type="text" class="input ${type}" name="input">
+				</c:when>
+				<c:when test="${'BOOLEAN' == type }">
+					<input type="checkbox" class="input" value="1" name="input" style="position: relative; top: 2px;">
+				</c:when>
+				<c:when test="${'TEXT' == type}">
+					<div><textarea class="input" cols="40" rows="3" name="input"></textarea></div>
+				</c:when>
+				<c:when test="${'FILE' == type || 'ZIPFILE' == type}">
+					<s:file_upload fieldname="input" displayname="upload tool.."/>
+				</c:when>
+				<c:when test="${'DATE' == type}">
+					<input type="text" class="dateField" readonly="readonly">
+				</c:when>
+			</c:choose>
+		</c:otherwise>
 	</c:choose>
 </div>

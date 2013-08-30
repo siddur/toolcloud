@@ -193,6 +193,7 @@ public class ToolAction extends DBAction<Comment>{
 		iTags = req.getParameterValues("i_tag");
 		String iDataTypes[] = req.getParameterValues("i_dataType");
 		String iDescriptions[] = req.getParameterValues("i_description");
+		String iConstaints[] = req.getParameterValues("i_constraint");
 		if(iDataTypes != null){
 			DataTemplate[] iData = new DataTemplate[iDataTypes.length];
 			for (int i = 0; i < iData.length; i++) {
@@ -200,6 +201,7 @@ public class ToolAction extends DBAction<Comment>{
 				td.setTag(iTags[i]);
 				td.setDataType(iDataTypes[i]);
 				td.setDescription(iDescriptions[i]);
+				td.setConstraint(iConstaints[i]);
 				iData[i] = td;
 			}
 			pd.setInputModel(iData);

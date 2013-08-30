@@ -21,6 +21,7 @@ public class XmlUtil {
 	private static final String TYPE = "type";
 	private static final String TAG = "tag";
 	private static final String DESCRIPTION = "description";
+	private static final String CONSTRAINT = "constraint";
 	
 	
 
@@ -62,6 +63,7 @@ public class XmlUtil {
 			item.addElement(TYPE).addText(td.getDataType());
 			item.addElement(TAG).addText(td.getTag());
 			item.addElement(DESCRIPTION).addText(td.getDescription());
+			item.addElement(CONSTRAINT).addText(td.getConstraint());
 		}
 	}
 	
@@ -102,6 +104,7 @@ public class XmlUtil {
 			td.setDataType(ele.elementText(TYPE));
 			td.setTag(ele.elementText(TAG));
 			td.setDescription(ele.elementText(DESCRIPTION));
+			td.setConstraint(ele.elementText(CONSTRAINT));
 			tds[x++] = td;
 		}
 		return tds;
