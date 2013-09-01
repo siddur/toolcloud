@@ -17,6 +17,8 @@ public class DataTemplate {
 	
 	private String description = "";
 	
+	private boolean supportBatch = false;
+	
 	/*
 	 * 格式：
 	 * type|||content
@@ -55,7 +57,8 @@ public class DataTemplate {
 	}
 	
 	public boolean isFile(){
-		return DataType.FILE.name().equals(dataType);
+		return DataType.FILE.name().equals(dataType)
+				|| DataType.IMAGE.name().equals(dataType);
 	}
 	
 	public boolean isZip(){
@@ -99,15 +102,23 @@ public class DataTemplate {
 	
 	public String[][] getOptions(){
 		if("ENUM".equals(getConstrantType())){
-			String[] content = this.constraint.split(TEXT_SPLITTER);
+			String[] content = this.constraint.split("\\|\\|\\|");
 			String[] array = Arrays.copyOfRange(content, 1, content.length);
 			String[][] rr = new String[array.length/2][2];
 			for (int i = 0; i < rr.length; i++) {
-				rr[i] = new String[]{array[i], array[i+1]};
+				rr[i] = new String[]{array[2*i], array[2*i+1]};
 			}
 			return rr;
 		}
 		return null;
+	}
+	
+	public boolean isSupportBatch() {
+		return supportBatch;
+	}
+	
+	public void setSupportBatch(boolean supportBatch) {
+		this.supportBatch = supportBatch;
 	}
 	
 }

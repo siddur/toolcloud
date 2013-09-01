@@ -240,6 +240,15 @@ public class ToolAction extends DBAction<Comment>{
 		String[] params = req.getParameterValues("input[]");
 		Map<String, Object> context = new HashMap<String, Object>();
 		context.put(Constants.TICKET, req.getParameter(Constants.TICKET));
+		String[] batchs = req.getParameterValues("batch");
+		Map<Integer, Integer> splitMap = new HashMap<Integer, Integer>();
+		for (String b : batchs) {
+			String split = req.getParameter("splitter" + b);
+			if(split != null){
+				splitMap.put(Integer.parseInt(b), Integer.parseInt(split));
+			}
+		}
+		context.put(Constants.SPLIT_MAP, splitMap);
 		String[] results = null;
 		
 		RunInfo run = new RunInfo();

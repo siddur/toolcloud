@@ -75,28 +75,35 @@
   		height: 0;
 	}
 	.input_output{
-		border-left: solid 2px green;
-		padding-left: 10px;
-		margin-left:10px;
+		border: solid 2px green;
+		padding: 6px;
 		min-height: 400px;
 	}
 	
 	.input_container{
 		border-bottom: solid 2px green;
-		margin-bottom: 20px;
-		padding-bottom: 20px;
+		padding-bottom: 15px;
 	}
 	.upload_item{
 		display: inline;
 	}
 	.comments{
 		float:left;
-		position: relative;
+		margin-top: 10px;
 	}
 	.input_item{
 		background-color: #EEEEEE;
 		margin: 2px;
 		padding: 5px
+	}
+	.output{
+		word-wrap: break-word;
+	}
+	#run_btn{
+		float:right; 
+		position:relative; 
+		top:20px; 
+		right:50px;
 	}
 </style>
 </head>
@@ -105,20 +112,23 @@
 	<s:file_upload_head/>
 	<div class="screen">
 		<div class="detail_head">
-			<input type="button" id="run_btn" value="运行" onclick="doSubmit()" style="float:right; position:relative; top:20px; right:50px;">
+			<input type="button" id="run_btn" value="运行" onclick="doSubmit()">
 			<s:tool_detail toolDescriptor="<%=tool.getDescriptor()%>"/>
 		</div>
 		<div class="input_output">
 			<div class="input_container">
+			<span></span>
 			<%
 				DataTemplate[] inputs = tool.getDescriptor() == null ? null : tool.getDescriptor().getInputModel();
 					if(inputs != null){
+						int i = 0;
 						for(DataTemplate input : inputs){
 			%>
-					<s:input inputModel="<%=input%>"></s:input>
+					<s:input inputModel="<%=input%>" index="<%=i%>"></s:input>
 			<%
+							i++;
+						}
 					}
-				}
 			%>
 			</div>
 			<div class="output_container">
@@ -152,9 +162,9 @@
 			%>
 			
 			<form method="post" action="/toolcloud/ctrl/tool/comment">
-				<textarea name="comment" id="comment" rows="6" cols="33"></textarea>
+				<textarea name="comment" id="comment" rows="6" cols="60"></textarea>
 				<input type="hidden" name="toolId" value="<%=tool.getDescriptor().getPluginID()%>">
-				<input type="submit" class="btn" value="say">
+				<input type="submit" class="btn" value="评论">
 			</form>
 		</div>
 	</div>

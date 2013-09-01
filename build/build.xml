@@ -4,6 +4,7 @@
 <project name="project" default="standalone">
 	<property name="dist_dir" value="${basedir}/dist"/>
 	<property name="src" value="${basedir}/../src"/>
+	<property name="sample" value="${basedir}/../sample"/>
 	<property name="web" value="${basedir}/../web"/>
 	<property name="srclib" value="${basedir}/../lib"/>
 	<property name="classes" value="${dist_dir}/classes"/>
@@ -90,7 +91,7 @@ java -Djava.security.manager -Djava.security.policy="my.policy" -cp "$LIB:${jarf
 		</jar>
 	</target>
 	
-	<target name="samples">
+	<target name="samples" depends="compile">
 		<mkdir dir="${samples}"/>
 		<jar destfile="${samples}/Cal24.jar" basedir="${classes}">
 			<include name="**/Combination*.class"/>
@@ -99,6 +100,22 @@ java -Djava.security.manager -Djava.security.policy="my.policy" -cp "$LIB:${jarf
 		<jar destfile="${samples}/HelloWorld.jar" basedir="${classes}" includes="**/HelloWorld*.class"/>
 		<jar destfile="${samples}/FromFile.jar" basedir="${classes}" includes="**/FromFile*.class"/>
 		<jar destfile="${samples}/ToFile.jar" basedir="${classes}" includes="**/ToFile*.class"/>
+		<jar destfile="${samples}/Cal24.jar" basedir="${classes}"  includes="**/Cal24*.class,**/Combination*.class"/>
+		
+		<jar destfile="${samples}/Barcode.jar" basedir="${classes}" includes="**/Barcode*.class"/>
+		<jar destfile="${samples}/QRDecoder.jar" basedir="${classes}" includes="**/QRDecoder*.class"/>
+		<jar destfile="${samples}/QREncoder.jar" basedir="${classes}" includes="**/QREncoder*.class"/>
+		
+		<jar destfile="${samples}/Base64.jar" basedir="${classes}" includes="**/Base64*.class"/>
+		<jar destfile="${samples}/CheckEncoding.jar" basedir="${classes}" includes="**/CheckEncoding*.class"/>
+		<jar destfile="${samples}/DetectEncoding.jar" basedir="${classes}" includes="**/DetectEncoding*.class"/>
+		<jar destfile="${samples}/DigitCode.jar" basedir="${classes}" includes="**/DigitCode*.class"/>
+		<jar destfile="${samples}/DigitUpCase.jar" basedir="${classes}" includes="**/DigitUpCase*.class"/>
+		<jar destfile="${samples}/File2Byte.jar" basedir="${classes}" includes="**/File2Byte*.class"/>
+		<jar destfile="${samples}/GuessEncoding.jar" basedir="${classes}" includes="**/GuessEncoding*.class"/>
+		<jar destfile="${samples}/Native2ASCII.jar" basedir="${classes}" includes="**/Native2ASCII*.class"/>
+		<jar destfile="${samples}/Native2HTML.jar" basedir="${classes}" includes="**/Native2HTML*.class"/>
+		<jar destfile="${samples}/Native2URL.jar" basedir="${classes}" includes="**/Native2URL*.class"/>
 	</target>
 
 	<target name="compile" depends="clean">
@@ -108,9 +125,13 @@ java -Djava.security.manager -Djava.security.policy="my.policy" -cp "$LIB:${jarf
 		<javac srcdir="${src}" destdir="${classes}" includeantruntime="false" encoding="UTF-8">
 			<classpath refid="classpath"/>
 		</javac>
+		<javac srcdir="${sample}" destdir="${classes}" includeantruntime="false" encoding="UTF-8">
+			<classpath refid="classpath"/>
+		</javac>
 		
 		<copy todir="${classes}">
 			<fileset dir="${src}" excludes="**/*.java"/>
+			<fileset dir="${sample}" excludes="**/*.java"/>
 		</copy>
 	</target>
 	

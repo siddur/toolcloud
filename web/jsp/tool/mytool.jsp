@@ -4,15 +4,17 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <link rel="stylesheet" type="text/css" href="/toolcloud/css/tag.css" />
 <style>
+	.body{
+		width:1000px;
+	}
 	.list{
 		margin:7px;
-		width:250px;
+		width:225px;
 		height:150px;
 		overflow: hidden;
 		background-color: #A9B1BD;
 		box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5) ;
 		padding:3px;
-		
 	}
 	
 	.list:hover{

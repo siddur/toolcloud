@@ -1,4 +1,4 @@
-package siddur.tool.encoding;
+package siddur.tool.code;
 
 import java.io.File;
 import java.util.Hashtable;

@@ -1,5 +1,6 @@
 <%@ tag language="java" pageEncoding="UTF-8"%>
 <%@ attribute name="inputModel" type="siddur.tool.core.data.DataTemplate"%>
+<%@ attribute name="index" type="java.lang.Integer"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib tagdir="/WEB-INF/tags" prefix="s" %>
 <c:set var="type" value="${inputModel.dataType}"/>
@@ -13,11 +14,32 @@
 			font-size: 62.5%;
 			font-family: "Trebuchet MS", "Arial", "Helvetica", "Verdana", "sans-serif"; 
 		}
+		.splitter_container{
+			padding-left:40px;
+		}
 	</style>
 	<script>
+		var optionsArray = [];
 		$(function(){
-			$( ".dateField" ).datepicker({
-				dateFormat: "yy-mm-dd"
+			var dateField = $( ".dateField" );
+			if(dateField.length){
+				dateField.datepicker({
+					dateFormat: "yy-mm-dd"
+				});
+			}
+			
+			
+			$(".batch").change(function(_event){
+				var obj = _event.target;
+				var id = obj.id;
+				var span = $(obj).next().next();
+				if(obj.checked){
+					span.css("display", "inline");
+					span.children().last().attr("name", "splitter" + id);
+				}else{
+					span.css("display", "none");
+					span.children().last().attr("name", null);
+				}
 			});
 		});
 		var validateResult;
@@ -62,18 +84,25 @@
 				$(item).addClass("error");
 			}
 		}
-<c:if test="${type.constrantType=='ENUM'}">
-	var options = [];
-	<c:forEach var="item" items="$(type.options)">
-		options.push(${item[1]});
-	</c:forEach>
-		function changeOption(obj){
+		
+		function changeOption(obj, index){
 			var i = obj.selectedIndex;
-			obj.nextSibling.innerHTML = options[i];
+			obj.nextElementSibling.innerHTML = optionsArray[index][i];
 		}
-</c:if>
+		
 	</script>
 </c:if>
+	<script>
+	<c:if test="${inputModel.constrantType=='ENUM'}">
+		(function(){
+			var options = [];
+			<c:forEach var="item" items="${inputModel.options}">
+				options.push("${item[1]}");
+			</c:forEach>
+			optionsArray[${index}] = options;
+		})();
+	</c:if>
+	</script>
 
 <div class="input_item">
 	<c:if test='${tag != null && desc != "" }'>
@@ -83,9 +112,9 @@
 		<span class="label">${tag}</span>
 	</c:if>
 	<c:choose>
-		<c:when test="${type.constrantType=='ENUM'}">
-			<select name="input" class="input" onselect="changeOption(this)">
-			<c:forEach var="item" items="$(type.options)">
+		<c:when test="${inputModel.constrantType=='ENUM'}">
+			<select name="input" class="input" onchange="changeOption(this, ${index})">
+			<c:forEach var="item" items="${inputModel.options}">
 				<option value="${item[0]}">${item[0]}</option>
 			</c:forEach>
 			</select>
@@ -103,10 +132,26 @@
 					<input type="checkbox" class="input" value="1" name="input" style="position: relative; top: 2px;">
 				</c:when>
 				<c:when test="${'TEXT' == type}">
-					<div><textarea class="input" cols="40" rows="3" name="input"></textarea></div>
+					<div><textarea class="input" style="width:99%" rows="3" name="input"></textarea></div>
+					<div>
+						<input type="checkbox" class="batch" name="batch" value="${index}" id="ch_${index}">
+						<label for="ch_${index}">批量输入</label>
+						<span id="batch${index}" class="splitter_container" style="display:none">
+							<label for="select_${index}">分割符:</label>
+							<select id="select_${index}" >
+								<option value="0">逗号</option>
+								<option value="1">分号</option>
+								<option value="2">换行符</option>
+								<option value="3">|||</option>
+							</select>
+						</span>
+					</div>
 				</c:when>
 				<c:when test="${'FILE' == type || 'ZIPFILE' == type}">
-					<s:file_upload fieldname="input" displayname="upload tool.."/>
+					<s:file_upload fieldname="input" displayname="上传文件.."/>
+				</c:when>
+				<c:when test="${'IMAGE' == type}">
+					<s:file_upload fieldname="input" displayname="上传图片.." isImage="true"/>
 				</c:when>
 				<c:when test="${'DATE' == type}">
 					<input type="text" class="dateField" readonly="readonly">

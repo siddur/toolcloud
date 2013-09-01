@@ -23,7 +23,7 @@
 				font-size:12px;
 				display: inline-block;
 				position: relative;
-				top:-15px;
+				top:-10px;
 				left:5px;
 			}
 			

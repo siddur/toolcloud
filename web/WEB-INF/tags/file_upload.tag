@@ -34,7 +34,7 @@
 			<span class="ui-icon ui-icon-close" onclick="close(this)"></span>
 		</div>
 	</c:forEach>
-	<c:if test="${file != null}">
+	<c:if test="${file != null && file != ''}">
 		<div class="file_item">
 			<input type='hidden' name='file' value="${file}">
 			<c:choose>

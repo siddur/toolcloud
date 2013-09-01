@@ -80,6 +80,9 @@ public class ToolDescriptor {
 	}
 	
 	public void setIcon(String icon) {
+		if(icon == null){
+			icon = "";
+		}
 		this.icon = icon;
 	}
 	public String getAuthorId() {

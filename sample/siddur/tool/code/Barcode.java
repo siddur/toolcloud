@@ -1,4 +1,4 @@
-package siddur.tool.encoding;
+package siddur.tool.code;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -44,6 +44,7 @@ public class Barcode implements ITool{
 		float width = Float.parseFloat(inputs[1]);
 		int dpi = Integer.parseInt(inputs[2]);
 		double moduleWidth = UnitConv.in2mm(width/dpi);
+		System.out.println(moduleWidth);
 		String mime = inputs[3];
 		File dest = TempFileUtil.createEmptyFile(mime);
 		if(mime.equals(GIF)){
@@ -72,7 +73,7 @@ public class Barcode implements ITool{
 		}finally{
 			os.close();
 		}
-		return null;
+		return new String[]{dest.getCanonicalPath()};
 	}
 
 	private AbstractBarcodeBean buildBean(String type){

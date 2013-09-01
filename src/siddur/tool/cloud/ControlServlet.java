@@ -13,7 +13,7 @@ import siddur.common.jpa.JPAUtil;
 import siddur.common.miscellaneous.Constants;
 import siddur.common.web.ActionMapper;
 import siddur.tool.core.IToolManager;
-import siddur.tool.core.WebToolManager;
+import siddur.tool.core.WebBatchToolManager;
 
 public class ControlServlet extends HttpServlet{
 
@@ -25,7 +25,7 @@ public class ControlServlet extends HttpServlet{
 	public void init() throws ServletException {
 		HashMap<String, Object> context = new HashMap<String, Object>();
 		//init tool
-		IToolManager tm = new WebToolManager();
+		IToolManager tm = new WebBatchToolManager();
 		tm.init();
 		context.put(Constants.TOOL_PLUGIN_MANAGE, tm);
 		

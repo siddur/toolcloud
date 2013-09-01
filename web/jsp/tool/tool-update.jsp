@@ -54,6 +54,7 @@
 			return false;
 		}
 
+		$(".instance").remove();
 		return true;
 	}
 

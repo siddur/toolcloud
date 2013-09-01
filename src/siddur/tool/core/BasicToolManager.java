@@ -83,7 +83,7 @@ public class BasicToolManager implements IToolManager{
 			toolPersister.saveTool(td, toolFile);
 			load(td.getPluginID());
 		} catch (Exception e) {
-			log4j.warn(e);
+			log4j.warn(e.getMessage(), e);
 		}
 	}
 

@@ -7,7 +7,7 @@ import siddur.tool.core.ITool;
 public class DigitCode implements ITool {
 
 	/*
-	 * String
+	 * Integer
 	 * Integer
 	 * Integer
 	 */

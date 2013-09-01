@@ -11,6 +11,9 @@
 			if(tag == "SPAN"){
 				$(this).html(data);
 			}
+			else if(tag == "TEXTAREA"){
+				$(this).val(data);
+			}
 			else if(tag == "A"){
 				$(this).attr("href", "/toolcloud/file/" + data).html(data);
 			}
@@ -18,7 +21,7 @@
 
 			}
 			else if(tag == "IMG"){
-				$(this).attr("src", data.replace("/fileserver", ""));
+				$(this).attr("src", "/toolcloud/file/" + data);
 			}
 		}
 		
@@ -36,12 +39,15 @@
 </c:if>
 <c:choose>
 	<c:when test="${'STRING' == type}">
+		<textarea class="output" style="width:99%; height:120px;"></textarea>
+	</c:when>
+	<c:when test="${'HTML' == type}">
 		<span class="output"></span>
 	</c:when>
 	<c:when test="${'FILE' == type}">
 		<a class="output"></a>
 	</c:when>
 	<c:when test="${'IMAGE' == type}">
-		<img src='#'/>
+		<img class="output" src='#'/>
 	</c:when>
 </c:choose>

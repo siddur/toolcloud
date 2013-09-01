@@ -8,13 +8,12 @@
 <style>
 	.list{
 		margin:7px;
-		width:250px;
+		width:225px;
 		height:150px;
 		overflow: hidden;
 		background-color: #A9B1BD;
 		box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5) ;
 		padding:3px;
-		
 	}
 	
 	.list:hover{

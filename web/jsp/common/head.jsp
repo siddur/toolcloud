@@ -5,6 +5,7 @@
 
 <link rel="stylesheet" type="text/css" href="/toolcloud/css/common.css" />
  <link rel="stylesheet" type="text/css" href="/toolcloud/jqueryui/jquery-ui-1.10.3.custom.min.css" />
+ <script type="text/javascript" src="/toolcloud/jquery/js/jquery-1.9.1.js"></script>
 <div class="header">
 	<div class="user">
 	<c:choose>

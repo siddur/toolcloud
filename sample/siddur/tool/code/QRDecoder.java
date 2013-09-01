@@ -1,4 +1,4 @@
-package siddur.tool.encoding;
+package siddur.tool.code;
 
 import java.io.File;
 import java.util.Hashtable;
@@ -20,7 +20,7 @@ import siddur.tool.core.TempFileUtil;
 public class QRDecoder implements ITool{
 
 	/*
-	 *  String imagePath
+	 *  file imageFile
 	 * 	String Encoding
 	 */
 	@Override

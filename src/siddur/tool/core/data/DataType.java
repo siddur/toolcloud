@@ -9,10 +9,11 @@ public enum DataType {
 	DOUBLE("double", false, true),
 	BOOLEAN("boolean", false, true),
 	DATE("date", false, true),
-	TEXT("boolean", false, true),
+	TEXT("text", false, true),
+	HTML("html", true, false),
 	FILE("file", true, true),
 	ZIPFILE("zipfile", false, true),
-	IMAGE("image", true, false);
+	IMAGE("image", true, true);
 	
 	private String label;
 	private boolean out;

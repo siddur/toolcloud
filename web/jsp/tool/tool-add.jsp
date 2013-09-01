@@ -56,7 +56,7 @@
 		$(".error").removeClass("error");
 		var file = $("[name='toolfile']");
 		if(!file.val()){
-			file.next().addClass("error")
+			$("#toolfile").prev().addClass("error")
 			return false;
 		}
 		var name = $("[name='name']");
@@ -65,6 +65,7 @@
 			return false;
 		}
 
+		$(".instance").remove();
 		return true;
 	}
 </script>

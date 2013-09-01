@@ -30,11 +30,11 @@
 	margin-bottom: 20px;
 }
 .latest_list{
-	width:45%;
+	width:390px;
 	float:left;
 }
 .hottest_list{
-	width:45%;
+	width:390px;
 	float:right;
 }
 .right{
@@ -46,6 +46,13 @@
 	background-color: #EEEEEE;
 	padding:3px;
 	border: 1px solid #CFCFCF;
+}
+.favorite_item{
+	padding:3px;
+	width:120px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
 }
 .query_item{
 	padding:3px;
