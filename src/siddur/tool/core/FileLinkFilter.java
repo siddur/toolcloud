@@ -40,7 +40,7 @@ public class FileLinkFilter implements LogFilter{
 			try {
 				String url = dealFile(file);
 				if(url != null){
-					String newString = "<a target='_blank' href='<file-url>"+url+"'>" + url + "</a>";
+					String newString = "<a target='_blank' href='<file-url>"+url+"?d=1'>" + url + "</a>";
 					newString = newString.replace("\\", "\\\\");
 					m.appendReplacement(sb, newString);
 				}

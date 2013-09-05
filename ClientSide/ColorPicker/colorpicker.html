@@ -1,0 +1,439 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Color Picker</title>
+		<link rel="stylesheet" href="../jquery/css/ui-lightness/icon_sets.css" />
+		<style>
+			#arrow{
+				float:left;
+				position: relative;
+				color: red;
+				left:10px;
+				top:-8px;
+				visibility: hidden;
+			}
+			.HSL_L{
+				width:15px;
+				height:250px;
+				margin-left:11px;
+				border:inset 1px black;
+			}
+			.color{
+				float:left;
+				width:23px;
+				height:15px;
+				margin:5px;
+				border:inset 1px grey;
+			}
+			.colors{
+				width:290px;
+				float:left;
+			}
+			.current_color_container{
+				float:left;
+				padding:3px 0 0 3px;
+				width:110px;
+			}
+			.current_color{
+				float:left;
+				width:110px;
+				height:40px;
+				border:inset 1px grey;
+				clear:right;
+			}
+			.RGB, .HSL{
+				width:55px;
+				float:left;
+				margin-top:5px;
+			}
+			.RGB input, .HSL input{
+				width:32px;
+				margin-bottom:3px;
+			}
+			.output{
+				float:left;
+				margin-top:8px;
+			}
+			.output input{
+				width:64px;
+			}
+		</style>
+		<script src="jquery.js"></script>
+		<script>
+			var Color = function(h, s, l){
+				this.h = h;
+				this.s = s;
+				this.l = l;
+				this.r = null;
+				this.g = null;
+				this.b = null;
+				
+				this._rgb2hsl = function(r, g, b){
+					r = r/255;
+					g = g/255;
+					b = b/255;
+					var max, min, diff, r_dist, g_dist, b_dist;
+					max = Math.max(Math.max(r, g), b);
+					min = Math.min(Math.min(r, g), b);
+					diff = max - min;
+					var h, s, l;
+					l = (max + min)/2;
+					if(diff == 0){
+						s = 0;
+						l = 0;
+					}
+					else if(l < 0.5){
+						s = diff/(max + min);
+					}
+					else{
+						s = diff/(2 - max - min);
+					}
+					r_dist = (max - r)/diff;
+					g_dist = (max - g)/diff;
+					b_dist = (max - b)/diff;
+					if(r == max){
+						h = b_dist - g_dist;
+					}
+					else if(g == max){
+						h = 2 + r_dist - b_dist;
+					}
+					else {
+						h = 4 + g_dist - r_dist;
+					}
+					
+					h = h * 60;
+					h = Math.round(h);
+					if(h < 0){
+						h += 360;
+					}
+					else if(h >= 360){
+						h -= 360;
+					}
+					return [h, s, l];
+				}
+				this._hsl2rgb = function(h, s, l){
+					var r, g, b;
+					if(s == 0){
+						r = g = b = 255;
+					}
+					else{
+						var q = (l<0.5)?(l * (1.0+s)):(l+s - (l*s));
+						var p = (2.0 * l) - q;
+						var Hk = h/360.0;
+						var T = [];
+						T[0] = Hk + 0.3333333;
+						T[1] = Hk;
+						T[2] = Hk - 0.3333333;
+						for(var i=0; i<3; i++){
+							if(T[i] < 0) T[i] += 1.0;
+							if(T[i] > 1) T[i] -= 1.0;
+							if((T[i]*6) < 1){
+								T[i] = p + ((q-p)*6.0*T[i]); 
+							}
+							else if((T[i]*2.0) < 1){
+								T[i] = q; 
+							}
+							else if((T[i]*3.0) < 2){
+								T[i] = p + (q-p) * ((2.0/3.0) - T[i]) * 6.0;
+							}
+							else{
+								T[i] = p;
+							}
+						}
+						r = T[0]*255.0;  
+				        g = T[1]*255.0;  
+				        b = T[2]*255.0;
+				        
+				        r = Math.round(r);
+				        b = Math.round(b);
+				        g = Math.round(g);
+				        
+				        r = (r>255)? 255 : ((r<0)?0 : r);
+				        g = (g>255)? 255 : ((g<0)?0 : g);
+				        b = (b>255)? 255 : ((b<0)?0 : b);
+					}
+					
+					return [r, g, b];
+				}
+				
+				this._hex2rgb = function(hex){
+					var h = [];
+					h[0] = hex.substring(1,3);
+					h[1] = hex.substring(3,5);
+					h[2] = hex.substring(5,7);
+					var r, g, b;
+					r = parseInt(h[0], 16);
+					g = parseInt(h[1], 16);
+					b = parseInt(h[2], 16);
+					return [r, g, b];
+				}
+				
+				this._rgb2hex = function(r, g, b){
+					r = r.toString(16);
+					if(r.length == 1){
+						r = "0" + r;
+					}
+					g = g.toString(16);
+					if(g.length == 1){
+						g = "0" + g;
+					}
+					b = b.toString(16);
+					if(b.length == 1){
+						b = "0" + b;
+					}
+					return "#" + r + g + b;
+				}
+				
+				
+				this.updateHSL = function(){
+					var a = this._hsl2rgb(this.h, this.s, this.l);
+					this.r = a[0];
+					this.g = a[1];
+					this.b = a[2];
+				}
+				this.updateRGB = function(){
+					var a = this._rgb2hsl(this.r, this.g, this.b);
+					this.h = a[0];
+					this.s = a[1];
+					this.l = a[2];
+				}
+				
+				this.toRGBString = function(){
+					return this._rgb2hex(this.r, this.g, this.b);
+				}
+				
+				this.toHSLString = function(){
+					return "hsl("+this.h+","+(this.s * 100)+"%,"+(this.l * 100)+"%)"
+				}
+				
+				this.setRGB = function(r, g, b){
+					this.r = r;
+					this.g = g;
+					this.b = b;
+					this.updateRGB();
+				}
+				
+				this.setR = function(r){
+					this.r = r;
+					this.updateRGB();
+				}
+				this.setG = function(g){
+					this.g = g;
+					this.updateRGB();
+				}
+				this.setB = function(b){
+					this.b = b;
+					this.updateRGB();
+				}
+				this.setHSL = function(h, s, l){
+					this.h = h;
+					this.s = s;
+					this.l = l;
+					this.updateHSL();
+				}
+				
+				this.setH = function(h){
+					this.h = h;
+					this.updateHSL();
+				}
+				this.setS = function(s){
+					this.s = s;
+					this.updateHSL();
+				}
+				this.setL = function(l){
+					this.l = l;
+					this.updateHSL();
+				}
+			}
+			
+		</script>
+		<script>
+			var color = new Color(360, 1, 0.5);
+			var init = function(){
+				$("#color_container").click(function(a){
+					var target = a.target;
+					var parent = target.parentElement;
+					var left = parent.offsetLeft;
+					var top = parent.offsetTop;
+					var i = a.clientX - left;
+					var j = a.clientY - top;
+					pick(i, j);
+				});
+				
+				var HSL_L = $(".HSL_L");
+				for (var i=0; i < 250; i = i + 5) {
+					var hsl = "hsl("+color.h+", "+(color.s*100)+"%, (i/2.5)%)";
+					HSL_L.append("<div style='height:5px;'></div>");
+				};
+				updateSlider(color.h, color.s);
+				var initTop = -8;
+				var len = 250;
+				var arrow = $("#arrow");
+				arrow.css("top", len/2 + initTop);
+				var down = false;
+				HSL_L.mousedown(function(e){
+					down = true;
+					var distance = e.clientY - HSL_L.get(0).offsetTop;
+					arrow.css("visibility", "visible");
+					arrow.css("top", distance + initTop);
+					slide(distance / len);
+				});
+				$(document).mouseup(function(e){
+					arrow.css("visibility", "hidden");
+					down = false;
+				});
+				
+				$(document).mousemove(function(e){
+					if(down){
+						var distance = e.clientY - HSL_L.get(0).offsetTop;
+						if(distance <= 250 && distance >= 0){
+							arrow.css("top", distance + initTop);
+							slide(distance / len);
+						}
+					}
+				});
+				
+				$(".input input").blur(function(e){
+					var id = e.target.id;
+					var v = e.target.value;
+					if(isNaN(v)){
+						error("not a number");
+						return;
+					}
+					
+					if(id == "R" || id == "B" || id == "G"){
+						v = parseInt(v);
+						if(v < 0 || v > 255){
+							error("0-255");
+							return;
+						}
+					}else if(id == "S" || id == "L"){
+						v = parseFloat(v);
+						if(v > 1 || v < 0){
+							error("0-1");
+							return;
+						}
+					}else if(id == "H"){
+						v = parseInt(v);
+						if(v > 360 || v < 0){
+							error("0-360");
+							return;
+						}
+					}
+					color["set" + id](v);
+					show();
+				});
+				
+				//grb
+				var colorMatrix = [
+[255, 128, 128],[255, 255, 128],[128, 255, 128],[0, 225, 128],[128, 225, 225],[0, 128, 255],[255, 128, 192],[255, 128, 255],
+[255, 0, 0],[255, 255, 0],[128, 255, 0],[0, 225, 64],[0, 225, 225],[0, 128, 192],[128, 128, 192],[255, 0, 255],
+[128, 64, 64],[255, 128, 64],[0, 255, 0],[0, 128, 128],[0, 64, 128],[128, 128, 255],[128, 0, 64],[255, 0, 128],
+[128, 0, 0],[255, 128, 0],[0, 128, 0],[0, 128, 64],[0, 0, 225],[0, 0, 160],[128, 0, 128],[128, 0, 255],
+[64, 0, 0],[128, 64, 0],[0, 64, 0],[0, 64, 64],[0, 0, 128],[0, 0, 64],[64, 0, 64],[64, 0, 128],
+[0, 0, 0],[128, 128, 0],[128, 128, 64],[128, 128, 128],[64, 128, 128],[192, 192, 192],[64, 0, 64],[255, 255, 255],
+				
+				];
+				var total = 48
+				var colors = $(".colors");
+				for (var i=0; i < 48; i++) {
+					var r = colorMatrix[i][0];
+					var g = colorMatrix[i][1];
+					var b = colorMatrix[i][2];
+					var rgb = "rgb("+r+","+g+","+b+")"
+				  	colors.append("<div class='color' onclick='select("+r+", "+g+", "+b+")' style='background-color:"+rgb+"'></div>")
+				};
+				
+				
+				color.updateHSL();
+				show();
+			}
+			
+			var select = function(r, g, b){
+				color.setRGB(r,g,b);
+				show();
+				updateSlider(color.s, color.h);
+			}
+			
+			var error = function(msg){
+				alert(msg);
+			}
+			
+			var slide = function(distance){
+				color.setL(distance);
+				show();
+			}
+			var updateSlider = function(h, s){
+				var slider = $(".HSL_L");
+				slider.children().each(function(idx, item){
+					var hsl = "hsl("+color.h+", "+(color.s*100)+"%, "+(idx*2)+"%)";
+					$(item).css("background-color", hsl);
+					debugger;
+				});
+			}
+			var pick = function(i, j){
+				var h = i;
+				var s = (250-j) / 250;
+				color.setHSL(h, s, color.l);
+				show();
+				updateSlider(color.s, color.h);
+			}
+			
+			var show = function(){
+				$("#H").val(color.h);
+				$("#S").val(color.s);
+				$("#L").val(color.l);
+				
+				$("#R").val(color.r);
+				$("#B").val(color.b);
+				$("#G").val(color.g);
+				
+				var rgb = color.toRGBString();
+				$(".current_color").css("background-color", rgb);
+				$("#result").val(rgb);
+			}
+			var getHSL = function(i, j){
+				var h = i;
+				j = 250 - j;
+				var s = Math.floor(j / 2.5) + "%";
+				return "hsl("+h+","+s+","+(color.l * 100)+"%)"
+			}
+			
+			
+			window.onload = init;
+			
+			
+		</script>
+	</head>
+	
+	<body>
+		<div style="width:405px; height:420px; border:inset 1px gray; padding:2px;">
+			<img src="colors.png" style="float:left" id="color_container" width="360px" height="250px" >
+			<div id="arrow" class="ui-icon ui-icon-play" onclick="slide()">
+			</div>
+			<div style="float:left;" class="HSL_L">
+			</div>
+			<div class="colors">
+			</div>
+			<div class="current_color_container">
+				<div class="current_color">
+				</div>
+				<div class="input">
+					<div class="RGB">
+						<div>R:<input id="R"></div>
+						<div>G:<input id="G"></div>
+						<div>B:<input id="B"></div>
+					</div>
+					<div class="HSL">
+						<div>H:<input id="H"></div>
+						<div>S:<input id="S"></div>
+						<div>L:<input id="L"></div>
+					</div>
+				</div>
+				<div class="output">
+					RGB:<input id="result" readonly="readonly">
+				</div>
+			</div>
+		</div>
+	</body>	
+</html>

@@ -17,8 +17,6 @@ public class DataTemplate {
 	
 	private String description = "";
 	
-	private boolean supportBatch = false;
-	
 	/*
 	 * 格式：
 	 * type|||content
@@ -111,14 +109,6 @@ public class DataTemplate {
 			return rr;
 		}
 		return null;
-	}
-	
-	public boolean isSupportBatch() {
-		return supportBatch;
-	}
-	
-	public void setSupportBatch(boolean supportBatch) {
-		this.supportBatch = supportBatch;
 	}
 	
 }

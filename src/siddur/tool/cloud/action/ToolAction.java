@@ -117,9 +117,9 @@ public class ToolAction extends DBAction<Comment>{
 		
 		if(tpu.getDescriptor().getLang().equals("client-side")){
 			File f = new File(tpu.getToolfile());
-			File desc = TempFileUtil.createEmptyFile();
-			FileUtils.copyFile(f, desc);
-			req.setAttribute("toolFile", desc.getName());
+			File dir = f.getParentFile();
+			FileSystemUtil.copy2Server(dir);
+			req.setAttribute("toolFile", dir.getName() + "/" + f.getName());
 			return Result.forward("/jsp/tool/tool-cs-detail.jsp");
 		}else{
 			return Result.forward("/jsp/tool/tool-ss-detail.jsp");
@@ -240,15 +240,17 @@ public class ToolAction extends DBAction<Comment>{
 		String[] params = req.getParameterValues("input[]");
 		Map<String, Object> context = new HashMap<String, Object>();
 		context.put(Constants.TICKET, req.getParameter(Constants.TICKET));
-		String[] batchs = req.getParameterValues("batch");
-		Map<Integer, Integer> splitMap = new HashMap<Integer, Integer>();
-		for (String b : batchs) {
-			String split = req.getParameter("splitter" + b);
-			if(split != null){
-				splitMap.put(Integer.parseInt(b), Integer.parseInt(split));
+
+		String[] splitters = req.getParameterValues("splitter[]");
+		if(splitters != null && splitters.length > 0){
+			Map<Integer, String> splitMap = new HashMap<Integer, String>(splitters.length);
+			for (int i = 0; i < splitters.length; i++) {
+				String item = splitters[i];
+				int index = item.indexOf("=");
+				splitMap.put(Integer.parseInt(item.substring(0, index)), item.substring(index + 1));
 			}
+			context.put(Constants.SPLIT_MAP, splitMap);
 		}
-		context.put(Constants.SPLIT_MAP, splitMap);
 		String[] results = null;
 		
 		RunInfo run = new RunInfo();

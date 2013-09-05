@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="zh">
+	<head>
+		<title>Date Interval</title>
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8" >
+		<link href="css/ui-lightness/jquery-ui-1.10.3.custom.css" rel="stylesheet">
+		<script src="js/jquery-1.9.1.js"></script>
+		<script src="js/jquery-ui-1.10.3.custom.min.js"></script>
+		<style>
+			.container{
+				width:600px;
+				padding:5px;
+				border:inset 1px gray;
+			}
+			.container:after{
+				content:".";
+				display: block;
+				visibility: hidden;
+				height:5px;
+				clear:both;
+			}
+			.column{
+				width:50%;
+				height:70px;
+				float:left;
+			}
+			.column div{
+				padding:5px;
+			}
+			#error{
+				color:red;
+			}
+			#weekend{
+				color:green;
+			}
+			#weekday{
+				color:#EB8F00;
+			}
+		</style>
+		<script>
+		
+			var oneDay = 1000 * 60 * 60 * 24;
+			function calc(){
+				var from = $("#from").datepicker("getDate");
+				var to = $("#to").datepicker("getDate");
+				var interval = Math.floor(to.getTime() / oneDay) - Math.floor(from.getTime() / oneDay);
+				$("#interval").val(interval);
+				calcWeekend(from, to, interval);
+			}
+			
+			function changeInterval(){
+				var text = $("#interval").val();
+				text = $.trim(text);
+				var b = /^\d+$/.test(text);
+				if(b){
+					var v = parseInt(text);
+					var from = $("#from").datepicker("getDate");
+					var to = new Date(from);
+					to.setDate(to.getDate() + v);
+					$("#to").datepicker("setDate", to);
+					$("#from").datepicker("option", "maxDate",  $("#to").val());
+					calcWeekend(from, to, v);
+				}else{
+					$('#error').html("输入的不是数字");
+				}
+			}
+			
+			function calcWeekend(from, to, interval){
+				//weekend
+				var x = from.getDay(); //0-6
+				var weeks = Math.floor(interval / 7);
+				var rest = interval - weeks*7;
+				var y = x + rest;
+				var weekend = weeks * 2;
+				if(x == 6){
+					weekend -= 1;
+				}
+				if(y == 6){
+					weekend += 1;
+				}
+				else if(y > 5){
+					weekend += 2;
+				}
+				$("#weekend").html(weekend);
+				//weekday
+				$("#weekday").html(interval - weekend);
+			}
+			
+			$(function(){
+				var today = new Date(2013,11,5);
+				var nextMonth = new Date();
+				nextMonth.setMonth(today.getMonth() + 1);
+				nextMonth.setDate(0);
+				$( "#from" ).datepicker({dateFormat: "yy-mm-dd", 
+					changeYear: true, 
+					maxDate: $.datepicker.formatDate( "yy-mm-dd", nextMonth),
+					onClose: function( selectedDate ) {
+						$( "#to" ).datepicker( "option", "minDate", selectedDate);
+						calc();
+					}
+				});
+				$( "#to" ).datepicker({dateFormat: "yy-mm-dd", 
+					changeYear: true, 
+					minDate: $.datepicker.formatDate( "yy-mm-dd", today),
+					onClose: function( selectedDate ) {
+						$( "#from" ).datepicker( "option", "maxDate",  selectedDate);
+						calc();
+					}
+				});
+				$( "#from" ).datepicker("setDate", today);
+				$( "#to" ).datepicker("setDate", nextMonth);
+				calc();
+			});
+			
+			
+			
+		</script>
+	</head>
+	<body>
+		<div class="container">
+			<div class="column">
+				从
+				<input id="from" type="text" readonly="readonly">
+			</div>
+			<div class="column">
+				到
+				<input id="to" type="text" readonly="readonly">
+			</div>
+			<div class="column">
+				<div>
+					<span id="error">&nbsp;</span></br>
+					距离
+					<input id="interval" type="text" style="width:40px;" onchange="$('#error').html('')">
+					天
+					<input type="button" value="计算" onclick="changeInterval()">
+				</div>
+				<div>
+					工作日<span id="weekday"></span>天
+					周末<span id="weekend"></span>天
+				</div>
+			</div>
+		</div>
+	</body>
+	
+</html>

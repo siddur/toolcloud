@@ -34,7 +34,7 @@ public class WebBatchToolManager extends BasicToolManager{
 		
 		String[] output = null;
 		@SuppressWarnings("unchecked")
-		Map<String, String> splitMap = (Map<String, String>)context.get(Constants.SPLIT_MAP);
+		Map<Integer, String> splitMap = (Map<Integer, String>)context.get(Constants.SPLIT_MAP);
 		if(splitMap != null && !splitMap.isEmpty()){
 			output = execute(tool, params, splitMap);
 		}else{
@@ -49,12 +49,12 @@ public class WebBatchToolManager extends BasicToolManager{
 	}
 
 	
-	private String[] execute(ITool tool, String[] inputs, Map<String, String> splitMap) throws Exception{
-		Set<String> keys = splitMap.keySet();
-		Map<String, String[]> splittedMap = new HashMap<String, String[]>(keys.size());
+	private String[] execute(ITool tool, String[] inputs, Map<Integer, String> splitMap) throws Exception{
+		Set<Integer> keys = splitMap.keySet();
+		Map<Integer, String[]> splittedMap = new HashMap<Integer, String[]>(keys.size());
 		int len = 0;
-		for (String k : keys) {
-			String[] v = StringUtils.split(inputs[Integer.parseInt(k)], splitMap.get(k));
+		for (Integer k : keys) {
+			String[] v = StringUtils.split(inputs[k], splitMap.get(k));
 			if(len != 0 && len != v.length){
 				throw new Exception("批量输入的数量不等");
 			}
@@ -66,9 +66,8 @@ public class WebBatchToolManager extends BasicToolManager{
 		for (int x = 0; x < len; x++) {
 			String[] itemParams = new String[inputs.length];
 			for (int i = 0; i < itemParams.length; i++) {
-				String k = Integer.toString(i);
-				if(keys.contains(k)){
-					itemParams[i] = splittedMap.get(k)[0];
+				if(keys.contains(i)){
+					itemParams[i] = splittedMap.get(i)[0];
 				}else{
 					itemParams[i] = inputs[i];
 				}

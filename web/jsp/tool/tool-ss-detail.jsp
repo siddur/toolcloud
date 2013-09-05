@@ -36,9 +36,21 @@
 			}
 			inputs.push(v);
 		});
+
+		var splitters = [];
+		$(".splitter").each(function(idx, item){
+			var v = item.value;
+			if(v == "\\n"){
+				v = "\n";
+			}
+			var index = item.id;
+			v = index + "=" + v;
+			splitters.push(v);
+		});
 		var data = {
 				id:"<%=tool.getDescriptor().getPluginID()%>",
 				input:inputs,
+				splitter:splitters,
 				ticket:ticket
 			};
 		$.post(

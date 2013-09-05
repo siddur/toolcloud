@@ -110,7 +110,7 @@ public class ToolLoader {
 		cstw.setDescriptor(td);
 		File[] files = toolDir.listFiles();
 		for (File file : files) {
-			if(!file.getName().equals(Constants.TOOL_PLUGIN_FILENAME)){
+			if(!file.getName().endsWith(".html")){
 				cstw.setToolfile(file.getCanonicalPath());
 				return cstw;
 			}

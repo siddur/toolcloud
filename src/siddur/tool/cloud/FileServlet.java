@@ -60,14 +60,16 @@ public class FileServlet extends HttpServlet{
 			f = new File(FileSystemUtil.getOutputDir(), path);
 		}
 		if(f.exists() /*&& FileSystemUtil.containedInOutputDir(f)*/){
-			if(f.isDirectory()){
-				f = ZipUtil.zipDir(f);
+			boolean download = "1".equals(req.getParameter("d"));
+			if(download){
+				if(f.isDirectory()){
+					f = ZipUtil.zipDir(f);
+				}
+				
+				String filename = f.getName();
+				resp.addHeader("Content-Disposition", "attachment;filename=" + new String(filename.getBytes("utf-8"),"ISO-8859-1"));
+				resp.addHeader("Content-Length", "" + f.length());
 			}
-			
-			String filename = f.getName();
-			resp.addHeader("Content-Disposition", "attachment;filename=" + new String(filename.getBytes("utf-8"),"ISO-8859-1"));
-			resp.addHeader("Content-Length", "" + f.length());
-			
 			ReadableByteChannel r = new FileInputStream(f).getChannel();
 			WritableByteChannel w = Channels.newChannel(resp.getOutputStream());
 			ByteBuffer bb = ByteBuffer.allocate(8192);

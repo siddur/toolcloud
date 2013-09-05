@@ -82,6 +82,15 @@ public class FileSystemUtil {
 				+ "/" + namespace, path);
 	}
 	
+	public static String copy2Server(File dir) throws IOException{
+		if(dir.isDirectory()){
+			String dirname = dir.getName();
+			FileUtils.copyDirectory(dir, new File(FileSystemUtil.getOutputDir(), dirname));
+			return dirname;
+		}
+		return null;
+	}
+	
 	public static String copy2Server(File f, String namespace) throws IOException{
 		if(f.exists()){
 			File downloadableDir = new File(FileSystemUtil.getOutputDir(), namespace);

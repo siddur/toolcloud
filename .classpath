@@ -44,5 +44,7 @@
 	<classpathentry kind="lib" path="lib/barcode4j.jar"/>
 	<classpathentry kind="lib" path="lib/ZXing-core-2.2.jar"/>
 	<classpathentry kind="lib" path="lib/ZXing-javase-2.2.jar"/>
+	<classpathentry kind="lib" path="lib/pinyin4j-2.5.0.jar"/>
+	<classpathentry kind="lib" path="lib/FileDiff/jlibdiff.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

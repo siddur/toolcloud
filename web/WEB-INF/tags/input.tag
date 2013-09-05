@@ -35,10 +35,10 @@
 				var span = $(obj).next().next();
 				if(obj.checked){
 					span.css("display", "inline");
-					span.children().last().attr("name", "splitter" + id);
+					span.children().last().addClass("splitter");
 				}else{
 					span.css("display", "none");
-					span.children().last().attr("name", null);
+					span.children().last().removeClass("splitter");
 				}
 			});
 		});
@@ -134,15 +134,16 @@
 				<c:when test="${'TEXT' == type}">
 					<div><textarea class="input" style="width:99%" rows="3" name="input"></textarea></div>
 					<div>
-						<input type="checkbox" class="batch" name="batch" value="${index}" id="ch_${index}">
-						<label for="ch_${index}">批量输入</label>
-						<span id="batch${index}" class="splitter_container" style="display:none">
-							<label for="select_${index}">分割符:</label>
-							<select id="select_${index}" >
-								<option value="0">逗号</option>
-								<option value="1">分号</option>
-								<option value="2">换行符</option>
-								<option value="3">|||</option>
+						<input type="checkbox" class="batch" id="ch${index}">
+						<label for="ch${index}">批量输入</label>
+						<span class="splitter_container" style="display:none">
+							<label for="${index}">分割符:</label>
+							<select id="${index}"  class="splitter">
+								<option value=" ">空格</option>
+								<option value=",">逗号</option>
+								<option value=";">分号</option>
+								<option value="\n">换行符</option>
+								<option value="|||">|||</option>
 							</select>
 						</span>
 					</div>

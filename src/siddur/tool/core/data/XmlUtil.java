@@ -22,7 +22,6 @@ public class XmlUtil {
 	private static final String TAG = "tag";
 	private static final String DESCRIPTION = "description";
 	private static final String CONSTRAINT = "constraint";
-	private static final String SUPPORT_BATCH = "support batch";
 	
 	
 
@@ -65,7 +64,6 @@ public class XmlUtil {
 			item.addElement(TAG).addText(td.getTag());
 			item.addElement(DESCRIPTION).addText(td.getDescription());
 			item.addElement(CONSTRAINT).addText(td.getConstraint());
-			item.addElement(SUPPORT_BATCH).addText(Boolean.toString(td.isSupportBatch()));
 		}
 	}
 	
@@ -107,7 +105,6 @@ public class XmlUtil {
 			td.setTag(ele.elementText(TAG));
 			td.setDescription(ele.elementText(DESCRIPTION));
 			td.setConstraint(ele.elementText(CONSTRAINT));
-			td.setSupportBatch(Boolean.valueOf(ele.elementText(SUPPORT_BATCH)));
 			tds[x++] = td;
 		}
 		return tds;

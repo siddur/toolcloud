@@ -15,7 +15,7 @@
 				$(this).val(data);
 			}
 			else if(tag == "A"){
-				$(this).attr("href", "/toolcloud/file/" + data).html(data);
+				$(this).attr("href", "/toolcloud/file/" + data + "?d=1").html(data);
 			}
 			else if(tag == "TABLE"){
 

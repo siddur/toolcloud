@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="zh">
+	<head>
+		<title>Timestamp Converter</title>
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8" >
+		<link href="css/ui-lightness/jquery-ui-1.10.3.custom.css" rel="stylesheet">
+		<script src="js/jquery-1.9.1.js"></script>
+		<script src="js/jquery-ui-1.10.3.custom.min.js"></script>
+		<style>
+			#date{
+				width:110px;
+			}
+			#hour, #minute, #second{
+				width:30px;
+			}
+			#millisecond{
+				width:40px;
+			}
+			#timestamp{
+				width:150px;
+				font-size: 20px;
+				height:20px;
+			}
+			input{
+				text-align: right;
+			}
+		</style>
+		<script>
+			$(function(){
+				var now = new Date();
+				$("#date").datepicker({
+					dateFormat: "yy年mm月dd日", 
+					changeYear: true,
+					onClose:calc
+				});
+				setDate(now);
+				setTimestamp(now)
+			})
+			
+			function setDate(date){
+				$("#date").datepicker("setDate", date);
+				$("#hour").val(date.getHours());
+				$("#minute").val(date.getMinutes());
+				$("#second").val(date.getSeconds());
+				$("#millisecond").val(date.getMilliseconds());
+			}
+			
+			function setTimestamp(date){
+				$("#timestamp").val(date.getTime());
+			}
+			
+			function calc(){
+				var h = parseInt($("#hour").val());
+				var m = parseInt($("#minute").val());
+				var s = parseInt($("#second").val());
+				var ms = parseInt($("#millisecond").val());
+				var d = $("#date").datepicker("getDate");
+				d.setHours(h);
+				d.setMinutes(m);
+				d.setSeconds(s);
+				d.setMilliseconds(ms);
+				setTimestamp(d);
+			}
+			
+			function convert(ts){
+				var b = /^\d{0,13}$/.test(ts);
+				if(b){
+					var ts = parseInt(ts);
+					var d = new Date();
+					d.setTime(ts);
+					setDate(d);
+				}
+			}
+		</script>
+	</head>
+	<body>
+		<table>
+			<tr height="50">
+				<td align="right">时间戳：</td>
+				<td><input id="timestamp" onchange="convert(this.value)"></td>
+			</tr>
+			<tr height="50">
+				<td align="right">时间：</td>
+				<td>
+					<input id="date" readonly="readonly">
+					<input id="hour" onchange="calc()">时
+					<input id="minute" onchange="calc()">分
+					<input id="second" onchange="calc()">秒
+					<input id="millisecond" onchange="calc()">微秒
+				</td>
+			</tr>
+		</table>
+	</body>
+	
+</html>
