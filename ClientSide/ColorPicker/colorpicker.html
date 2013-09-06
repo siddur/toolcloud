@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<title>Color Picker</title>
-		<link rel="stylesheet" href="../jquery/css/ui-lightness/icon_sets.css" />
+		<link rel="stylesheet" href="../jqueryui/css/ui-lightness/jquery-ui-1.10.3.custom.css" />
 		<style>
 			#arrow{
 				float:left;
@@ -273,6 +273,7 @@
 				var down = false;
 				HSL_L.mousedown(function(e){
 					down = true;
+					console.log(e.clientY, HSL_L.get(0).offsetTop);
 					var distance = e.clientY - HSL_L.get(0).offsetTop;
 					arrow.css("visibility", "visible");
 					arrow.css("top", distance + initTop);
@@ -368,7 +369,6 @@
 				slider.children().each(function(idx, item){
 					var hsl = "hsl("+color.h+", "+(color.s*100)+"%, "+(idx*2)+"%)";
 					$(item).css("background-color", hsl);
-					debugger;
 				});
 			}
 			var pick = function(i, j){
@@ -407,7 +407,12 @@
 	</head>
 	
 	<body>
-		<div style="width:405px; height:420px; border:inset 1px gray; padding:2px;">
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<div style="width:405px; height:420px; border:inset 1px gray; padding:2px; float:left">
 			<img src="colors.png" style="float:left" id="color_container" width="360px" height="250px" >
 			<div id="arrow" class="ui-icon ui-icon-play" onclick="slide()">
 			</div>

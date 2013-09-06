@@ -1,0 +1,51 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Color Picker</title>
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8" >
+		<link href="../jqueryui/css/ui-lightness/jquery-ui-1.10.3.custom.css" rel="stylesheet">
+		<script src="../jqueryui/js/jquery-1.9.1.js"></script>
+		<script src="../jqueryui/js/jquery-ui-1.10.3.custom.min.js"></script>
+		
+		<link href="colorpicker.css" rel="stylesheet">
+		<script src="colorpicker.js"></script>
+		
+		<style>
+			body {
+				font-size: 62.5%;
+				font-family: "Trebuchet MS", "Arial", "Helvetica", "Verdana", "sans-serif";
+			}
+		</style>
+	</head>
+	<body>
+		<button onclick='$( "#dialog" ).dialog("open")'>open</button>
+		<div id="dialog" style="width:405px; height:420px; border:inset 1px gray; padding:2px;">
+			<img src="colors.png" style="float:left" id="color_container" width="360px" height="250px" >
+			<div id="arrow" class="ui-icon ui-icon-play" onclick="slide()">
+			</div>
+			<div style="float:left;" class="HSL_L">
+			</div>
+			<div class="colors">
+			</div>
+			<div class="current_color_container">
+				<div class="current_color">
+				</div>
+				<div class="input">
+					<div class="RGB">
+						<div>R:<input id="R"></div>
+						<div>G:<input id="G"></div>
+						<div>B:<input id="B"></div>
+					</div>
+					<div class="HSL">
+						<div>H:<input id="H"></div>
+						<div>S:<input id="S"></div>
+						<div>L:<input id="L"></div>
+					</div>
+				</div>
+				<div class="output">
+					RGB:<input id="result" readonly="readonly">
+				</div>
+			</div>
+		</div>
+	</body>	
+</html>

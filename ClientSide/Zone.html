@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="zh">
+	<head>
+		<title>Timestamp Converter</title>
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8" >
+		<link href="css/ui-lightness/jquery-ui-1.10.3.custom.css" rel="stylesheet">
+		<script src="js/jquery-1.9.1.js"></script>
+		<script src="js/jquery-ui-1.10.3.custom.min.js"></script>
+		<style>
+			.hour{
+				width:50px;
+			}
+			.minute{
+				width:50px;
+			}
+			.date{
+				width:110px;
+			}
+			select{
+				width: 200px;
+			}
+		</style>
+		<script>
+			$(function(){
+				var _address = new Array(25)
+				_address[0]='西12区：埃尼威托克岛，夸贾林岛';
+				_address[1]='西11区：中途岛，东萨摩亚';
+				_address[2]='西10区：夏威夷';
+				_address[3]='西9区：阿拉斯加';
+				_address[4]='西8区：太平洋时间（美国和加拿大），蒂华纳';
+				_address[5]='西7区：山地时间（美国和加拿大），亚利桑那';
+				_address[6]='西6区：中部时间（美国和加拿大），墨西哥城，特古西加尔巴，萨斯喀彻温省';
+				_address[7]='西5区：东部时间（美国和加拿大），印第安那州（东部），波哥大，利马，基多';
+				_address[8]='西4区：大西洋时间（加拿大），加拉加斯，拉巴斯';
+				_address[9]='西3区：巴西利亚，布宜诺斯艾利斯，乔治敦';
+				_address[10]='西2区：中大西洋';
+				_address[11]='西1区：亚速尔群岛，佛得角群岛';
+				_address[12]='格林尼治平均时：伦敦，都柏林，爱丁堡，里斯本，卡萨布兰卡，蒙罗维亚';
+				_address[13]='东1区：阿姆斯特丹，柏林，伯尔尼，罗马，斯德哥尔摩，维也纳，贝尔格莱德，布拉迪斯拉发，布达佩斯，卢布尔雅那，布拉格，布鲁赛尔，哥本哈根，马德里，巴黎，萨拉热窝，斯科普里，索非亚，华沙，萨格勒布';
+				_address[14]='东2区：布加勒斯特，哈拉雷，比勒陀尼亚，赫尔辛基，里加，塔林，开罗，雅典，伊斯坦布尔，明斯克，以色列';
+				_address[15]='东3区：巴格达，科威特，利雅得，莫斯科，圣彼得堡，伏尔加格勒，内罗毕';
+				_address[16]='东4区：阿布扎比，马斯喀特，巴库，第比利斯';
+				_address[17]='东5区：叶卡特琳堡，伊斯兰堡，卡拉奇，塔什干';
+				_address[18]='东6区：阿拉木图，达卡，科伦坡';
+				_address[19]='东7区：曼谷，河内，雅加达';
+				_address[20]='东8区：北京，重庆，广州，上海，香港，乌鲁木齐，台北，新加坡，佩思';
+				_address[21]='东9区：平壤，汉城，东京，大阪，札幌，雅库茨克';
+				_address[22]='东10区：布里斯班，关岛，莫尔兹比港，霍巴特，堪培拉，墨尔本，悉尼';
+				_address[23]='东11区：马加丹，所罗门群岛，新喀里多尼亚';
+				_address[24]='东12区：奥克兰，惠灵顿，斐济，堪察加半岛，马绍尔群岛';
+			
+				var html = new Array();
+				html.push("<select class='zones_select' onchange='calc()'>");
+				for (var i=0; i < _address.length; i++) {
+					html.push("<option value='"+(i-12)+"'>"+_address[i]+"</option>");
+				};
+				html.push("</select>");
+				$(".zones").append(html.join(""));
+				$(".zones_select").val(8);
+				
+				html = new Array();
+				for (var i=0; i < 24; i++) {
+					html.push("<option value='"+i+"'>"+i+"</option>");
+				};
+				$(".hour").append(html.join(""))
+				
+				html = new Array();
+				for (var i=0; i < 59; i++) {
+					html.push("<option value='"+i+"'>"+i+"</option>");
+				};
+				$(".minute").append(html.join(""))
+				
+				var now = new Date();
+				$(".date:first").datepicker({
+					dateFormat: "yy年mm月dd日", 
+					changeYear: true,
+					onClose:calc
+				});
+				
+				$(".date:first").datepicker("setDate", now);
+				$(".date:last").val($.datepicker.formatDate("yy年mm月dd日", now));
+				$(".hour").val(now.getHours());
+				$(".minute").val(now.getMinutes());
+				
+			});
+			
+			function calc(){
+				var zones = $(".zones_select");
+				var zone1 = zones[0].value;
+				var zone2 = zones[1].value;
+				
+				var h = parseInt($(".hour:first").val());
+				h = h + (zone2 - zone1);
+				var m = parseInt($(".minute:first").val());
+				var d = $(".date:first").datepicker("getDate");
+				d.setHours(h);
+				d.setMinutes(m);
+				
+				$(".date:last").val($.datepicker.formatDate("yy年mm月dd日", d));
+				$(".hour:last").val(d.getHours());
+				$(".minute:last").val(d.getMinutes());
+			}
+		</script>
+	</head>
+	<body>
+		<table>
+			<tr height="50">
+				<td class="zones">
+				</td>
+				<td>
+					<input class="source date" readonly="readonly">
+					<select class="hour" onchange="calc()"></select>时
+					<select class="minute" onchange="calc()"></select>分
+				</td>
+			</tr>
+			<tr height="50">
+				<td class="zones">
+				</td>
+				<td>
+					<input class="target date" readonly="readonly">
+					<input class="hour" readonly="readonly"></select>时
+					<input class="minute" readonly="readonly"></select>分
+				</td>
+			</tr>
+		</table>
+	</body>
+	
+</html>
