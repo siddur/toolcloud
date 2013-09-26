@@ -1,0 +1,25 @@
+.sTable .cell{
+	width:100%;
+	margin:0;
+	overflow: hidden;
+	font-size:13px;
+}
+.sTable{
+	clear:left;
+}
+.appendRow, .appendCol, .addRow, .addCol, .delRow, .delCol{
+	display:inline-block;
+	cursor: pointer;
+}
+.orders{
+	float:left;
+	padding-right:10px;
+	border-bottom:1px solid gray;
+	font-size:14px;
+	color:#0000FF;
+	cursor: pointer;
+}
+.orders .ui-icon{
+	float:left;
+	
+}

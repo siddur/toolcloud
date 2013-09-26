@@ -181,3 +181,19 @@ body{
 	text-indent:10px;
 	background-color:#FCF8E3;
 }
+
+.tool_logo{
+	height:64px;
+	width:64px;
+	background-color:#F87219;
+	color:#FFFFFF;
+	text-align: center;
+    font-size: 12px;
+    word-wrap: break-word;
+    word-break:break-all;
+}
+
+.tool_logo span{
+	margin-top:10px;
+	display:inline-block;
+}

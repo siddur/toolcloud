@@ -24,6 +24,9 @@
 	var _console;
 	<%}%>
 	function doSubmit(){
+		$(".tableHidden").each(function(idx, item){
+			item.setValue();
+		});
 		if(!validate()) return;
 		$("#run_btn").attr("disabled", true);
 		
@@ -105,8 +108,9 @@
 	}
 	.input_item{
 		background-color: #EEEEEE;
-		margin: 2px;
-		padding: 5px
+		margin: 5px;
+		padding: 5px;
+		border: 1px solid #999999;
 	}
 	.output{
 		word-wrap: break-word;
@@ -116,6 +120,9 @@
 		position:relative; 
 		top:20px; 
 		right:50px;
+	}
+	.output_container{
+		padding:4px;
 	}
 </style>
 </head>

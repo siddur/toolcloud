@@ -62,6 +62,10 @@ public class DataTemplate {
 	public boolean isZip(){
 		return DataType.ZIPFILE.name().equals(dataType);
 	}
+	
+	public boolean isTable(){
+		return DataType.TABLE.name().equals(dataType);
+	}
 
 	public String getDefaultValue() {
 		return defaultValue;

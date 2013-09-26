@@ -74,6 +74,7 @@
 				<option value="BOOLEAN" <c:if test="${item.dataType == 'BOOLEAN'}">selected="selected"</c:if> >布尔</option>
 				<option value="DATE" <c:if test="${item.dataType == 'DATE'}">selected="selected"</c:if> >日期</option>
 				<option value="TEXT" <c:if test="${item.dataType == 'TEXT'}">selected="selected"</c:if> >文本</option>
+				<option value="TABLE" <c:if test="${item.dataType == 'TABLE'}">selected="selected"</c:if> >表格</option>
 				<option value="IMAGE" <c:if test="${item.dataType == 'IMAGE'}">selected="selected"</c:if> >图片</option>
 				<option value="FILE" <c:if test="${item.dataType == 'FILE'}">selected="selected"</c:if> >文件</option>
 				<option value="ZIPFILE" <c:if test="${item.dataType == 'ZIPFILE'}">selected="selected"</c:if> >zip文件</option>

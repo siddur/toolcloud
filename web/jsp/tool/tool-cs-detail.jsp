@@ -26,6 +26,15 @@
 		float:left;
 		margin-top: 10px;
 	}
+	.tool_container{
+		float:left;
+		width:100%;
+		height:500px;
+		border: 1px solid #848877;
+		-moz-box-shadow: 5px 5px 2px 2px rgba(68, 68, 68, 0.5);
+		-webkit-box-shadow: 5px 5px 2px 2px rgba(68, 68, 68, 0.5);
+		box-shadow: 5px 5px 2px 2px rgba(68, 68, 68, 0.5);
+	}
 </style>
 </head>
 <body>
