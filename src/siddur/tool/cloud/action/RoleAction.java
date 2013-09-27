@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import siddur.common.security.Permission;
+import siddur.common.security.PermissionManager;
+import siddur.common.security.PermissionManager.PermissionGroup;
 import siddur.common.security.RoleInfo;
 import siddur.common.web.ActionMapper.Result;
 import siddur.common.web.DBAction;
@@ -71,6 +73,14 @@ public class RoleAction extends DBAction<RoleInfo>{
 		if(roleIdStr != null){
 			RoleInfo role = find(Integer.parseInt(roleIdStr), req);
 			req.setAttribute("role", role);
+			PermissionGroup pg = PermissionManager.createPermissionGroup(role.getPermission());
+			List<Permission> allPerms = PermissionManager.getAllPermissions();
+			boolean[] perms = new boolean[allPerms.size()];
+			for (int i = 0; i < perms.length; i++) {
+				perms[i] = pg.hasPerm(i);
+			}
+			req.setAttribute("perms", perms);
+			req.setAttribute("allPerms", allPerms);
 			crumb = "manage > role("+role.getRolename()+")";
 		}
 		else{

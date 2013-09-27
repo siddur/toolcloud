@@ -1,28 +1,15 @@
-<%@page import="siddur.common.security.Permission"%>
-<%@page import="siddur.common.security.RequestUtil"%>
-<%@page import="siddur.tool.core.ConsoleTool"%>
-<%@page import="siddur.common.miscellaneous.Comment"%>
-<%@page import="java.util.List"%>
-<%@page import="siddur.tool.cloud.action.ToolAction"%>
-<%@page import="siddur.tool.core.data.DataTemplate"%>
-<%@page import="siddur.tool.core.data.DataType"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib tagdir="/WEB-INF/tags" prefix="s" %>
-<jsp:useBean id="tool" scope="request" type="siddur.tool.core.IToolWrapper"></jsp:useBean>
-<%
-	boolean needConsole = !ConsoleTool.class.isAssignableFrom(tool.getToolClass());
-%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<script type="text/javascript" src="/toolcloud/jquery/js/jquery-1.9.1.js"></script>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<s:site>
+<jsp:attribute name="headPart">
 <script>
 	var runUrl = "/toolcloud/ctrl/tool/exec";
-	<%if(!needConsole){%>
+	<c:if test="${needConsole}">
 	var consoleUrl = "/toolcloud/console?ticket=";
 	var _console;
-	<%}%>
+	</c:if>
 	function doSubmit(){
 		if(!validate()) return;
 		$("#run_btn").attr("disabled", true);
@@ -48,7 +35,7 @@
 			splitters.push(v);
 		});
 		var data = {
-				id:"<%=tool.getDescriptor().getPluginID()%>",
+				id:"${tool.descriptor.pluginID}",
 				input:inputs,
 				splitter:splitters,
 				ticket:ticket
@@ -58,16 +45,16 @@
 			data,
 			showResult
 		);
-		<%if(!needConsole){%>
+		<c:if test="${needConsole}">
 		var url = consoleUrl + ticket;
 		_console = new Console(url);
 		_console.loop();
-		<%}%>
+		</c:if>
 	}
 	function showResult(results){
-		<%if(!needConsole){%>
+		<c:if test="${needConsole}">
 		_console.close();
-		<%}%>
+		</c:if>
 		if(results){
 			var r = eval(results);
 			$(".output").each(function(idx, item){
@@ -118,67 +105,43 @@
 		right:50px;
 	}
 </style>
-</head>
-<body>
-	<%@include file="/jsp/common/head.jsp" %>
+</jsp:attribute>
+<jsp:body>
 	<s:file_upload_head/>
 	<div class="screen">
 		<div class="detail_head">
 			<input type="button" id="run_btn" value="运行" onclick="doSubmit()">
-			<s:tool_detail toolDescriptor="<%=tool.getDescriptor()%>"/>
+			<s:tool_detail toolDescriptor="${tool.descriptor}"/>
 		</div>
 		<div class="input_output">
 			<div class="input_container">
-			<span></span>
-			<%
-				DataTemplate[] inputs = tool.getDescriptor() == null ? null : tool.getDescriptor().getInputModel();
-					if(inputs != null){
-						int i = 0;
-						for(DataTemplate input : inputs){
-			%>
-					<s:input inputModel="<%=input%>" index="<%=i%>"></s:input>
-			<%
-							i++;
-						}
-					}
-			%>
+			<c:forEach var="input" items="${tool.descriptor.inputModel}" varStatus="status">
+				<s:input inputModel="${input}" index="${status.index}"></s:input>
+			</c:forEach>
 			</div>
 			<div class="output_container">
-			<%
-				DataTemplate[] outputs = tool.getDescriptor() == null ? null : tool.getDescriptor().getOutputModel();
-					if(outputs != null){
-						for(DataTemplate output : outputs){
-			%>
-						<s:output_display outputData="<%=output%>"></s:output_display>
-					<%
-					}
-				}
-			%>	
+			<c:forEach var="output" items="${tool.descriptor.outputModel}">
+				<s:output_display outputData="${output}"></s:output_display>
+			</c:forEach>
 			</div>
-			<%if(!needConsole){ %>
+			<c:if test="${needConsole}">
 				<div style="width:600px; height:300px;">
 					<s:console></s:console>
 				</div>
-			<%} %>
+			</c:if>
 		</div>
 		<div class="comments">
-			<%
-				List<Comment> list = (List<Comment>)request.getAttribute("comments");
-										for(Comment c: list){
-			%>
-					<s:comment comment="<%=c%>" 
-						toolId="<%=tool.getDescriptor().getPluginID()%>"
-						closable="<%=RequestUtil.hasPerm(request, Permission.COMMENT_DEL)%>" ></s:comment>
-			<%
-				}
-			%>
-			
+			<c:forEach var="c" items="${comments}">
+				<s:comment comment="${c}" 
+						toolId="${tool.descriptor.pluginID}"
+						closable="${canDelComment}" ></s:comment>
+			</c:forEach>
 			<form method="post" action="/toolcloud/ctrl/tool/comment">
 				<textarea name="comment" id="comment" rows="6" cols="60"></textarea>
-				<input type="hidden" name="toolId" value="<%=tool.getDescriptor().getPluginID()%>">
+				<input type="hidden" name="toolId" value="${tool.descriptor.pluginID}">
 				<input type="submit" class="btn" value="评论">
 			</form>
 		</div>
 	</div>
-</body>
-</html>
+</jsp:body>
+</s:site>

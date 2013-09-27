@@ -2,7 +2,8 @@
     pageEncoding="UTF-8"%>
 <%@ taglib tagdir="/WEB-INF/tags" prefix="s" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<link rel="stylesheet" type="text/css" href="/toolcloud/css/tag.css" />
+<s:manage>
+<jsp:attribute name="headPart">
 <style>
 	.body{
 		width:1000px;
@@ -26,8 +27,8 @@
 	}
 }
 </style>
-<script type="text/javascript" src="/toolcloud/jquery/js/jquery-1.9.1.js"></script>
-<%@include file="/jsp/common/manage.jsp" %>
+</jsp:attribute>
+<jsp:body>
 <div class="crumb">
 	${crumb}
 </div>
@@ -40,3 +41,5 @@
 		
 	<s:paging pageIndex="${paging.pageIndex}" pageSize="${paging.pageSize}" total="${paging.total}"/>
 </div>
+</jsp:body>
+</s:manage>

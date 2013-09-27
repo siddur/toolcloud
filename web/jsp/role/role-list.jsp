@@ -1,15 +1,9 @@
-<%@page import="siddur.common.security.RoleInfo"%>
-<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<%
-	List<RoleInfo> list = (List<RoleInfo>)request.getAttribute("list");
-%>
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Role List</title>
+<%@ taglib tagdir="/WEB-INF/tags" prefix="s" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<s:manage>
+<jsp:attribute name="headPart">
 <style>
 	.role-item{
 		margin: 15px;
@@ -25,25 +19,20 @@
 	}
 }
 </style>
-</head>
-<body>
-<%@include file="/jsp/common/manage.jsp" %>
+</jsp:attribute>
+<jsp:body>
 	<div class="crumb">
-		<%= request.getAttribute("crumb")%>
+		${crumb}
 	</div>
 	<div class="body">
 		<div class="add">
 			<a class="btn1" href="/toolcloud/ctrl/role/detail">New Role</a>
 		</div>
-		<%if(list != null){
-			for(RoleInfo r : list){
-		%>
+		<c:forEach var="r" items="${list}">
 			<div class="role-item">
-				<a class="txt" href="/toolcloud/ctrl/role/detail?roleId=<%=r.getRoleId()%>"><%=r.getRolename() %></a>
+				<a class="txt" href="/toolcloud/ctrl/role/detail?roleId=${r.roleId }">${r.rolename }</a>
 			</div>
-		<%	}
-		}
-		%>
+		</c:forEach>
 	</div>
-</body>
-</html>
+</jsp:body>
+</s:manage>

@@ -2,12 +2,9 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib tagdir="/WEB-INF/tags" prefix="s" %>
-<jsp:useBean id="tool" scope="request" type="siddur.tool.core.IToolWrapper"></jsp:useBean>
-<c:set var="td" scope="page" value="<%=tool.getDescriptor() %>"></c:set>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<script type="text/javascript" src="/toolcloud/jquery/js/jquery-1.9.1.js"></script>
+<c:set var="td" scope="page" value="${tool.descriptor}"></c:set>
+<s:manage>
+<jsp:attribute name="headPart">
 <script>
 <c:if test="${td.lang != 'client-side' }">
 	var inputDiv, outputDiv;
@@ -70,9 +67,8 @@
 		display: none;
 	}
 </style>
-</head>
-<body>
-	<%@include file="/jsp/common/manage.jsp" %>
+</jsp:attribute>
+<jsp:body>
 	<div class="crumb">
 		${crumb}
 	</div>
@@ -124,7 +120,11 @@
 					<div style="clear: left;"></div>
 				</div>
 			</c:if>
-			<center><input type="submit" class="btn" value="save" onclick="return validate();"></center>	
+			<center>
+				<input type="button" class="btn" value="取消" onclick="history.back()">
+				<input type="submit" class="btn" value="保存" onclick="return validate();">
+			</center>	
 		</form>
 	</div>
-</body>
+</jsp:body>
+</s:manage>

@@ -1,22 +1,9 @@
-<%@page import="siddur.common.security.Permission"%>
-<%@page import="siddur.common.security.RequestUtil"%>
-<%@page import="siddur.common.security.UserInfo"%>
-<%@page import="java.util.List"%>
-<%@page import="siddur.common.security.RoleInfo"%>
+<%@taglib prefix="s" tagdir="/WEB-INF/tags"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%
-	UserInfo user = (UserInfo)request.getAttribute("user");
-	boolean updateMsg = RequestUtil.hasPerm(request, Permission.USER_EDIT);
-	boolean updateRole = RequestUtil.hasPerm(request, Permission.ROLE_EDIT);
-	boolean canUpdate = updateMsg || updateRole;
-	List<RoleInfo> roles = (List<RoleInfo>)request.getAttribute("roles");
-%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Me</title>
+<s:manage>
+<jsp:attribute name="headPart">
 <style>
 	.user_item{
 		padding: 20px;
@@ -27,64 +14,71 @@
 		color:blue;
 	}
 </style>
-</head>
-<body>
-<%@include file="/jsp/common/manage.jsp" %>
+</jsp:attribute>
+<jsp:body>
 	<div class="crumb">
-		<%= request.getAttribute("crumb")%>
+		${crumb}
 	</div>
 	<div class="body">
 		<form action="/toolcloud/ctrl/user/update">
-			<input type="hidden" name="userId" value="<%= user.getUserId()%>">
-			<div class="user_item"><span>USERNAME</span><span class="txt"><%= user.getUsername()%></span></div>
-			<div class="user_item"><span>PASSWORD</span><span class="txt"><%= user.getPassword()%></span></div>
+			<input type="hidden" name="userId" value="${user.userId}">
+			<div class="user_item"><span>USERNAME</span><span class="txt">${user.username}</span></div>
+			<div class="user_item"><span>PASSWORD</span><span class="txt">${user.password}</span></div>
 			
 			<div class="user_item">
 				<span>ROLE</span>
-				<% if(!updateRole){ %>
-					<span class="txt"><%= user.getRole().getRolename()%></span>
-				<%}else{ %>
+				<c:choose>
+				<c:when test="${!updatable}">
+					<span class="txt">${user.role.rolename}</span>
+				</c:when>
+				<c:otherwise>
 					<select name="role">
-						<%
-							for(RoleInfo r : roles){
-						%>
-								<option value="<%= r.getRoleId()%>" <%if(r.getRoleId() == user.getRole().getRoleId()){ %>selected="selected"<%} %>><%= r.getRolename()%></option>
-						<%
-							}
-						%>
+						<c:forEach var="r" items="${roles}">
+							<option value="${r.roleId}" <c:if test="${u.role.roleId == r.roleId}">selected="selected"</c:if>>${r.rolename}</option>
+						</c:forEach>
 					</select>
-				<%} %>
+				</c:otherwise>
+				</c:choose>
 			</div>
 			
 			<div class="user_item">
 				<span>EMAIL</span>
-				<% if(!updateMsg){ %>
-					<span class="txt"><%= user.getEmail() == null ? "" : user.getEmail()%></span>
-				<%}else{ %>
-					<input value="<%= user.getEmail() == null ? "" : user.getEmail()%>" name="email">
-				<%} %>
+				<c:choose>
+				<c:when test="${!updatable}">
+					<span class="txt">${user.email}</span>
+				</c:when>
+				<c:otherwise>
+					<input value="${user.email}" name="email">
+				</c:otherwise>
+				</c:choose>
 			</div>
 			
 			<div class="user_item">
 				<span>REALNAME</span>
-				<% if(!updateMsg){ %>
-					<span class="txt"><%= user.getRealname() == null ? "" : user.getRealname()%></span>
-				<%}else{ %>
-					<input value="<%= user.getRealname() == null ? "" : user.getRealname()%>" name="realname">
-				<%} %>
+				<c:choose>
+				<c:when test="${!updatable}">
+					<span class="txt">${user.realname}</span>
+				</c:when>
+				<c:otherwise>
+					<input value="${user.realname}" name="realname">
+				</c:otherwise>
+				</c:choose>
 			</div>
 			<div class="user_item">
 				<span>NICKNAME</span>
-				<% if(!updateMsg){ %>
-					<span class="txt"><%= user.getNickname() == null ? "" : user.getNickname()%></span>
-				<%}else{ %>
-					<input value="<%= user.getNickname() == null ? "" : user.getNickname()%>" name="nickname">
-				<%} %>
+				<c:choose>
+				<c:when test="${!updatable}">
+					<span class="txt">${user.nickname}</span>
+				</c:when>
+				<c:otherwise>
+					<input value="${user.nickname}" name="nickname">
+				</c:otherwise>
+				</c:choose>
 			</div>
-			<%if(canUpdate){ %>
+			<c:if test="${updatable}">
 				<input type="submit" value="update">
-			<%} %>
+			</c:if>
 		</form>
 	</div>
-</body>
-</html>
+</jsp:body>
+</s:manage>

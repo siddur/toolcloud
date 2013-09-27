@@ -80,6 +80,7 @@
 	</c:forEach>
 	
 	<s:paging pageIndex="${comments.pageIndex }" pageSize="20" total="${comments.total }"></s:paging>
+	<a href="javascript:history.back()">返回</a>
 	
 	<div style="clear:left; padding-top:50px;">
 		<form method="post" action="/toolcloud/ctrl/query/comment">

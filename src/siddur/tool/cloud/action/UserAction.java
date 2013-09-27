@@ -109,7 +109,12 @@ public class UserAction extends DBAction<UserInfo>{
 		List<RoleInfo> roles = getEntityManager(req).createQuery("from RoleInfo", RoleInfo.class).getResultList();
 		req.setAttribute("roles", roles);
 		req.setAttribute("crumb", "manage > user");
+		boolean canDelete = RequestUtil.hasPerm(req, Permission.USER_DEL);
+		boolean canAdd = RequestUtil.hasPerm(req, Permission.USER_ADD);
+		req.setAttribute("canDelete", canDelete);
+		req.setAttribute("canAdd", canAdd);
 		req.getRequestDispatcher("/jsp/user/user-list.jsp").forward(req, resp);
+		
 		return Result.ok();
 	}
 	
@@ -133,6 +138,11 @@ public class UserAction extends DBAction<UserInfo>{
 			req.setAttribute(Constants.USER, u);
 			req.setAttribute("crumb","manage > user("+u.getUsername()+")");
 		}
+		
+		boolean updateMsg = RequestUtil.hasPerm(req, Permission.USER_EDIT);
+		boolean updateRole = RequestUtil.hasPerm(req, Permission.ROLE_EDIT);
+		boolean canUpdate = updateMsg || updateRole;
+		req.setAttribute("updatable", canUpdate);
 		req.getRequestDispatcher("/jsp/user/user-detail.jsp").forward(req, resp);
 		return Result.ok();
 	}

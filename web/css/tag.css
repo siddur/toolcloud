@@ -1,24 +1,55 @@
 .paging span{
 	padding: 3px 10px;
-	background-color: #61824B;
 	vertical-align: middle;
-	cursor: pointer;
-	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
 	color:white;
 }
 
 .paging{
-	margin-top:50px;
-	float: left;
+	float: right;
 }
 
 span.selected{
-	background-color: #DBC59E;
-	color:red;
+	background-color: #888888;
+	color:white;
+}
+
+span.unselected{
+	background-color: #000000;
+	cursor: pointer;
+	color:white;
 }
 
 .ui-datepicker{
 	font-size: 62.5%;
 	font-family: "Trebuchet MS", "Arial", "Helvetica", "Verdana", "sans-serif"; 
+}
+
+.basicSearch {
+    background-color: white;
+    border-radius: 10px 10px 10px 10px;
+    margin-top: 1px;
+    padding: 1px 1px 1px 8px;
+    width: 200px;
+}
+
+.basicSearchInput {
+	border: none;
+	width: 180px;
+	color: #9B9B9B;
+}
+
+.basicSearchInput:focus {
+	color: black;
+}
+
+.basic_search_btn {
+	float: right;
+	position: relative;
+    right: 3px;
+    top: 1px;
+}
+
+.basicSearch span {
+	cursor: pointer;
 }
 

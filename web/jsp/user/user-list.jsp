@@ -1,23 +1,10 @@
-<%@page import="siddur.common.security.Permission"%>
-<%@page import="siddur.common.security.RequestUtil"%>
-<%@page import="siddur.common.security.UserInfo"%>
-<%@page import="siddur.common.security.RoleInfo"%>
-<%@page import="java.util.List"%>
+<%@taglib prefix="s" tagdir="/WEB-INF/tags"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<% 
-	List<UserInfo> list = (List<UserInfo>)request.getAttribute("list");
-	List<RoleInfo> roles = (List<RoleInfo>)request.getAttribute("roles");
-	boolean canDelete = RequestUtil.hasPerm(request, Permission.USER_DEL);
-	boolean canAdd = RequestUtil.hasPerm(request, Permission.USER_ADD);
-%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Users</title>
+<s:manage>
+<jsp:attribute name="headPart">
 <style>
-
 	table{
 		border-spacing: 0;
 		width:600px;
@@ -48,53 +35,48 @@
 <script type="text/javascript" src="/toolcloud/jquery/js/jquery-1.9.1.js"></script>
 <script>
 	$(document).ready(function(){
-			$(".item").click(function(){
-				var userId = this.children[6].children[0].children[0].value;
-				location.href = "/toolcloud/ctrl/user/detail?userId=" + userId;
-			});
+		$(".item").click(function(){
+			var userId = this.children[6].children[0].children[0].value;
+			location.href = "/toolcloud/ctrl/user/detail?userId=" + userId;
 		});
+	});
 </script>
-</head>
-<body>
-
-<%@include file="/jsp/common/manage.jsp" %>
-	<div class="crumb">
-		<%= request.getAttribute("crumb")%>
-	</div>
-	<div class="body">
-	<%if(list != null){%>
-		<table>
-			<tr>
-				<td width="100">USERNAME</td>
-				<td width="100">PASSWORD</td>
-				<td width="100">ROLE</td>
-				<td width="100">EMAIL</td>
-				<td width="100">REALNAME</td>
-				<td width="100">NICKNAME</td>
-				<td width="100">&nbsp;</td>
-			</tr>
-			<%for(UserInfo u : list){ %>
-			<tr class="item">
-				<td><%=u.getUsername()%></td>
-				<td><%=u.getPassword()%></td>
-				<td><%=u.getRole().getRolename()%></td>
-				<td><%=u.getEmail()==null ? "" : u.getEmail()%></td>
-				<td><%=u.getRealname()==null ? "" : u.getRealname()%></td>
-				<td><%=u.getNickname()==null ? "" : u.getNickname()%></td>
-				<td>
-					<form action="/toolcloud/ctrl/user/delete">
-						<input type="hidden" name="userId" value="<%=u.getUserId()%>">
-						<%if(canDelete){ %>
-							<input class="btn" type="submit" value="delete">
-						<%} %>
-					</form>
-				</td>
-				
-			</tr>
-			<%} %>
-		</table>
-	<%}%>
-	<%if(canAdd){ %>
+</jsp:attribute>
+<jsp:body>
+<div class="crumb">
+	${crumb}
+</div>
+<div class="body">
+	<table>
+		<tr>
+			<td width="100">USERNAME</td>
+			<td width="100">PASSWORD</td>
+			<td width="100">ROLE</td>
+			<td width="100">EMAIL</td>
+			<td width="100">REALNAME</td>
+			<td width="100">NICKNAME</td>
+			<td width="100">&nbsp;</td>
+		</tr>
+	<c:forEach var='u' items='${list}'>
+		<tr class="item">
+			<td>${u.username}</td>
+			<td>${u.password}</td>
+			<td>${u.role.rolename }</td>
+			<td>${u.email }</td>
+			<td>${u.realname }</td>
+			<td>${u.nickname }</td>
+			<td>
+				<form action="/toolcloud/ctrl/user/delete">
+					<input type="hidden" name="userId" value="${u.userId }">
+					<c:if test="${canDelete}">
+						<input class="btn" type="submit" value="delete">
+					</c:if>
+				</form>
+			</td>
+		</tr>
+	</c:forEach>
+	</table>
+	<c:if test="${canAdd}">
 		<div class="add_user">
 			<form method="post" action="/toolcloud/ctrl/user/add">
 				<div>
@@ -108,13 +90,11 @@
 				<div>
 					Role<span class="asterisk">*</span>:
 					<select name="role">
-						<%
-							for(RoleInfo r : roles){
-						%>
-								<option value="<%= r.getRoleId()%>"><%= r.getRolename()%></option>
-						<%
-							}
-						%>
+					<c:forEach var="r" items="${roles}">
+						<option value="${r.roleId }">
+							${r.rolename }
+						</option>
+					</c:forEach>
 					</select>
 				</div>
 				<div>
@@ -132,7 +112,7 @@
 				<input class="btn" type="submit" value="save&add">
 			</form>
 		</div>
-	<%}%>
-	</div>
-</body>
-</html>
+	</c:if>
+</div>
+</jsp:body>
+</s:manage>

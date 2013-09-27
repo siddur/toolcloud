@@ -54,6 +54,9 @@ public class PermissionManager {
 			this(Integer.parseInt(value.replace(" ", ""), 2));
 		}
 		
+		public List<Permission> getPerms(){
+			return perms;
+		}
 		
 		public void addPerm(Permission p){
 			perms.add(p);

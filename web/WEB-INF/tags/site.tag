@@ -1,12 +1,17 @@
 <%@tag language="java" pageEncoding="UTF-8"%>
 <%@taglib prefix="s" tagdir="/WEB-INF/tags"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ attribute name="headPart" fragment="true" %>
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>Tool Cloud</title>
-	<!-- <link rel="stylesheet" type="text/css" href="/toolcloud/css/common.css" /> -->
-	<link rel="stylesheet" type="text/css" href="/toolcloud/css/icon_sets.css" />
+	<script type="text/javascript" src="/toolcloud/jquery/js/jquery-1.9.1.js"></script>
+	<script type="text/javascript" src="/toolcloud/js/search.js"></script>
+	<link rel="stylesheet" type="text/css" href="/toolcloud/css/common.css" />
+	<link rel="stylesheet" type="text/css" href="/toolcloud/jqueryui/jquery-ui-1.10.3.custom.min.css" />
+	<link rel="stylesheet" type="text/css" href="/toolcloud/css/tag.css" />
+	<jsp:invoke fragment="headPart"></jsp:invoke>
 </head>
 <body>
 	<div class="header">
@@ -34,8 +39,14 @@
 				<li>
 					<a href="/toolcloud/ctrl/user/list"><span class="ui-icon ui-icon-gear"></span>管理</a>
 				</li>
+				<li>
+					<a href="/toolcloud/ctrl/user/list"><span class="ui-icon ui-icon-help"></span>文档</a>
+				</li>
+				<li>
+					<a href="/toolcloud/ctrl/user/list"><span class="ui-icon ui-icon-arrowthickstop-1-s"></span>下载</a>
+				</li>
 			</ul>
-			<div style="float: right; position: relative; right:50px; margin-top:5px;">
+			<div style="float: right; position: relative; right:50px; margin-top:4px;">
 				<s:basic-serach></s:basic-serach>
 			</div>
 		</div>

@@ -47,6 +47,7 @@ body{
 	color: white;
 	text-decoration: none;
 	border-left: 1px solid #EC5B29;
+	font-size:14px;
 }
 .toolbar li:hover {
    	background: none repeat scroll 0 0 #B83A10

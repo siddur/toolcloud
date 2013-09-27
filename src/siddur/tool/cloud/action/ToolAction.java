@@ -15,8 +15,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.io.FileUtils;
-
 import siddur.common.miscellaneous.ClickInfo;
 import siddur.common.miscellaneous.Comment;
 import siddur.common.miscellaneous.Constants;
@@ -31,10 +29,10 @@ import siddur.common.security.UserInfo;
 import siddur.common.web.ActionMapper.Result;
 import siddur.common.web.DBAction;
 import siddur.common.web.Perm;
+import siddur.tool.core.ConsoleTool;
 import siddur.tool.core.IToolManager;
 import siddur.tool.core.IToolWrapper;
 import siddur.tool.core.MemoryVisitor;
-import siddur.tool.core.TempFileUtil;
 import siddur.tool.core.data.DataTemplate;
 import siddur.tool.core.data.ToolDescriptor;
 
@@ -92,6 +90,7 @@ public class ToolAction extends DBAction<Comment>{
 		Paging<IToolWrapper> paging = getVisitor().findAll(key, pageSize, pageIndex);
 		req.setAttribute("paging", paging);
 		req.setAttribute("key", key);
+		req.setAttribute("editable", RequestUtil.hasPerm(req, Permission.TOOL_EDIT));
 		return Result.forward("/jsp/tool/tool-list.jsp");
 		
 	}
@@ -115,6 +114,8 @@ public class ToolAction extends DBAction<Comment>{
 		}
 		getEntityManager(req, true).persist(c);
 		
+		req.setAttribute("canDelComment", RequestUtil.hasPerm(req, Permission.COMMENT_DEL));
+		
 		if(tpu.getDescriptor().getLang().equals("client-side")){
 			File f = new File(tpu.getToolfile());
 			File dir = f.getParentFile();
@@ -122,6 +123,8 @@ public class ToolAction extends DBAction<Comment>{
 			req.setAttribute("toolFile", dir.getName() + "/" + f.getName());
 			return Result.forward("/jsp/tool/tool-cs-detail.jsp");
 		}else{
+			boolean needConsole = ConsoleTool.class.isAssignableFrom(tpu.getToolClass());
+			req.setAttribute("needConsole", needConsole);
 			return Result.forward("/jsp/tool/tool-ss-detail.jsp");
 		}
 	}

@@ -6,9 +6,14 @@
 <style>
 	.query_item{
 		padding: 10px;
-		background: #DDDDDD;
+		background: #FFFFFF;
 		margin: 10px;
-		width: 600px;
+		width: 100%;
+		border:solid 1px #AAAAAA;
+	}
+	
+	.query_item a{
+		text-decoration: none;
 	}
 	
 	.query_title{
@@ -44,5 +49,6 @@
 	</c:forEach>
 	
 	<s:paging pageIndex="${queries.pageIndex }" pageSize="20" total="${queries.total }"></s:paging>
+	<a href="/toolcloud">返回首页</a>
 </div>
 </s:site>
