@@ -3,11 +3,13 @@
 <%@ attribute name="index" type="java.lang.Integer"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib tagdir="/WEB-INF/tags" prefix="s" %>
+
 <c:set var="type" value="${inputModel.dataType}"/>
 <c:set var="tag" value="${inputModel.tag}"/>
 <c:set var="desc" value="${inputModel.description}"/>
 <c:if test="${input_parts_loaded != true }">
 	<c:set var="input_parts_loaded" value="true" scope="request"></c:set>
+	<c:set var="input_index" value="-1" scope="request"></c:set>
 	
 	<style>
 		.ui-datepicker{
@@ -92,8 +94,9 @@
 		
 	</script>
 </c:if>
-	<script>
+<c:set var="input_index" value="${input_index + 1}" scope="request"></c:set>
 	<c:if test="${inputModel.constrantType=='ENUM'}">
+	<script>
 		(function(){
 			var options = [];
 			<c:forEach var="item" items="${inputModel.options}">
@@ -101,8 +104,8 @@
 			</c:forEach>
 			optionsArray[${index}] = options;
 		})();
-	</c:if>
 	</script>
+	</c:if>
 
 <div class="input_item">
 	<c:if test='${tag != null && desc != "" }'>
@@ -148,6 +151,9 @@
 						</span>
 					</div>
 				</c:when>
+				<c:when test="${'TABLE' == type}">
+					<s:excel containerId="table${input_index}"></s:excel>
+				</c:when>
 				<c:when test="${'FILE' == type || 'ZIPFILE' == type}">
 					<s:file_upload fieldname="input" displayname="上传文件.."/>
 				</c:when>
@@ -155,7 +161,7 @@
 					<s:file_upload fieldname="input" displayname="上传图片.." isImage="true"/>
 				</c:when>
 				<c:when test="${'DATE' == type}">
-					<input type="text" class="dateField" readonly="readonly">
+					<input type="text" name="input" class="dateField" readonly="readonly">
 				</c:when>
 			</c:choose>
 		</c:otherwise>

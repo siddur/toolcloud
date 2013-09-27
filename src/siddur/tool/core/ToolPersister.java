@@ -29,7 +29,7 @@ public class ToolPersister {
 				File dir = null;
 				File unzipped = ZipUtil.unZip(toolFile);
 				File[] list = unzipped.listFiles();
-				if(list.length == 0){
+				if(list.length == 1){
 					File f = list[0];
 					if(f.isDirectory()){
 						dir = f;

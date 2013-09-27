@@ -10,6 +10,7 @@ public enum DataType {
 	BOOLEAN("boolean", false, true),
 	DATE("date", false, true),
 	TEXT("text", false, true),
+	TABLE("table", false, true),
 	HTML("html", true, false),
 	FILE("file", true, true),
 	ZIPFILE("zipfile", false, true),
