@@ -265,7 +265,9 @@ public class ToolAction extends DBAction<Comment>{
 		run.setIp(req.getRemoteAddr());
 		try {
 			results = tpm.run(toolID, params, context);
-		} finally{
+		}catch(Exception e){
+			return Result.ajax("error");
+		}finally{
 			run.setEndAt(new Date());
 			run.setSuccess(results != null);
 			getEntityManager(req, true).persist(run);

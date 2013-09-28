@@ -59,11 +59,16 @@
 		_console.close();
 		</c:if>
 		if(results){
-			var r = eval(results);
-			$(".output").each(function(idx, item){
-				var value = r[idx];
-				item.populate(value);
-			});
+			if(results != "error"){
+				$("#run_msg").css("color", "green").html("运行成功");
+				var r = eval(results);
+				$(".output").each(function(idx, item){
+					var value = r[idx];
+					item.populate(value);
+				});
+			}else{
+				$("#run_msg").css("color", "red").html("运行失败");
+			}
 		}
 		$("#run_btn").attr("disabled", false);
 	}
@@ -102,11 +107,14 @@
 	.output{
 		word-wrap: break-word;
 	}
-	#run_btn{
+	.run_div{
 		float:right; 
 		position:relative; 
 		top:20px; 
 		right:50px;
+	}
+	#run_msg{
+		font-size:13px;
 	}
 	.output_container{
 		padding:4px;
@@ -117,7 +125,10 @@
 	<s:file_upload_head/>
 	<div class="screen">
 		<div class="detail_head">
-			<input type="button" id="run_btn" value="运行" onclick="doSubmit()">
+			<div class="run_div">
+				<input type="button" id="run_btn" value="运行" onclick="doSubmit()">
+				<span id="run_msg"></span>
+			</div>
 			<s:tool_detail toolDescriptor="${tool.descriptor}"/>
 		</div>
 		<div class="input_output">

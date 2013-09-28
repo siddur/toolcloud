@@ -26,13 +26,31 @@
 		box-shadow: 5px 5px 2px 2px rgba(68, 68, 68, 0.5);
 	}
 </style>
+<script>
+	$(function(){
+		var iframe = $(".tool_container");
+		iframe.load(function(){
+			var me = $(this);
+			var body = me.contents().find("body");
+			body.css("margin", "0");
+			var children = body.children();
+			if(children.length > 0){
+				var root = children.first();
+				var w = Math.max(root.outerWidth(), 800);
+				var h = Math.max(root.outerHeight(), 400)
+				me.width(w);
+				me.height(h);
+			}
+		});
+	});
+</script>
 </jsp:attribute>
 <jsp:body>
 	<div class="screen">
 		<div class="detail_head">
 			<s:tool_detail toolDescriptor="${tool.descriptor}"/>
 		</div>
-		<iframe class="tool_container" src="/toolcloud/file/${toolFile}"></iframe>
+		<iframe class="tool_container" name="tool_container" src="/toolcloud/file/${toolFile}"></iframe>
 		<div class="comments">
 			<c:forEach var="c" items="${comments}">
 				<s:comment comment="${c}" 

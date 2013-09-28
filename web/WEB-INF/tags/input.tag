@@ -104,6 +104,9 @@
 			</c:forEach>
 			optionsArray[${index}] = options;
 		})();
+		$(function(){
+			$("select.input").prop("selectedIndex", 0);
+		});
 	</script>
 	</c:if>
 
@@ -121,7 +124,7 @@
 				<option value="${item[0]}">${item[0]}</option>
 			</c:forEach>
 			</select>
-			<span></span>
+			<span>${inputModel.options[0][1]}</span>
 		</c:when>
 		<c:otherwise>
 			<c:choose>
