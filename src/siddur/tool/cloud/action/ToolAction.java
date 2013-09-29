@@ -188,6 +188,7 @@ public class ToolAction extends DBAction<Comment>{
 			pd.setLang(lang);
 		
 		pd.setIcon(req.getParameter("icon"));
+		pd.setKeywords(req.getParameter("keywords"));
 		pd.setPluginName(req.getParameter("name"));
 		pd.setDescription(req.getParameter("description"));
 		pd.setCatalog(req.getParameter("catelog"));

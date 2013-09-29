@@ -7,6 +7,7 @@ public class ToolDescriptor {
 	private String lang;
 	private String catalog;
 	private String description;
+	private String keywords;
 	private String icon;
 	private String authorId;
 	private Date publishAt = new Date();
@@ -91,6 +92,10 @@ public class ToolDescriptor {
 	public void setAuthorId(String authorId) {
 		this.authorId = authorId;
 	}
-	
-	
+	public String getKeywords() {
+		return keywords;
+	}
+	public void setKeywords(String keywords) {
+		this.keywords = keywords;
+	}
 }

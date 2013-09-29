@@ -33,6 +33,7 @@ public class XmlUtil {
 		if(pd != null){
 			root.addElement("ID").addText(pd.getPluginID());
 			root.addElement("lang").addText(pd.getLang());
+			root.addElement("keywords").addText(pd.getKeywords());
 			root.addElement("name").addText(pd.getPluginName());
 			root.addElement("authorId").addText(pd.getAuthorId());
 			root.addElement("catalog").addText(pd.getCatalog());
@@ -76,6 +77,7 @@ public class XmlUtil {
 		pd.setPublishAt(new Date(Long.parseLong(root.elementText("ID"))));
 		pd.setPluginName(root.elementText("name"));
 		pd.setLang(root.elementText("lang"));
+		pd.setKeywords(root.elementText("keywords"));
 		pd.setCatalog(root.elementText("catalog"));
 		pd.setAuthorId(root.elementText("authorId"));
 		pd.setIcon(root.elementText("icon"));
