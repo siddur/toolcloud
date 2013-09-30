@@ -179,6 +179,7 @@ public class LogCache {
 	private List<String> filter(List<String> logs){
 		List<String> newLogs = new ArrayList<String>(logs.size());
 		for(String log : logs){
+			System.out.println("===fetch===" + log);
 			String newLog = log;
 			for(LogFilter f : filters){
 				newLog = f.doFilter(newLog);

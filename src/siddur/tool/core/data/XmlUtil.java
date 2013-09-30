@@ -31,14 +31,15 @@ public class XmlUtil {
 		Element root = doc.addElement(PLUGIN);
 		
 		if(pd != null){
-			root.addElement("ID").addText(pd.getPluginID());
-			root.addElement("lang").addText(pd.getLang());
-			root.addElement("keywords").addText(pd.getKeywords());
-			root.addElement("name").addText(pd.getPluginName());
-			root.addElement("authorId").addText(pd.getAuthorId());
-			root.addElement("catalog").addText(pd.getCatalog());
-			root.addElement("icon").addText(pd.getIcon());
-			root.addElement("description").addText(pd.getDescription());
+			if(pd.getPluginID() != null) root.addElement("ID").addText(pd.getPluginID());
+			if(pd.getLang() != null) root.addElement("lang").addText(pd.getLang());
+			if(pd.getKeywords() != null) root.addElement("keywords").addText(pd.getKeywords());
+			if(pd.getSimilars() != null) root.addElement("simulars").addText(pd.getSimilars());
+			if(pd.getPluginName() != null) root.addElement("name").addText(pd.getPluginName());
+			if(pd.getAuthorId() != null) root.addElement("authorId").addText(pd.getAuthorId());
+			if(pd.getCatalog() != null) root.addElement("catalog").addText(pd.getCatalog());
+			if(pd.getIcon() != null) root.addElement("icon").addText(pd.getIcon());
+			if(pd.getDescription() != null) root.addElement("description").addText(pd.getDescription());
 		}
 		
 		DataTemplate[] input = pd.getInputModel();
@@ -61,10 +62,10 @@ public class XmlUtil {
 	private static void tdToXml(Element parent, DataTemplate[] tds){
 		for(DataTemplate td : tds){
 			Element item = parent.addElement(DATA);
-			item.addElement(TYPE).addText(td.getDataType());
-			item.addElement(TAG).addText(td.getTag());
-			item.addElement(DESCRIPTION).addText(td.getDescription());
-			item.addElement(CONSTRAINT).addText(td.getConstraint());
+			if(td.getDataType() != null) item.addElement(TYPE).addText(td.getDataType());
+			if(td.getTag() != null) item.addElement(TAG).addText(td.getTag());
+			if(td.getDescription() != null) item.addElement(DESCRIPTION).addText(td.getDescription());
+			if(td.getConstraint() != null) item.addElement(CONSTRAINT).addText(td.getConstraint());
 		}
 	}
 	
@@ -78,6 +79,7 @@ public class XmlUtil {
 		pd.setPluginName(root.elementText("name"));
 		pd.setLang(root.elementText("lang"));
 		pd.setKeywords(root.elementText("keywords"));
+		pd.setSimilars(root.elementText("simulars"));
 		pd.setCatalog(root.elementText("catalog"));
 		pd.setAuthorId(root.elementText("authorId"));
 		pd.setIcon(root.elementText("icon"));

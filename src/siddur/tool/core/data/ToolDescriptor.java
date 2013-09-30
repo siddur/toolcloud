@@ -8,6 +8,7 @@ public class ToolDescriptor {
 	private String catalog;
 	private String description;
 	private String keywords;
+	private String similars;
 	private String icon;
 	private String authorId;
 	private Date publishAt = new Date();
@@ -97,5 +98,11 @@ public class ToolDescriptor {
 	}
 	public void setKeywords(String keywords) {
 		this.keywords = keywords;
+	}
+	public String getSimilars() {
+		return similars;
+	}
+	public void setSimilars(String similars) {
+		this.similars = similars;
 	}
 }

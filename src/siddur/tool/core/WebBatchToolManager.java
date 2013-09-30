@@ -21,14 +21,12 @@ public class WebBatchToolManager extends BasicToolManager{
 		final String ticket = (String)context.get(Constants.TICKET);
 		if(tool instanceof ConsoleTool){
 			ConsoleTool ct = (ConsoleTool)tool;
-			if(ct.isOpen()){
-				if(ticket != null){
-					useLog = true;
-					LogCache logCache = LogCache.newInstance(ticket);
-					logCache.addFilter(new EscapeFilter());
-					logCache.addFilter(new FileLinkFilter(tw.getDescriptor().getPluginID()));
-					ct.setLogQueue(logCache);
-				}
+			if(ticket != null){
+				useLog = true;
+				LogCache logCache = LogCache.newInstance(ticket);
+				logCache.addFilter(new EscapeFilter());
+				logCache.addFilter(new FileLinkFilter(tw.getDescriptor().getPluginID()));
+				ct.setLogQueue(logCache);
 			}
 		}
 		

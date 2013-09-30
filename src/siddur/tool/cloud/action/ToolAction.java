@@ -90,7 +90,8 @@ public class ToolAction extends DBAction<Comment>{
 		Paging<IToolWrapper> paging = getVisitor().findAll(key, pageSize, pageIndex);
 		req.setAttribute("paging", paging);
 		req.setAttribute("key", key);
-		req.setAttribute("editable", RequestUtil.hasPerm(req, Permission.TOOL_EDIT));
+		req.setAttribute("mine", false);
+		req.setAttribute("editable", false);
 		return Result.forward("/jsp/tool/tool-list.jsp");
 		
 	}
@@ -115,6 +116,10 @@ public class ToolAction extends DBAction<Comment>{
 		getEntityManager(req, true).persist(c);
 		
 		req.setAttribute("canDelComment", RequestUtil.hasPerm(req, Permission.COMMENT_DEL));
+		
+		boolean editable = RequestUtil.hasPerm(req, Permission.TOOL_EDIT) 
+				&& tpu.getDescriptor().getAuthorId().equals(u.getUserId() + "");
+		req.setAttribute("updatable", editable);
 		
 		if(tpu.getDescriptor().getLang().equals("client-side")){
 			File f = new File(tpu.getToolfile());
@@ -146,8 +151,10 @@ public class ToolAction extends DBAction<Comment>{
 		Paging<IToolWrapper> paging = getVisitor().findMine(u.getUserId() + "", pageSize, pageIndex);
 		req.setAttribute("paging", paging);
 		
-		req.setAttribute("crumb", "manage > mytools");
-		return Result.forward("/jsp/tool/mytool.jsp");
+		req.setAttribute("mine", true);
+		req.setAttribute("editable", RequestUtil.hasPerm(req, Permission.TOOL_EDIT));
+		
+		return Result.forward("/jsp/tool/tool-list.jsp");
 	}
 	
 	@Perm(Permission.TOOL_EDIT)
@@ -155,7 +162,6 @@ public class ToolAction extends DBAction<Comment>{
 		String id = req.getParameter("toolId");
 		IToolWrapper tpu = getVisitor().findById(id);
 		req.setAttribute("tool", tpu);
-		req.setAttribute("crumb", "manage > mytools > update");
 		return Result.forward("/jsp/tool/tool-update.jsp");
 	}
 	
@@ -179,7 +185,7 @@ public class ToolAction extends DBAction<Comment>{
 		populate(req, pd);
 		
 		tpm.save(pd, toolFile);		
-		return list(req, resp);
+		return mine(req, resp);
 	}
 	
 	private void populate(HttpServletRequest req, ToolDescriptor pd){
@@ -302,6 +308,32 @@ public class ToolAction extends DBAction<Comment>{
 			delete(commentId, req);
 		}
 		return Result.redirect("tool/detail?toolId=" + req.getParameter("toolId"));
+	}
+	
+	@Perm(Permission.TOOL_SETTING)
+	public Result blocks(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
+		String id = req.getParameter("toolId");
+		List<IToolWrapper> list = getVisitor().findAll();
+		
+		if(id != null){
+			IToolWrapper tpu = getVisitor().findById(id);
+			list.remove(tpu);
+			req.setAttribute("current", tpu);
+			
+			String keywords = req.getParameter("keywords");
+			if(keywords != null){
+				String similars = req.getParameter("similars");
+				ToolDescriptor td = tpu.getDescriptor();
+				td.setKeywords(keywords);
+				td.setSimilars(similars);
+				tpm.save(td, null);
+				tpu = getVisitor().findById(id);
+			}
+		}
+		req.setAttribute("list", list);
+		req.setAttribute("crumb", "manage > setting");
+		return Result.forward("/jsp/tool/tool-blocks.jsp");
+		
 	}
 	
 	private MemoryVisitor getVisitor(){

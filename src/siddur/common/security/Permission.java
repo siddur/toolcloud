@@ -5,6 +5,7 @@ public enum Permission{
 	TOOL_PUB("工具", "发布工具"),
 	TOOL_EDIT("工具", "修改工具"),
 	TOOL_DEL("工具", "删除工具"),
+	TOOL_SETTING("工具", "辅助设置"),
 	
 	USER_VIEW("用户", "查看用户信息"),
 	USER_ADD("用户", "新增用户"),
@@ -18,6 +19,7 @@ public enum Permission{
 	ROLE_VIEW("角色", "查看角色权限"),
 	
 	COMMENT_DEL("评论", "删除评论");
+	
 	
 	private String catelog;
 	private String description;

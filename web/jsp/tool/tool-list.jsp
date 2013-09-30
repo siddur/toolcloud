@@ -6,6 +6,7 @@
 <%@ taglib tagdir="/WEB-INF/tags" prefix="s" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <s:site>
+<jsp:attribute name="headPart">
 <link rel="stylesheet" type="text/css" href="/toolcloud/css/tag.css" />
 <style>
 	.list{
@@ -27,8 +28,24 @@
 	}
 }
 </style>
-
+<script>
+	var url = "/toolcloud/ctrl/tool/list";
+	var onlyForMine = function(obj){
+		if(obj.checked){
+			url = "/toolcloud/ctrl/tool/mine";
+		}else{
+			url = "/toolcloud/ctrl/tool/list";
+		}
+		location.href = url;
+	}
+</script>
+</jsp:attribute>
+<jsp:body>
 <div class="screen">
+	<div style="text-align:right">
+		<input type="checkbox" id="mytoolsck" onchange="onlyForMine(this)" <c:if test="${mine}">checked="checked"</c:if>>
+		<label for="mytoolsck" style="font-size: 15px;">仅显示我发布的工具</label>
+	</div>
 	<c:forEach var="t" items="${paging.data}">
 		<div class="list left_float" onclick="location.href='/toolcloud/ctrl/tool/detail?toolId=${t.descriptor.pluginID}';">
 			<s:tool_detail updatable="${editable}" toolDescriptor="${t.descriptor}"></s:tool_detail>
@@ -36,4 +53,5 @@
 	</c:forEach>
 	<s:paging pageIndex="${paging.pageIndex}" pageSize="${paging.pageSize}" total="${paging.total}"/>
 </div>
+</jsp:body>
 </s:site>

@@ -18,10 +18,11 @@
 	<div>
 	<c:if test="${updatable == true}">
 		<a href="/toolcloud/ctrl/tool/update?toolId=${toolDescriptor.pluginID }">
-	</c:if>
 			<b>${toolDescriptor.pluginName}</b>
-	<c:if test="${updatable == true}">
 		</a>
+	</c:if>
+	<c:if test="${updatable != true}">
+		<b>${toolDescriptor.pluginName}</b>
 	</c:if>
 	</div>
 	<div>

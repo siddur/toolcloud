@@ -72,6 +72,20 @@
 		}
 		$("#run_btn").attr("disabled", false);
 	}
+
+	var shown = false;
+	function switchConsole(){
+		var a = $("#switcher");
+		if(!shown){
+			shown = true;
+			a.next().show();
+			a.html("隐藏控制台");
+		}else{
+			shown = false;
+			a.next().hide();
+			a.html("显示控制台");
+		}
+	}
 </script>
 <style>
 	.detail_head:AFTER{
@@ -84,7 +98,6 @@
 	.input_output{
 		border: solid 2px green;
 		padding: 6px;
-		min-height: 400px;
 	}
 	
 	.input_container{
@@ -96,7 +109,7 @@
 	}
 	.comments{
 		float:left;
-		margin-top: 10px;
+		margin-top: 20px;
 	}
 	.input_item{
 		background-color: #EEEEEE;
@@ -119,6 +132,9 @@
 	.output_container{
 		padding:4px;
 	}
+	#switcher{
+		font-size:13px;
+	}
 </style>
 </jsp:attribute>
 <jsp:body>
@@ -137,16 +153,21 @@
 				<s:input inputModel="${input}" index="${status.index}"></s:input>
 			</c:forEach>
 			</div>
+		<c:if test="${tool.descriptor.lang == 'java'}">
 			<div class="output_container">
 			<c:forEach var="output" items="${tool.descriptor.outputModel}">
 				<s:output_display outputData="${output}"></s:output_display>
 			</c:forEach>
 			</div>
-			<c:if test="${needConsole}">
-				<div style="width:600px; height:300px;">
+		</c:if>
+		<c:if test="${needConsole}">
+			<div>
+				<a id="switcher" href="javascript:switchConsole()">显示控制台</a>
+				<div style="width:600px; height:300px;display:none;">
 					<s:console></s:console>
 				</div>
-			</c:if>
+			</div>
+		</c:if>
 		</div>
 		<div class="comments">
 			<c:forEach var="c" items="${comments}">

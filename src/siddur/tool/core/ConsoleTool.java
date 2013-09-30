@@ -10,19 +10,6 @@ import java.io.OutputStream;
 public abstract class ConsoleTool implements ITool{
 
 	private LogCache lc;
-	private boolean open = false;
-	
-	protected void closeLog(){
-		open = false;
-	}
-	
-	protected void openLog(){
-		open = true;
-	}
-	
-	public boolean isOpen(){
-		return this.open;
-	}
 	
 	public void setLogQueue(LogCache logCache) {
 		this.lc = logCache;
@@ -47,7 +34,6 @@ public abstract class ConsoleTool implements ITool{
 	
 	@Override
 	public void init() {
-		openLog();
 	}
 	
 	@Override

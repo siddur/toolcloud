@@ -3,7 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib tagdir="/WEB-INF/tags" prefix="s" %>
 <c:set var="td" scope="page" value="${tool.descriptor}"></c:set>
-<s:manage>
+<s:site>
 <jsp:attribute name="headPart">
 <script>
 <c:if test="${td.lang != 'client-side' }">
@@ -127,4 +127,4 @@
 		</form>
 	</div>
 </jsp:body>
-</s:manage>
+</s:site>
