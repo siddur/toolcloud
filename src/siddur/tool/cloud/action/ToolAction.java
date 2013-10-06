@@ -33,6 +33,7 @@ import siddur.tool.core.ConsoleTool;
 import siddur.tool.core.IToolManager;
 import siddur.tool.core.IToolWrapper;
 import siddur.tool.core.MemoryVisitor;
+import siddur.tool.core.ScriptUtil;
 import siddur.tool.core.data.DataTemplate;
 import siddur.tool.core.data.ToolDescriptor;
 
@@ -121,6 +122,8 @@ public class ToolAction extends DBAction<Comment>{
 				&& tpu.getDescriptor().getAuthorId().equals(u.getUserId() + "");
 		req.setAttribute("updatable", editable);
 		
+		req.setAttribute("similars", getVisitor().findAll(tpu.getDescriptor().getSimilars()));
+		
 		if(tpu.getDescriptor().getLang().equals("client-side")){
 			File f = new File(tpu.getToolfile());
 			File dir = f.getParentFile();
@@ -135,6 +138,7 @@ public class ToolAction extends DBAction<Comment>{
 	}
 	
 	public Result toAdd(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
+		req.setAttribute("langs", ScriptUtil.getLangs());
 		return Result.forward("/jsp/tool/tool-add.jsp");
 	}
 	
@@ -244,7 +248,7 @@ public class ToolAction extends DBAction<Comment>{
 		return list(req, resp);
 	}
 	
-	@Perm(Permission.TOOL_RUN)
+	@DoNotAuthenticate
 	public Result exec(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
 		String toolID = (req.getParameter("id"));
 		String[] params = req.getParameterValues("input[]");
@@ -313,12 +317,10 @@ public class ToolAction extends DBAction<Comment>{
 	@Perm(Permission.TOOL_SETTING)
 	public Result blocks(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
 		String id = req.getParameter("toolId");
-		List<IToolWrapper> list = getVisitor().findAll();
-		
+		List<IToolWrapper> list;
+		IToolWrapper tpu = null;
 		if(id != null){
-			IToolWrapper tpu = getVisitor().findById(id);
-			list.remove(tpu);
-			req.setAttribute("current", tpu);
+			tpu = getVisitor().findById(id);
 			
 			String keywords = req.getParameter("keywords");
 			if(keywords != null){
@@ -327,9 +329,16 @@ public class ToolAction extends DBAction<Comment>{
 				td.setKeywords(keywords);
 				td.setSimilars(similars);
 				tpm.save(td, null);
+				list = getVisitor().findAll();
 				tpu = getVisitor().findById(id);
+			}else{
+				list = getVisitor().findAll();
 			}
+		}else{
+			list = getVisitor().findAll();
+			tpu = list.get(0);
 		}
+		req.setAttribute("current", tpu);
 		req.setAttribute("list", list);
 		req.setAttribute("crumb", "manage > setting");
 		return Result.forward("/jsp/tool/tool-blocks.jsp");

@@ -13,6 +13,7 @@
   		height: 0;
 	}
 	.comments{
+		clear:both;
 		float:left;
 		margin-top: 10px;
 	}
@@ -51,6 +52,22 @@
 			<s:tool_detail toolDescriptor="${tool.descriptor}"/>
 		</div>
 		<iframe class="tool_container" name="tool_container" src="/toolcloud/file/${toolFile}"></iframe>
+		<div style="clear:left; padding-top:20px;">
+			<c:forEach var="t" items="${similars}">
+			<div class="left_float" style="padding-right:20px; padding-bottom:5px;">
+				<a id="${t.descriptor.pluginID}" href="/toolcloud/ctrl/tool/detail?toolId=${t.descriptor.pluginID}">
+					<c:choose>
+						<c:when test="${empty t.descriptor.icon}">
+							<div class="tool_logo"><span>${t.descriptor.pluginName}</span></div>
+						</c:when>
+						<c:otherwise>
+							<img height="64" width="64" src="${t.descriptor.displayIcon}" style="border:1px #333333 inset;"/>
+						</c:otherwise>
+					</c:choose>
+				</a>
+			</div>
+			</c:forEach>
+		</div>
 		<div class="comments">
 			<c:forEach var="c" items="${comments}">
 				<s:comment comment="${c}" 

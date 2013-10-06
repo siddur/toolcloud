@@ -46,7 +46,7 @@ public class UserAction extends DBAction<UserInfo>{
 				return Result.redirect("tool/home");
 			}
 		}
-		return Result.redirect("/login.jsp");
+		return Result.redirect("/jsp/user/login.jsp");
 	}
 	
 	public Result logout(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{

@@ -14,6 +14,12 @@
 		border-bottom: solid 1px green;
 	}
 	
+	.current_item{
+		float:left;
+		padding:10px;
+		background-color: #CCCCCC;
+	}
+	
 	.item{
 		float:left;
 		padding:10px;
@@ -73,10 +79,20 @@
 		</div>
 		<div class="fieldlabel">关联的工具:</div>
 		<c:forEach var="item" items="${list}">
-			<div class="item">
-				<span class="left_float ui-icon ui-icon-circle-arrow-n" onclick="location.href='/toolcloud/ctrl/tool/blocks?toolId=${item.descriptor.pluginID}'"></span>
-				<span class="txt" id="${item.descriptor.pluginID}" onclick="select(this)">${item.descriptor.pluginName}</span>		
-			</div>
+				<c:choose>
+					<c:when test="${item.descriptor.pluginID == current.descriptor.pluginID}">
+						<div class="current_item">
+							<span class="left_float ui-icon ui-icon-circle-arrow-n"></span>
+							<span class="txt" id="${item.descriptor.pluginID}">${item.descriptor.pluginName}</span>		
+						</div>
+					</c:when>
+					<c:otherwise>
+						<div class="item">
+							<span class="left_float ui-icon ui-icon-circle-arrow-n" onclick="location.href='/toolcloud/ctrl/tool/blocks?toolId=${item.descriptor.pluginID}'"></span>
+							<span class="txt" id="${item.descriptor.pluginID}" onclick="select(this)">${item.descriptor.pluginName}</span>		
+						</div>
+					</c:otherwise>
+				</c:choose>
 		</c:forEach>
 	</form>
 </div>

@@ -3,6 +3,8 @@
 <%@ taglib prefix="f" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<s:site>
+<jsp:attribute name="headPart">
 <style>
 .tool_item {
 	float:left;
@@ -57,7 +59,8 @@
 	text-decoration: none;
 }
 </style>
-<s:site>
+</jsp:attribute>
+<jsp:body>
 	<div class="screen">
 		<div style="width:800px; float:left;">
 			<div style="width:100%;">
@@ -109,4 +112,5 @@
 			</div>
 		</div>
 	</div>
+</jsp:body>
 </s:site>

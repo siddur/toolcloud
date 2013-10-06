@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map.Entry;
+import java.util.StringTokenizer;
+
+import org.apache.commons.lang3.StringUtils;
 
 import siddur.common.miscellaneous.Paging;
 import siddur.tool.core.data.ToolDescriptor;
@@ -20,12 +23,27 @@ public class MemoryVisitor extends MapVisitor<String, IToolWrapper>{
 		return new ArrayList<IToolWrapper>(map.values());
 	}
 	
+	public List<IToolWrapper> findAll(String ids){
+		if(StringUtils.isEmpty(ids)){
+			return null;
+		}
+		List<IToolWrapper> list = new ArrayList<IToolWrapper>();
+		StringTokenizer st = new StringTokenizer(ids, ",");
+		while(st.hasMoreTokens()){
+			IToolWrapper t = findById(st.nextToken());
+			if(t != null){
+				list.add(t);
+			}
+		}
+		return list;
+	}
+	
 	public List<IToolWrapper> findAll(List<String> ids){
 		List<IToolWrapper> list = new ArrayList<IToolWrapper>(ids.size());
 		for (String id : ids) {
 			IToolWrapper t = findById(id);
 			if(t != null)
-				list.add(findById(id));
+				list.add(t);
 		}
 		return list;
 	}

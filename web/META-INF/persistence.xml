@@ -34,6 +34,7 @@
         	<property name="hibernate.c3p0.max_size" value="10"/>
         	<property name="hibernate.c3p0.timeout" value="120"/>
         	<property name="hibernate.c3p0.max_statements" value="50"/>
+        	<property name="hibernate.c3p0.acquire_increment" value="2"/>   
         </properties>
     </persistence-unit>
 </persistence>

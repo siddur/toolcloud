@@ -86,16 +86,11 @@
 			<div>
 				<span class="label">编程语言:</span>
 				<select id="lang" name="lang" onchange="selectLang(this.value)">
-				<%
-					for(String lang : ScriptUtil.getLangs())
-					{
-				%>
-					<option value="<%=lang%>" <%if(lang.equals("java")){%>selected="selected"<%}%>>
-						<%=lang%>
+				<c:forEach var="lang" items="${langs}">
+					<option value="${lang}" <c:if test="${lang == 'java'}"> selected="selected" </c:if> >
+						${lang}
 					</option>
-				<%
-					}
-				%>
+				</c:forEach>
 					<option value="cmd">cmd</option>
 					<option value="bash">bash</option>
 					<option value="client-side">javascript</option>

@@ -8,7 +8,6 @@
 	.login-panel{
 		width: 400px;
 		margin: 50px auto;
-		
 	}
 	.login-head{
 		border-radius: 4px 4px 0 0;

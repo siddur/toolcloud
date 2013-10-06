@@ -34,19 +34,12 @@ span.unselected{
 
 .basicSearchInput {
 	border: none;
-	width: 180px;
+	width: 160px;
 	color: #9B9B9B;
 }
 
 .basicSearchInput:focus {
 	color: black;
-}
-
-.basic_search_btn {
-	float: right;
-	position: relative;
-    right: 3px;
-    top: 1px;
 }
 
 .basicSearch span {

@@ -65,7 +65,7 @@ public class WebBatchToolManager extends BasicToolManager{
 			String[] itemParams = new String[inputs.length];
 			for (int i = 0; i < itemParams.length; i++) {
 				if(keys.contains(i)){
-					itemParams[i] = splittedMap.get(i)[0];
+					itemParams[i] = splittedMap.get(i)[x];
 				}else{
 					itemParams[i] = inputs[i];
 				}

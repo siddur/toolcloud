@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.StringTokenizer;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
@@ -208,25 +209,38 @@ public class BasicToolManager implements IToolManager{
 			for (int i = 0; i < outputModel.length; i++) {
 				if(outputModel[i].isFile()){
 					String path = output[i];
-					File src = null;;
-					
-					String relativePath = null;
-					if(FileSystemUtil.isRelative(path)){
-						src = new File(FileSystemUtil.getTempDir(), path);
-						relativePath = path;
+					if(path.indexOf("|||") > 0){
+						StringBuilder sb = new StringBuilder();
+						StringTokenizer st = new StringTokenizer(path, "|||");
+						while(st.hasMoreTokens()){
+							sb.append(dealFile(st.nextToken()));
+							sb.append("|||");
+						}
+						output[i] = sb.substring(0, sb.length() - 3);
 					}else{
-						src = new File(path);
-						relativePath = TempFileUtil.getRelativePath(src.getCanonicalPath());
+						output[i] = dealFile(path);
 					}
-					File dest = new File(FileSystemUtil.getOutputDir(), relativePath);
-					if(src.isFile())
-						FileUtils.copyFile(src, dest);
-					else if(src.isDirectory())
-						FileUtils.copyDirectory(src, dest);
-					output[i] = relativePath;
 				}
 			}
 		}
 	}
 	
+	private String dealFile(String path) throws IOException{
+		File src = null;
+		
+		String relativePath = null;
+		if(FileSystemUtil.isRelative(path)){
+			src = new File(FileSystemUtil.getTempDir(), path);
+			relativePath = path;
+		}else{
+			src = new File(path);
+			relativePath = TempFileUtil.getRelativePath(src.getCanonicalPath());
+		}
+		File dest = new File(FileSystemUtil.getOutputDir(), relativePath);
+		if(src.isFile())
+			FileUtils.copyFile(src, dest);
+		else if(src.isDirectory())
+			FileUtils.copyDirectory(src, dest);
+		return relativePath;
+	}
 }

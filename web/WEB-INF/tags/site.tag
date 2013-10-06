@@ -2,9 +2,10 @@
 <%@taglib prefix="s" tagdir="/WEB-INF/tags"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ attribute name="headPart" fragment="true" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 	<title>Tool Cloud</title>
 	<script type="text/javascript" src="/toolcloud/jquery/js/jquery-1.9.1.js"></script>
 	<script type="text/javascript" src="/toolcloud/js/search.js"></script>
@@ -37,7 +38,7 @@
 					<a href="/toolcloud"><span class="ui-icon ui-icon-home"></span>首页</a>
 				</li>
 				<li>
-					<a href="/toolcloud/ctrl/user/list"><span class="ui-icon ui-icon-gear"></span>管理</a>
+					<a href="/toolcloud/ctrl/tool/blocks"><span class="ui-icon ui-icon-gear"></span>管理</a>
 				</li>
 				<li>
 					<a href="/toolcloud/ctrl/user/list"><span class="ui-icon ui-icon-help"></span>文档</a>
@@ -46,7 +47,7 @@
 					<a href="/toolcloud/ctrl/user/list"><span class="ui-icon ui-icon-arrowthickstop-1-s"></span>下载</a>
 				</li>
 			</ul>
-			<div style="float: right; position: relative; right:50px; margin-top:4px;">
+			<div style="float: right; position: relative; right:50px; margin:4px;">
 				<s:basic-serach></s:basic-serach>
 			</div>
 		</div>

@@ -22,32 +22,35 @@ public class ToolPersister {
 		File parent = new File(FileSystemUtil.getToolDir(), td.getPluginID());
 		
 		EntityManager em = JPAUtil.newEntityMgr();
-		ToolInfo tool = em.find(ToolInfo.class, td.getPluginID());
-		if(tool == null){
-			//13=new Date().toString().length
-			if(toolFile.getName().endsWith(".zip")){
-				File dir = null;
-				File unzipped = ZipUtil.unZip(toolFile);
-				File[] list = unzipped.listFiles();
-				if(list.length == 1){
-					File f = list[0];
-					if(f.isDirectory()){
-						dir = f;
-					}else{
-						dir = unzipped;
+		try {
+			ToolInfo tool = em.find(ToolInfo.class, td.getPluginID());
+			if(tool == null){
+				//13=new Date().toString().length
+				if(toolFile.getName().endsWith(".zip")){
+					File dir = null;
+					File unzipped = ZipUtil.unZip(toolFile);
+					File[] list = unzipped.listFiles();
+					if(list.length == 1){
+						File f = list[0];
+						if(f.isDirectory()){
+							dir = f;
+						}else{
+							dir = unzipped;
+						}
 					}
+					FileUtils.copyDirectory(dir, parent);
+				}else{
+					File dest = new File(parent, toolFile.getName().substring(13));
+					FileUtils.copyFile(toolFile, dest);
 				}
-				FileUtils.copyDirectory(dir, parent);
-			}else{
-				File dest = new File(parent, toolFile.getName().substring(13));
-				FileUtils.copyFile(toolFile, dest);
+				tool = new ToolInfo();
+				tool.setId(td.getPluginID());
+				EntityTransaction et = em.getTransaction();
+				et.begin();
+				em.persist(tool);
+				et.commit();
 			}
-			tool = new ToolInfo();
-			tool.setId(td.getPluginID());
-			EntityTransaction et = em.getTransaction();
-			et.begin();
-			em.persist(tool);
-			et.commit();
+		} finally {
 			em.close();
 		}
 		
@@ -70,12 +73,15 @@ public class ToolPersister {
 	
 	public void updateToolStatus(String toolID, int status){
 		EntityManager em = JPAUtil.newEntityMgr();
-		ToolInfo tool = em.find(ToolInfo.class, toolID);
-		EntityTransaction et = em.getTransaction();
-		et.begin();
-		tool.setStatus(status);
-		et.commit();
-		em.close();
+		try{
+			ToolInfo tool = em.find(ToolInfo.class, toolID);
+			EntityTransaction et = em.getTransaction();
+			et.begin();
+			tool.setStatus(status);
+			et.commit();
+		}finally{
+			em.close();
+		}
 	}
 	
 	public void updateToolStatus(String toolID, int status, EntityManager em){

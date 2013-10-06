@@ -26,16 +26,21 @@ Console = function(url){
 	
 	this.loop = function(){
 		this.times += 1;
-		var msg = this._fetchOne();
-		if(msg){
-			this.log(msg);
-		}
+		this._log();
 		if(this.active && this.times < 100){
 			setTimeout.call(this, this.loop, 100);
 		}
 	}
 	
+	this._log = function(){
+		var msg = this._fetchOne();
+		if(msg){
+			this.log(msg);
+		}
+	}
+	
 	this.close = function(){
+		setTimeout.call(this, this._log, 100);
 		this.active = false;
 	}
 	

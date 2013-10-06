@@ -3,6 +3,7 @@ package siddur.tool.core;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -75,6 +76,8 @@ public class LogCache {
 		}
 	}
 	
+	
+	//produce
 	public void log(String msg){
 		lock.lock();
 		try {
@@ -136,19 +139,20 @@ public class LogCache {
 				index = -1;
 			}
 			
-			private String getLine(){
-				return new String(buffer, 0, index + 1);
+			private String getLine() throws UnsupportedEncodingException{
+				return new String(buffer, 0, index + 1, "gbk");
 			}
 			
 			@Override
 			public void close() throws IOException {
 				log(getLine());
-//				toClose = true;
+				toClose = true;
 			}
 			
 		};
 	}
 	
+	//consume
 	//access log cache every 200ms
 	private List<String> accessLogs(){
 		List<String> flip = new ArrayList<String>();
@@ -179,7 +183,6 @@ public class LogCache {
 	private List<String> filter(List<String> logs){
 		List<String> newLogs = new ArrayList<String>(logs.size());
 		for(String log : logs){
-			System.out.println("===fetch===" + log);
 			String newLog = log;
 			for(LogFilter f : filters){
 				newLog = f.doFilter(newLog);

@@ -11,6 +11,8 @@
 	var _console;
 	</c:if>
 	function doSubmit(){
+		$(".duplication").remove();
+		
 		$(".tableHidden").each(function(idx, item){
 			item.setValue();
 		});
@@ -58,19 +60,37 @@
 		<c:if test="${needConsole}">
 		_console.close();
 		</c:if>
+		$("#run_btn").attr("disabled", false);
 		if(results){
 			if(results != "error"){
 				$("#run_msg").css("color", "green").html("运行成功");
 				var r = eval(results);
 				$(".output").each(function(idx, item){
-					var value = r[idx];
-					item.populate(value);
+					_showEachResult(r[idx], item);
 				});
 			}else{
 				$("#run_msg").css("color", "red").html("运行失败");
 			}
 		}
-		$("#run_btn").attr("disabled", false);
+	}
+	
+	function _showEachResult(value, ui){
+		if(value.indexOf("|||") > 0){
+			var a = value.split("|||");
+			for(var i=0; i<a.length; i++){
+				if(i > 0){
+					var _ui = $(ui).clone();
+					_ui.addClass("duplication");
+					var _ui0 = _ui[0];
+					_ui0.populate = populate;
+					$(ui).after(_ui);
+					ui = _ui0;
+				}
+				ui.populate(a[i]);
+			}
+		}else{
+			ui.populate(value);
+		}
 	}
 
 	var shown = false;
@@ -110,6 +130,7 @@
 	.comments{
 		float:left;
 		margin-top: 20px;
+		clear:both;
 	}
 	.input_item{
 		background-color: #EEEEEE;
@@ -168,6 +189,22 @@
 				</div>
 			</div>
 		</c:if>
+		</div>
+		<div style="clear:left; padding-top:20px;">
+			<c:forEach var="t" items="${similars}">
+			<div class="left_float" style="padding-right:20px; padding-bottom:5px;">
+				<a id="${t.descriptor.pluginID}" href="/toolcloud/ctrl/tool/detail?toolId=${t.descriptor.pluginID}">
+					<c:choose>
+						<c:when test="${empty t.descriptor.icon}">
+							<div class="tool_logo"><span>${t.descriptor.pluginName}</span></div>
+						</c:when>
+						<c:otherwise>
+							<img height="64" width="64" src="${t.descriptor.displayIcon}" style="border:1px #333333 inset;"/>
+						</c:otherwise>
+					</c:choose>
+				</a>
+			</div>
+			</c:forEach>
 		</div>
 		<div class="comments">
 			<c:forEach var="c" items="${comments}">
