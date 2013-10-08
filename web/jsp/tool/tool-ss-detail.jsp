@@ -4,6 +4,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <s:site>
 <jsp:attribute name="headPart">
+<meta name="keywords" content="${tool.descriptor.keywords}"/>
+<meta name="description" content="${tool.descriptor.description}"/>
 <script>
 	var runUrl = "/toolcloud/ctrl/tool/exec";
 	<c:if test="${needConsole}">
