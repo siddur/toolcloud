@@ -2,6 +2,8 @@ package siddur.tool.core.data;
 
 import java.util.Date;
 
+import org.apache.commons.lang3.StringUtils;
+
 public class ToolDescriptor {
 	private String pluginName;
 	private String lang;
@@ -104,5 +106,25 @@ public class ToolDescriptor {
 	}
 	public void setSimilars(String similars) {
 		this.similars = similars;
+	}
+	
+	public boolean deleSimilar(String toolID){
+		String similars = this.similars;
+		if(StringUtils.isEmpty(similars))
+			return false;
+		int index = similars.indexOf(toolID);
+		if(index > -1){
+			similars = similars.replace(toolID, "").replace(",,", ",");
+			if(similars.endsWith(",")){
+				similars = similars.substring(0, similars.length() - 1);
+			}
+			else if(similars.startsWith(",")){
+				similars = similars.substring(1, similars.length());
+			}
+			
+			this.similars = similars;
+			return true;
+		}
+		return false;
 	}
 }

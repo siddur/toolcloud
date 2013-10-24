@@ -15,6 +15,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.Logger;
+
 import siddur.common.miscellaneous.ClickInfo;
 import siddur.common.miscellaneous.Comment;
 import siddur.common.miscellaneous.Constants;
@@ -42,6 +44,7 @@ import com.google.gson.Gson;
 
 public class ToolAction extends DBAction<Comment>{
 
+	private Logger log4j = Logger.getLogger(ToolAction.class);
 	public static final DateFormat DATEFORMAT = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 	private IToolManager tpm;
 	
@@ -244,8 +247,17 @@ public class ToolAction extends DBAction<Comment>{
 	
 	@Perm(Permission.TOOL_DEL)
 	public Result delete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
-		tpm.delete(req.getParameter("id"));
-		return list(req, resp);
+		String toolID = (req.getParameter("id"));
+		List<IToolWrapper> list = getVisitor().findAll();
+		for (IToolWrapper tw : list) {
+			ToolDescriptor td = tw.getDescriptor();
+			boolean dele = td.deleSimilar(toolID);
+			if(dele){
+				tpm.save(td);
+			}
+		}
+		tpm.delete(toolID);
+		return blocks(req, resp);
 	}
 	
 	@DoNotAuthenticate
@@ -272,11 +284,13 @@ public class ToolAction extends DBAction<Comment>{
 		UserInfo u = (UserInfo)req.getSession().getAttribute("user");
 		if(u != null){
 			run.setWho(u.getUsername());
+			context.put(Constants.USER, u);
 		}
 		run.setIp(req.getRemoteAddr());
 		try {
 			results = tpm.run(toolID, params, context);
 		}catch(Exception e){
+			log4j.warn(e.getMessage(), e);
 			return Result.ajax("error");
 		}finally{
 			run.setEndAt(new Date());
@@ -328,7 +342,7 @@ public class ToolAction extends DBAction<Comment>{
 				ToolDescriptor td = tpu.getDescriptor();
 				td.setKeywords(keywords);
 				td.setSimilars(similars);
-				tpm.save(td, null);
+				tpm.save(td);
 				list = getVisitor().findAll();
 				tpu = getVisitor().findById(id);
 			}else{

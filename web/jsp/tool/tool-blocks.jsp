@@ -17,7 +17,7 @@
 	.current_item{
 		float:left;
 		padding:10px;
-		background-color: #CCCCCC;
+		border:solid 1px red;
 	}
 	
 	.item{
@@ -52,6 +52,12 @@
 	var select = function(obj){
 		$(obj).toggleClass("selected");
 	}
+
+	var deleTool = function(id){
+		if(confirm("确实要删除吗？")){
+			location.href = "/toolcloud/ctrl/tool/delete?id=" + id;
+		}
+	}
 </script>
 </jsp:attribute>
 <jsp:body>
@@ -63,7 +69,8 @@
 		<div id="currentItem">
 			<c:if test="${not empty current}">
 				<div>
-					<a href="/toolcloud/ctrl/tool/update?toolId=${toolDescriptor.pluginID }" class="txt">${current.descriptor.pluginName}</a>
+					<a href="/toolcloud/ctrl/tool/update?toolId=${current.descriptor.pluginID }" class="txt">${current.descriptor.pluginName}</a>
+					<input class="btn" type="button" value="删除" onclick="deleTool('${current.descriptor.pluginID }')">
 				</div>
 				<div>${current.descriptor.description}</div>
 				<div>

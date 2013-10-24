@@ -34,7 +34,6 @@ public class UserAction extends DBAction<UserInfo>{
 		try {
 			u = q.getSingleResult();
 		} catch (Exception e) {
-			e.printStackTrace();
 		}
 		if(u != null){
 			if(u.getPassword().equals(password)){

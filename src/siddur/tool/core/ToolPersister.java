@@ -5,6 +5,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.log4j.Logger;
 
 import siddur.common.jpa.JPAUtil;
 import siddur.common.miscellaneous.Constants;
@@ -14,17 +15,20 @@ import siddur.tool.core.data.ToolDescriptor;
 import siddur.tool.core.data.XmlUtil;
 
 public class ToolPersister {
-
+	
+	private final static Logger log4j = Logger.getLogger(ToolPersister.class);
 	/*
 	 * save or update
 	 */
 	public void saveTool(ToolDescriptor td, File toolFile) throws Exception{
 		File parent = new File(FileSystemUtil.getToolDir(), td.getPluginID());
 		
+		log4j.info("Start to save tool with ID " + td.getPluginID());
 		EntityManager em = JPAUtil.newEntityMgr();
 		try {
 			ToolInfo tool = em.find(ToolInfo.class, td.getPluginID());
 			if(tool == null){
+				log4j.info("This is a new tool");
 				//13=new Date().toString().length
 				if(toolFile.getName().endsWith(".zip")){
 					File dir = null;
@@ -38,6 +42,7 @@ public class ToolPersister {
 							dir = unzipped;
 						}
 					}
+					log4j.info("Unzip the tool file");
 					FileUtils.copyDirectory(dir, parent);
 				}else{
 					File dest = new File(parent, toolFile.getName().substring(13));
@@ -48,6 +53,7 @@ public class ToolPersister {
 				EntityTransaction et = em.getTransaction();
 				et.begin();
 				em.persist(tool);
+				log4j.info("Save to database");
 				et.commit();
 			}
 		} finally {
@@ -55,6 +61,8 @@ public class ToolPersister {
 		}
 		
 		XmlUtil.toXml(td, new File(parent, Constants.TOOL_PLUGIN_FILENAME));
+		log4j.info("Save to file system");
+		log4j.info("Successfully save the tool with ID " + td.getPluginID());
 	}
 	
 	public void updateToolFile(File toolFile, String toolID) throws Exception{

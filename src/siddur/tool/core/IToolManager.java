@@ -30,6 +30,11 @@ public interface IToolManager{
 	 */
 	void save(ToolDescriptor pd, File toolFile); 
 	
+	/*
+	 * Update pd
+	 */
+	void save(ToolDescriptor pd);
+	
 	
 	String[] run(String toolID, String[]params,  Map<String, Object> context);
 	
