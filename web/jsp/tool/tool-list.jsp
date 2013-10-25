@@ -19,8 +19,14 @@
 		padding:3px;
 	}
 	
+	.notApproved{
+	 	background-color: #888888;
+	}
+	
+	
 	.list:hover{
 		cursor:pointer;
+		box-shadow: 2px 3px 3px rgba(100, 0, 0, 0.5) ;
 	}
 	
 	.paging{
@@ -47,7 +53,8 @@
 		<label for="mytoolsck" style="font-size: 15px;">仅显示我发布的工具</label>
 	</div>
 	<c:forEach var="t" items="${paging.data}">
-		<div class="list left_float" onclick="location.href='/toolcloud/ctrl/tool/detail?toolId=${t.descriptor.pluginID}';">
+		<c:if test="${t.status == 0}"></c:if>
+		<div class="list <c:if test="${t.status == 0}">notApproved</c:if> left_float" onclick="location.href='/toolcloud/ctrl/tool/detail?toolId=${t.descriptor.pluginID}';">
 			<s:tool_detail updatable="${editable}" toolDescriptor="${t.descriptor}"></s:tool_detail>
 		</div>
 	</c:forEach>

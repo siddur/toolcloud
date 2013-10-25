@@ -16,5 +16,5 @@ public class Constants {
 	public static final String SPLIT_MAP = "split_map";
 	
 	
-	public static final String OWN = "own";
+	public static final String HAS_PERM = "hasPerm";
 }

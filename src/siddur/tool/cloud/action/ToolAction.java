@@ -31,6 +31,7 @@ import siddur.common.security.UserInfo;
 import siddur.common.web.ActionMapper.Result;
 import siddur.common.web.DBAction;
 import siddur.common.web.Perm;
+import siddur.tool.cloud.ToolInfo;
 import siddur.tool.core.ConsoleTool;
 import siddur.tool.core.IToolManager;
 import siddur.tool.core.IToolWrapper;
@@ -91,7 +92,7 @@ public class ToolAction extends DBAction<Comment>{
 			pageIndex = Integer.parseInt(req.getParameter("pageIndex"));
 		} catch (NumberFormatException e) {
 		}
-		Paging<IToolWrapper> paging = getVisitor().findAll(key, pageSize, pageIndex);
+		Paging<IToolWrapper> paging = getVisitor().findAll(key, pageSize, pageIndex, true);
 		req.setAttribute("paging", paging);
 		req.setAttribute("key", key);
 		req.setAttribute("mine", false);
@@ -117,6 +118,14 @@ public class ToolAction extends DBAction<Comment>{
 		if(u != null){
 			c.setWho(u.getUsername());
 		}
+		
+		if(tpu.getStatus() == 1){
+			ToolInfo tInfo = getEntityManager(req).find(ToolInfo.class, id);
+			if(tInfo != null){
+				tInfo.setClicks(tInfo.getClicks() + 1);
+				getEntityManager(req, true).persist(tInfo);
+			}
+		}
 		getEntityManager(req, true).persist(c);
 		
 		req.setAttribute("canDelComment", RequestUtil.hasPerm(req, Permission.COMMENT_DEL));
@@ -124,7 +133,7 @@ public class ToolAction extends DBAction<Comment>{
 		boolean editable = RequestUtil.hasPerm(req, Permission.TOOL_EDIT) 
 				&& tpu.getDescriptor().getAuthorId().equals(u.getUserId() + "");
 		req.setAttribute("updatable", editable);
-		
+		req.setAttribute("approve", RequestUtil.hasPerm(req, Permission.TOOL_APPROVE));
 		req.setAttribute("similars", getVisitor().findAll(tpu.getDescriptor().getSimilars()));
 		
 		if(tpu.getDescriptor().getLang().equals("client-side")){
@@ -155,7 +164,12 @@ public class ToolAction extends DBAction<Comment>{
 		}
 		
 		UserInfo u = (UserInfo)req.getSession().getAttribute("user");
-		Paging<IToolWrapper> paging = getVisitor().findMine(u.getUserId() + "", pageSize, pageIndex);
+		Paging<IToolWrapper> paging = null;
+		if(u.isAdmin()){
+			paging = getVisitor().findAll("", pageSize, pageIndex, false);
+		}else{
+			paging = getVisitor().findMine(u.getUserId() + "", pageSize, pageIndex);
+		}
 		req.setAttribute("paging", paging);
 		
 		req.setAttribute("mine", true);
@@ -284,6 +298,9 @@ public class ToolAction extends DBAction<Comment>{
 		UserInfo u = (UserInfo)req.getSession().getAttribute("user");
 		if(u != null){
 			run.setWho(u.getUsername());
+			
+			boolean hasPerm = RequestUtil.hasPerm(req, Permission.TOOL_RUN);
+			context.put(Constants.HAS_PERM, hasPerm);
 			context.put(Constants.USER, u);
 		}
 		run.setIp(req.getRemoteAddr());
@@ -296,6 +313,14 @@ public class ToolAction extends DBAction<Comment>{
 			run.setEndAt(new Date());
 			run.setSuccess(results != null);
 			getEntityManager(req, true).persist(run);
+			
+			if(tpm.getToolWrapper(toolID).getStatus() == 1){
+				ToolInfo tInfo = getEntityManager(req).find(ToolInfo.class, toolID);
+				if(tInfo != null){
+					tInfo.setRuns(tInfo.getRuns() + 1);
+					getEntityManager(req, true).persist(tInfo);
+				}
+			}
 		}
 		return Result.ajax(new Gson().toJson(results));
 	}
@@ -326,6 +351,13 @@ public class ToolAction extends DBAction<Comment>{
 			delete(commentId, req);
 		}
 		return Result.redirect("tool/detail?toolId=" + req.getParameter("toolId"));
+	}
+	
+	@Perm(Permission.TOOL_APPROVE)
+	public Result approve(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
+		String toolId = req.getParameter("toolId");
+		tpm.approve(toolId);
+		return Result.redirect("tool/detail?toolId=" + toolId);
 	}
 	
 	@Perm(Permission.TOOL_SETTING)

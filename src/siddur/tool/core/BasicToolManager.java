@@ -64,7 +64,7 @@ public class BasicToolManager implements IToolManager{
 				toolInfo = tempEm.find(ToolInfo.class, toolID);
 			}
 			if(toolInfo != null){
-				tw.setStatus(toolInfo.getStatus());
+				tw.setStatus(1);
 			}
 			
 			toolMap.put(toolID, tw);
@@ -93,8 +93,8 @@ public class BasicToolManager implements IToolManager{
 		try {
 			log4j.info("Start to delete tool with ID " + toolID);
 			
-			log4j.info("Change status to -1");
-			toolPersister.updateToolStatus(toolID, -1, em);
+			log4j.info("Remove from DB");
+			toolPersister.remove(toolID, em);
 			
 			log4j.info("Remove tool files");
 			File toolDir = new File(FileSystemUtil.getToolDir(), toolID);
@@ -141,15 +141,17 @@ public class BasicToolManager implements IToolManager{
 			throw new ToolNotFoundException(toolID);
 		}
 		
-		boolean isOwner = false;
 		UserInfo user = (UserInfo)context.get(Constants.USER);
+		
+		boolean isOwner = false;
 		if(Integer.toString(user.getUserId()).equals(tw.getDescriptor().getAuthorId())){
 			isOwner = true;
 		}
 		
-		if(!isOwner && !user.isAdmin()){
+		boolean hasPerm = (boolean)context.get(Constants.HAS_PERM);
+		if(!isOwner && !hasPerm){
 			//check status
-			boolean approved = ((tw.getStatus() & 1) == 1);
+			boolean approved = tw.getStatus() == 1;
 			if(!approved){
 				throw new ToolNotApprovedException(toolID);
 			}
@@ -173,12 +175,31 @@ public class BasicToolManager implements IToolManager{
 		return output;
 	}
 
+	/*
+	 * Save ToolInfo
+	 * Set status of tool wrapper
+	 */
 	@Override
 	public void approve(String pluginID) {
-		toolPersister.updateToolStatus(pluginID, 1);
 		IToolWrapper tw = toolMap.get(pluginID);
-		int status = tw.getStatus();
-		tw.setStatus(status | 1);
+		if(tw != null){
+			EntityManager em = JPAUtil.newEntityMgr();
+			EntityTransaction et = em.getTransaction();
+			et.begin();
+			try {
+				toolPersister.saveInfo(pluginID, em);
+				tw.setStatus(1);
+				et.commit();
+				log4j.info("Succssfully save tool info with ID " + pluginID);
+			} catch (Exception e) {
+				log4j.warn(e);
+				et.rollback();
+			} finally{
+				if(em.isOpen()){
+					em.close();
+				}
+			}
+		}
 	}
 
 	@Override
