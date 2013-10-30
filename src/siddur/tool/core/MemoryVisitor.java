@@ -77,7 +77,7 @@ public class MemoryVisitor extends MapVisitor<String, IToolWrapper>{
 		for(Entry<String, IToolWrapper> entry : map.entrySet()){
 			IToolWrapper tpu = entry.getValue();
 			ToolDescriptor pd = tpu.getDescriptor();
-			if(!excludeDisapproved || tpu.getStatus() == 0){
+			if(!excludeDisapproved || tpu.getStatus() == 1){
 				if(key == null || key.equals("")){
 					list.add(tpu);
 				}

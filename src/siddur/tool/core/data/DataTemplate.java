@@ -56,7 +56,8 @@ public class DataTemplate {
 	
 	public boolean isFile(){
 		return DataType.FILE.name().equals(dataType)
-				|| DataType.IMAGE.name().equals(dataType);
+				|| DataType.IMAGE.name().equals(dataType)
+				|| DataType.FILETREE.name().equals(dataType);
 	}
 	
 	public boolean isZip(){

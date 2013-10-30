@@ -175,7 +175,7 @@ public class ActionMapper{
 			resp.sendRedirect(url);
 		}
 		else if(r.isAjax){
-			resp.setContentType("text/html; charset=utf-8");
+			resp.setContentType("text/plain; charset=utf-8");
 			Writer w = resp.getWriter();
 			w.write(r.getMessage());
 			w.flush();

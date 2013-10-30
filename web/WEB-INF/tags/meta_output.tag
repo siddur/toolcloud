@@ -11,6 +11,7 @@
 			<option value="STRING" <c:if test="${item.dataType == 'STRING'}">selected="selected"</c:if> >文字</option>
 			<option value="HTML" <c:if test="${item.dataType == 'HTML'}">selected="selected"</c:if> >HTML</option>
 			<option value="FILE" <c:if test="${item.dataType == 'FILE'}">selected="selected"</c:if> >文件</option>
+			<option value="FILETREE" <c:if test="${item.dataType == 'FILETREE'}">selected="selected"</c:if> >文件浏览器</option>
 			<option value="IMAGE" <c:if test="${item.dataType == 'IMAGE'}">selected="selected"</c:if> >图片</option>
 		</select>
 	</div>
