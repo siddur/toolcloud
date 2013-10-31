@@ -1,0 +1,826 @@
+<html>
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=utf-8">
+<meta name=Generator content="Microsoft Word 12 (filtered)">
+<style>
+<!--
+ /* Font Definitions */
+ @font-face
+	{font-family:宋体;
+	panose-1:2 1 6 0 3 1 1 1 1 1;}
+@font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:Cambria;
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:Calibri;
+	panose-1:2 15 5 2 2 2 4 3 2 4;}
+@font-face
+	{font-family:Tahoma;
+	panose-1:2 11 6 4 3 5 4 4 2 4;}
+@font-face
+	{font-family:Consolas;
+	panose-1:2 11 6 9 2 2 4 3 2 4;}
+@font-face
+	{font-family:"\@宋体";
+	panose-1:2 1 6 0 3 1 1 1 1 1;}
+ /* Style Definitions */
+ p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:10.0pt;
+	margin-left:0cm;
+	line-height:115%;
+	font-size:11.0pt;
+	font-family:"Calibri","sans-serif";}
+h1
+	{mso-style-link:"Heading 1 Char";
+	margin-top:24.0pt;
+	margin-right:0cm;
+	margin-bottom:0cm;
+	margin-left:0cm;
+	margin-bottom:.0001pt;
+	line-height:115%;
+	page-break-after:avoid;
+	font-size:14.0pt;
+	font-family:"Cambria","serif";
+	color:#365F91;}
+h4
+	{mso-style-link:"Heading 4 Char";
+	margin-top:10.0pt;
+	margin-right:0cm;
+	margin-bottom:0cm;
+	margin-left:0cm;
+	margin-bottom:.0001pt;
+	line-height:115%;
+	page-break-after:avoid;
+	font-size:11.0pt;
+	font-family:"Cambria","serif";
+	color:#4F81BD;
+	font-style:italic;}
+h5
+	{mso-style-link:"Heading 5 Char";
+	margin-top:10.0pt;
+	margin-right:0cm;
+	margin-bottom:0cm;
+	margin-left:0cm;
+	margin-bottom:.0001pt;
+	line-height:115%;
+	page-break-after:avoid;
+	font-size:11.0pt;
+	font-family:"Cambria","serif";
+	color:#243F60;
+	font-weight:normal;}
+p.MsoToc1, li.MsoToc1, div.MsoToc1
+	{margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:5.0pt;
+	margin-left:0cm;
+	line-height:115%;
+	font-size:11.0pt;
+	font-family:"Calibri","sans-serif";}
+a:link, span.MsoHyperlink
+	{color:blue;
+	text-decoration:underline;}
+a:visited, span.MsoHyperlinkFollowed
+	{color:purple;
+	text-decoration:underline;}
+p.MsoAcetate, li.MsoAcetate, div.MsoAcetate
+	{mso-style-link:"Balloon Text Char";
+	margin:0cm;
+	margin-bottom:.0001pt;
+	font-size:8.0pt;
+	font-family:"Tahoma","sans-serif";}
+p.MsoListParagraph, li.MsoListParagraph, div.MsoListParagraph
+	{margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:10.0pt;
+	margin-left:36.0pt;
+	line-height:115%;
+	font-size:11.0pt;
+	font-family:"Calibri","sans-serif";}
+p.MsoListParagraphCxSpFirst, li.MsoListParagraphCxSpFirst, div.MsoListParagraphCxSpFirst
+	{margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:0cm;
+	margin-left:36.0pt;
+	margin-bottom:.0001pt;
+	line-height:115%;
+	font-size:11.0pt;
+	font-family:"Calibri","sans-serif";}
+p.MsoListParagraphCxSpMiddle, li.MsoListParagraphCxSpMiddle, div.MsoListParagraphCxSpMiddle
+	{margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:0cm;
+	margin-left:36.0pt;
+	margin-bottom:.0001pt;
+	line-height:115%;
+	font-size:11.0pt;
+	font-family:"Calibri","sans-serif";}
+p.MsoListParagraphCxSpLast, li.MsoListParagraphCxSpLast, div.MsoListParagraphCxSpLast
+	{margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:10.0pt;
+	margin-left:36.0pt;
+	line-height:115%;
+	font-size:11.0pt;
+	font-family:"Calibri","sans-serif";}
+p.MsoTocHeading, li.MsoTocHeading, div.MsoTocHeading
+	{margin-top:24.0pt;
+	margin-right:0cm;
+	margin-bottom:0cm;
+	margin-left:0cm;
+	margin-bottom:.0001pt;
+	line-height:115%;
+	page-break-after:avoid;
+	font-size:14.0pt;
+	font-family:"Cambria","serif";
+	color:#365F91;
+	font-weight:bold;}
+span.BalloonTextChar
+	{mso-style-name:"Balloon Text Char";
+	mso-style-link:"Balloon Text";
+	font-family:"Tahoma","sans-serif";}
+span.Heading1Char
+	{mso-style-name:"Heading 1 Char";
+	mso-style-link:"Heading 1";
+	font-family:"Cambria","serif";
+	color:#365F91;
+	font-weight:bold;}
+span.Heading4Char
+	{mso-style-name:"Heading 4 Char";
+	mso-style-link:"Heading 4";
+	font-family:"Cambria","serif";
+	color:#4F81BD;
+	font-weight:bold;
+	font-style:italic;}
+span.Heading5Char
+	{mso-style-name:"Heading 5 Char";
+	mso-style-link:"Heading 5";
+	font-family:"Cambria","serif";
+	color:#243F60;}
+.MsoPapDefault
+	{margin-bottom:10.0pt;
+	line-height:115%;}
+@page WordSection1
+	{size:612.0pt 792.0pt;
+	margin:72.0pt 72.0pt 72.0pt 72.0pt;}
+div.WordSection1
+	{page:WordSection1;}
+ /* List Definitions */
+ ol
+	{margin-bottom:0cm;}
+ul
+	{margin-bottom:0cm;}
+-->
+</style>
+
+</head>
+
+<body lang=EN-US link=blue vlink=purple>
+
+<div class=WordSection1>
+
+<p class=MsoTocHeading><span lang=ZH-CN style='font-size:10.0pt;line-height:
+115%;font-family:宋体'>开发者指南</span></p>
+
+<p class=MsoNormal>&nbsp;</p>
+
+<p class=MsoToc1><span class=MsoHyperlink><a href="#_Toc370997525">1.<span
+style='color:windowtext;text-decoration:none'>      </span><span lang=ZH-CN
+style='font-family:宋体'>搭建环境</span></a></span></p>
+
+<p class=MsoToc1><span class=MsoHyperlink><a href="#_Toc370997526">2.<span
+style='color:windowtext;text-decoration:none'>      </span><span lang=ZH-CN
+style='font-family:宋体'>几个重要类</span></a></span></p>
+
+<p class=MsoToc1><span class=MsoHyperlink><a href="#_Toc370997527">3.<span
+style='color:windowtext;text-decoration:none'>      </span><span lang=ZH-CN
+style='font-family:宋体'>开发工具</span></a></span></p>
+
+<p class=MsoToc1><span class=MsoHyperlink><a href="#_Toc370997528">4.<span
+style='color:windowtext;text-decoration:none'>      </span><span lang=ZH-CN
+style='font-family:宋体'>开发示例</span></a></span></p>
+
+<p class=MsoNormal>&nbsp;</p>
+
+<p class=MsoListParagraphCxSpFirst style='text-indent:-18.0pt'><a
+name="_Toc370997525">1.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><span lang=ZH-CN style='font-family:宋体'>搭建环境</span></a></p>
+
+<p class=MsoListParagraphCxSpMiddle><span lang=ZH-CN style='font-family:宋体'>工具云是基于</span>Apache 
+License2.0<span lang=ZH-CN style='font-family:宋体'>的开源</span>Java<span
+lang=ZH-CN style='font-family:宋体'>项目，代码位于</span>GitHub<span lang=ZH-CN
+style='font-family:宋体'>（</span><a href="https://github.com/siddur/toolcloud.git">https://github.com/siddur/toolcloud.git</a><span
+lang=ZH-CN style='font-family:宋体'>）上。</span><span lang=ZH-CN> </span><span
+lang=ZH-CN style='font-family:宋体'>您可以通过</span>Git<span lang=ZH-CN
+style='font-family:宋体'>客户端（</span>Eclipse<span lang=ZH-CN style='font-family:
+宋体'>自带）下载到本地。导入成</span>Eclipse<span lang=ZH-CN style='font-family:宋体'>项目。启动</span>siddur.tool.jetty.JettyStart<span
+lang=ZH-CN style='font-family:宋体'>的</span>main<span lang=ZH-CN
+style='font-family:宋体'>方法就能运行。</span></p>
+
+<p class=MsoListParagraphCxSpMiddle style='text-indent:-18.0pt'><a
+name="_Toc370997526">2.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><span lang=ZH-CN style='font-family:宋体'>几个重要类</span></a></p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-left:72.0pt;text-indent:-18.0pt'>a.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>ITool
+<span lang=ZH-CN style='font-family:宋体'>是一个接口，所有工具的开发都要继承该接口。换句话说，所有继承该接口的工具都能被平台识别。</span></p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-left:72.0pt;text-indent:-18.0pt'>b.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>ConsoleTool
+<span lang=ZH-CN style='font-family:宋体'>是一个能调用控制台的</span>ITool<span lang=ZH-CN
+style='font-family:宋体'>的实现。如果您希望在工具运行时将日志实时打印到浏览器的模拟控制台，您可以直接继承此类。否则，不要继承此类，而是直接实现</span>ITool<span
+lang=ZH-CN style='font-family:宋体'>接口。</span></p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-left:72.0pt;text-indent:-18.0pt'>c.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>ScriptTool<span
+lang=ZH-CN style='font-family:宋体'>是一个包装脚本（</span>Python<span lang=ZH-CN
+style='font-family:宋体'>、</span>Perl<span lang=ZH-CN style='font-family:宋体'>等）的类，它继承</span>ConsoleTool<span
+lang=ZH-CN style='font-family:宋体'>。因此能调用控制台打印实时信息。所有脚本工具注册后都会自动由</span>ScriptTool<span
+lang=ZH-CN style='font-family:宋体'>管理调用。此类无须开发者调用。</span></p>
+
+<p class=MsoListParagraphCxSpMiddle>&nbsp;</p>
+
+<p class=MsoListParagraphCxSpMiddle style='text-indent:-18.0pt'><a
+name="_Toc370997527">3.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><span lang=ZH-CN style='font-family:宋体'>开发工具</span></a></p>
+
+<p class=MsoListParagraphCxSpMiddle><span lang=ZH-CN style='font-family:宋体'>开发工具最重要的是要考虑输入和输出。浏览器将用户输入的数据进行验证，然后发送给平台，平台根据工具的配置信息，解析、验证数据，然后传给代表工具的类或脚本。代表工具的类或脚本运行后将产生的结果平台，平台再一次根据配置信息解析、验证后将输入发送给浏览器。</span></p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-left:72.0pt;text-indent:-18.0pt'>a.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span
+lang=ZH-CN style='font-family:宋体'>开发脚本</span></p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-left:72.0pt'><span
+lang=ZH-CN style='font-family:宋体'>选择平台支持的脚本语言及语言版本，如</span>Python27<span
+lang=ZH-CN style='font-family:宋体'>。脚本文件只能是单个文件，并且脚本的输入输出参数的设计需要与注册工具时填写的输入输出信息一致。</span></p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-left:72.0pt'><span
+lang=ZH-CN style='font-family:宋体'>由于脚本的实时信息能够打印在浏览器端的控制台，为了达到这一点，需要注意的是，标准输出需要随时</span>flush<span
+lang=ZH-CN style='font-family:宋体'>，不能让它们缓存。</span></p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-left:72.0pt;text-indent:-18.0pt'>b.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span
+lang=ZH-CN style='font-family:宋体'>开发</span>Jar</p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-left:72.0pt'><span
+lang=ZH-CN style='font-family:宋体'>继承</span>ConsoleTool<span lang=ZH-CN
+style='font-family:宋体'>或实现</span>ITool<span lang=ZH-CN style='font-family:宋体'>，编写</span>excute<span
+lang=ZH-CN style='font-family:宋体'>方法的代码。因为</span>Java<span lang=ZH-CN
+style='font-family:宋体'>代码是在安全沙箱里运行，它并不能随意读写磁盘文件，平台提供了一个</span>TempFileUtil<span
+lang=ZH-CN style='font-family:宋体'>类用来处理文件的读写。</span></p>
+
+<p class=MsoListParagraphCxSpMiddle style='text-indent:-18.0pt'><a
+name="_Toc370997528">4.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><span lang=ZH-CN style='font-family:宋体'>开发示例</span></a></p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-left:39.6pt;text-indent:-21.6pt'>1.1.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp; </span>HelloWorld</p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-left:39.6pt'><span
+lang=ZH-CN style='font-family:宋体'>实现</span>ITool<span lang=ZH-CN
+style='font-family:宋体'>的</span>execute<span lang=ZH-CN style='font-family:宋体'>方法。</span>execute<span
+lang=ZH-CN style='font-family:宋体'>的参数</span>String[] inputs<span lang=ZH-CN
+style='font-family:宋体'>是从用户界面收集来的输入参数，具体的个数由发布该工具时定义。此方法返回的也是一个数组，作为结果打印在页面，以什么形式（</span>html<span
+lang=ZH-CN style='font-family:宋体'>代码、文件连接）同样也是有发布该工具时定义的。</span></p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-bottom:0cm;margin-bottom:
+.0001pt;line-height:normal;text-autospace:none'><b><span style='font-size:10.0pt;
+font-family:Consolas;color:#7F0055'>package</span></b><span style='font-size:
+10.0pt;font-family:Consolas;color:black'> siddur.tool.sample;</span></p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-bottom:0cm;margin-bottom:
+.0001pt;line-height:normal;text-autospace:none'><b><span style='font-size:10.0pt;
+font-family:Consolas;color:#7F0055'>import</span></b><span style='font-size:
+10.0pt;font-family:Consolas;color:black'> siddur.tool.core.ITool;</span></p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-bottom:0cm;margin-bottom:
+.0001pt;line-height:normal;text-autospace:none'><span style='font-size:10.0pt;
+font-family:Consolas'>&nbsp;</span></p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-bottom:0cm;margin-bottom:
+.0001pt;line-height:normal;text-autospace:none'><b><span style='font-size:10.0pt;
+font-family:Consolas;color:#7F0055'>public</span></b><span style='font-size:
+10.0pt;font-family:Consolas;color:black'> </span><b><span style='font-size:
+10.0pt;font-family:Consolas;color:#7F0055'>class</span></b><span
+style='font-size:10.0pt;font-family:Consolas;color:black'> HelloWorld </span><b><span
+style='font-size:10.0pt;font-family:Consolas;color:#7F0055'>implements</span></b><span
+style='font-size:10.0pt;font-family:Consolas;color:black'> ITool{</span></p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-bottom:0cm;margin-bottom:
+.0001pt;line-height:normal;text-autospace:none'><span style='font-size:10.0pt;
+font-family:Consolas'>&nbsp;</span></p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-bottom:0cm;margin-bottom:
+.0001pt;line-height:normal;text-autospace:none'><span style='font-size:10.0pt;
+font-family:Consolas;color:black'>       </span><span style='font-size:10.0pt;
+font-family:Consolas;color:#646464'>@Override</span></p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-bottom:0cm;margin-bottom:
+.0001pt;line-height:normal;text-autospace:none'><span style='font-size:10.0pt;
+font-family:Consolas;color:black'>       </span><b><span style='font-size:10.0pt;
+font-family:Consolas;color:#7F0055'>public</span></b><span style='font-size:
+10.0pt;font-family:Consolas;color:black'> String[] execute(String[] inputs) {</span></p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-bottom:0cm;margin-bottom:
+.0001pt;line-height:normal;text-autospace:none'><span style='font-size:10.0pt;
+font-family:Consolas;color:black'>              String[] output = </span><b><span
+style='font-size:10.0pt;font-family:Consolas;color:#7F0055'>new</span></b><span
+style='font-size:10.0pt;font-family:Consolas;color:black'> String[2];</span></p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-bottom:0cm;margin-bottom:
+.0001pt;line-height:normal;text-autospace:none'><span style='font-size:10.0pt;
+font-family:Consolas;color:black'>              output[0] = </span><span
+style='font-size:10.0pt;font-family:Consolas;color:#2A00FF'>&quot;Hello
+World&quot;</span><span style='font-size:10.0pt;font-family:Consolas;
+color:black'>;</span></p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-bottom:0cm;margin-bottom:
+.0001pt;line-height:normal;text-autospace:none'><span style='font-size:10.0pt;
+font-family:Consolas;color:black'>              output[1] = inputs[0];</span></p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-bottom:0cm;margin-bottom:
+.0001pt;line-height:normal;text-autospace:none'><span style='font-size:10.0pt;
+font-family:Consolas;color:black'>              </span><b><span
+style='font-size:10.0pt;font-family:Consolas;color:#7F0055'>return</span></b><span
+style='font-size:10.0pt;font-family:Consolas;color:black'> output;</span></p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-bottom:0cm;margin-bottom:
+.0001pt;line-height:normal;text-autospace:none'><span style='font-size:10.0pt;
+font-family:Consolas;color:black'>       }</span></p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-bottom:0cm;margin-bottom:
+.0001pt;line-height:normal;text-autospace:none'><span style='font-size:10.0pt;
+font-family:Consolas'>&nbsp;</span></p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-bottom:0cm;margin-bottom:
+.0001pt;line-height:normal;text-autospace:none'><span style='font-size:10.0pt;
+font-family:Consolas;color:black'>       </span><span style='font-size:10.0pt;
+font-family:Consolas;color:#646464'>@Override</span></p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-bottom:0cm;margin-bottom:
+.0001pt;line-height:normal;text-autospace:none'><span style='font-size:10.0pt;
+font-family:Consolas;color:black'>       </span><b><span style='font-size:10.0pt;
+font-family:Consolas;color:#7F0055'>public</span></b><span style='font-size:
+10.0pt;font-family:Consolas;color:black'> </span><b><span style='font-size:
+10.0pt;font-family:Consolas;color:#7F0055'>void</span></b><span
+style='font-size:10.0pt;font-family:Consolas;color:black'> init() {</span></p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-bottom:0cm;margin-bottom:
+.0001pt;line-height:normal;text-autospace:none'><span style='font-size:10.0pt;
+font-family:Consolas;color:black'>              </span></p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-bottom:0cm;margin-bottom:
+.0001pt;line-height:normal;text-autospace:none'><span style='font-size:10.0pt;
+font-family:Consolas;color:black'>       }</span></p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-bottom:0cm;margin-bottom:
+.0001pt;line-height:normal;text-autospace:none'><span style='font-size:10.0pt;
+font-family:Consolas'>&nbsp;</span></p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-bottom:0cm;margin-bottom:
+.0001pt;line-height:normal;text-autospace:none'><span style='font-size:10.0pt;
+font-family:Consolas;color:black'>       </span><span style='font-size:10.0pt;
+font-family:Consolas;color:#646464'>@Override</span></p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-bottom:0cm;margin-bottom:
+.0001pt;line-height:normal;text-autospace:none'><span style='font-size:10.0pt;
+font-family:Consolas;color:black'>       </span><b><span style='font-size:10.0pt;
+font-family:Consolas;color:#7F0055'>public</span></b><span style='font-size:
+10.0pt;font-family:Consolas;color:black'> </span><b><span style='font-size:
+10.0pt;font-family:Consolas;color:#7F0055'>void</span></b><span
+style='font-size:10.0pt;font-family:Consolas;color:black'> destroy() {</span></p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-bottom:0cm;margin-bottom:
+.0001pt;line-height:normal;text-autospace:none'><span style='font-size:10.0pt;
+font-family:Consolas;color:black'>              </span></p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-bottom:0cm;margin-bottom:
+.0001pt;line-height:normal;text-autospace:none'><span style='font-size:10.0pt;
+font-family:Consolas;color:black'>       }</span></p>
+
+<p class=MsoListParagraphCxSpMiddle><span style='font-size:10.0pt;line-height:
+115%;font-family:Consolas;color:black'>}</span></p>
+
+<p class=MsoListParagraphCxSpMiddle><span style='font-size:10.0pt;line-height:
+115%;font-family:Consolas;color:black'>&nbsp;</span></p>
+
+<p class=MsoListParagraphCxSpMiddle><span lang=ZH-CN style='font-family:宋体'>我们将</span>Helloworld.class<span
+lang=ZH-CN style='font-family:宋体'>打成</span>Jar<span lang=ZH-CN
+style='font-family:宋体'>包。进入发布页面，按图所示输入相关信息：</span></p>
+
+<p class=MsoListParagraphCxSpMiddle><img border=0 width=625 height=450
+id="Picture 2" src="Developer_Guide_files/image001.gif"
+alt="应用中心截屏_2013-10-31T05-56-26.171Z.png"></p>
+
+<p class=MsoListParagraphCxSpMiddle><span lang=ZH-CN style='font-family:宋体;
+color:black'>需要注意的是此工具有</span><span lang=ZH-CN style='font-family:宋体;
+color:red'>一</span><span lang=ZH-CN style='font-family:宋体;color:black'>个字符串输入和</span><span
+lang=ZH-CN style='font-family:宋体;color:red'>两</span><span lang=ZH-CN
+style='font-family:宋体;color:black'>个文字输出。</span></p>
+
+<p class=MsoListParagraphCxSpMiddle><span style='font-size:10.0pt;line-height:
+115%;font-family:Consolas;color:black'>&nbsp;</span></p>
+
+<p class=MsoListParagraphCxSpMiddle><span lang=ZH-CN style='font-family:宋体;
+color:black'>在运行界面输入一个字符串，运行查看结果：</span></p>
+
+<p class=MsoListParagraphCxSpMiddle><span style='font-family:Consolas;
+color:black'><img border=0 width=556 height=305 id="Picture 3"
+src="Developer_Guide_files/image002.gif"
+alt="应用中心截屏_2013-10-31T05-58-05.170Z.png"></span></p>
+
+<p class=MsoListParagraphCxSpMiddle>&nbsp;</p>
+
+<p class=MsoListParagraphCxSpLast style='margin-left:39.6pt;text-indent:-21.6pt'>1.2.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp; </span><span
+lang=ZH-CN style='font-family:宋体'>文件输入输出</span></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;text-indent:
+18.0pt;line-height:normal;text-autospace:none'><span lang=ZH-CN
+style='font-family:宋体'>首先继承</span>ConsoleTool<span lang=ZH-CN style='font-family:
+宋体'>类</span></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;text-indent:
+18.0pt;line-height:normal;text-autospace:none'><b><span style='font-size:10.0pt;
+font-family:Consolas;color:#7F0055'>class</span></b><span style='font-size:
+10.0pt;font-family:Consolas;color:black'> FileReadAndWrite </span><b><span
+style='font-size:10.0pt;font-family:Consolas;color:#7F0055'>extends</span></b><span
+style='font-size:10.0pt;font-family:Consolas;color:black'> ConsoleTool</span></p>
+
+<p class=MsoListParagraphCxSpFirst style='margin-left:18.0pt'>&nbsp;</p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-left:18.0pt'><span
+lang=ZH-CN style='font-family:宋体'>然后实现</span>execute<span lang=ZH-CN
+style='font-family:宋体'>方法</span></p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-top:0cm;margin-right:0cm;
+margin-bottom:0cm;margin-left:18.0pt;margin-bottom:.0001pt;line-height:normal;
+text-autospace:none'><b><span style='font-size:10.0pt;font-family:Consolas;
+color:#7F0055'>public</span></b><span style='font-size:10.0pt;font-family:Consolas;
+color:black'> String[] execute(String[] inputs) </span><b><span
+style='font-size:10.0pt;font-family:Consolas;color:#7F0055'>throws</span></b><span
+style='font-size:10.0pt;font-family:Consolas;color:black'> Exception {</span></p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-top:0cm;margin-right:0cm;
+margin-bottom:0cm;margin-left:18.0pt;margin-bottom:.0001pt;line-height:normal;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Consolas;
+color:black'>          log(</span><span style='font-size:10.0pt;font-family:
+Consolas;color:#2A00FF'>&quot;</span><span lang=ZH-CN style='font-size:10.0pt;
+font-family:宋体;color:#2A00FF'>开始</span><span style='font-size:10.0pt;
+font-family:Consolas;color:#2A00FF'>----&gt;&quot;</span><span
+style='font-size:10.0pt;font-family:Consolas;color:black'>);</span></p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-top:0cm;margin-right:0cm;
+margin-bottom:0cm;margin-left:18.0pt;margin-bottom:.0001pt;line-height:normal;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Consolas;
+color:black'>          <span style='background:aqua'>//</span></span><span
+lang=ZH-CN style='font-size:10.0pt;font-family:宋体;color:black;background:aqua'>通过</span><span
+style='font-size:10.0pt;font-family:Consolas;color:black;background:aqua'>TempFileUtil</span><span
+lang=ZH-CN style='font-size:10.0pt;font-family:宋体;color:black;background:aqua'>获取</span><span
+style='font-size:10.0pt;font-family:Consolas;color:black;background:aqua'>File</span><span
+lang=ZH-CN style='font-size:10.0pt;font-family:宋体;color:black;background:aqua'>对象</span></p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-top:0cm;margin-right:0cm;
+margin-bottom:0cm;margin-left:18.0pt;margin-bottom:.0001pt;line-height:normal;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Consolas;
+color:black'>          File dir = <span style='background:silver'>TempFileUtil</span>.<i>findFile</i>(inputs[0]);</span></p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-top:0cm;margin-right:0cm;
+margin-bottom:0cm;margin-left:18.0pt;margin-bottom:.0001pt;line-height:normal;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Consolas;
+color:black'>          File file = <span style='background:silver'>TempFileUtil</span>.<i>findFile</i>(inputs[1]);</span></p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-top:0cm;margin-right:0cm;
+margin-bottom:0cm;margin-left:18.0pt;margin-bottom:.0001pt;line-height:normal;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Consolas;
+color:black'>          String s = inputs[2];</span></p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-top:0cm;margin-right:0cm;
+margin-bottom:0cm;margin-left:18.0pt;margin-bottom:.0001pt;line-height:normal;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Consolas;
+color:black'>          </span></p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-top:0cm;margin-right:0cm;
+margin-bottom:0cm;margin-left:54.0pt;margin-bottom:.0001pt;text-indent:18.0pt;
+line-height:normal;text-autospace:none'><span style='font-size:10.0pt;
+font-family:Consolas;color:black;background:aqua'>//</span><span lang=ZH-CN
+style='font-size:10.0pt;font-family:宋体;color:black;background:aqua'>通过</span><span
+style='font-size:10.0pt;font-family:Consolas;color:black;background:aqua'>TempFileUtil</span><span
+lang=ZH-CN style='font-size:10.0pt;font-family:宋体;color:black;background:aqua'>产生临时文件和文件夹</span></p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-top:0cm;margin-right:0cm;
+margin-bottom:0cm;margin-left:18.0pt;margin-bottom:.0001pt;line-height:normal;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Consolas;
+color:black'>          File newDir = <span style='background:silver'>TempFileUtil</span>.<i>createEmptyDir</i>();</span></p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-top:0cm;margin-right:0cm;
+margin-bottom:0cm;margin-left:18.0pt;margin-bottom:.0001pt;line-height:normal;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Consolas;
+color:black'>          File newFile = <span style='background:silver'>TempFileUtil</span>.<i>createEmptyFile</i>(</span><span
+style='font-size:10.0pt;font-family:Consolas;color:#2A00FF'>&quot;txt&quot;</span><span
+style='font-size:10.0pt;font-family:Consolas;color:black'>);</span></p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-top:0cm;margin-right:0cm;
+margin-bottom:0cm;margin-left:18.0pt;margin-bottom:.0001pt;line-height:normal;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Consolas;
+color:black'>          </span></p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-bottom:0cm;margin-bottom:
+.0001pt;line-height:normal;text-autospace:none'><span style='font-size:10.0pt;
+font-family:Consolas;color:black'>      BufferedWriter bw = </span><b><span
+style='font-size:10.0pt;font-family:Consolas;color:#7F0055'>new</span></b><span
+style='font-size:10.0pt;font-family:Consolas;color:black'> BufferedWriter(</span><b><span
+style='font-size:10.0pt;font-family:Consolas;color:#7F0055'>new</span></b><span
+style='font-size:10.0pt;font-family:Consolas;color:black'> OutputStreamWriter(</span><b><span
+style='font-size:10.0pt;font-family:Consolas;color:#7F0055'>new</span></b><span
+style='font-size:10.0pt;font-family:Consolas;color:black'>
+FileOutputStream(newFile)));</span></p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-top:0cm;margin-right:0cm;
+margin-bottom:0cm;margin-left:18.0pt;margin-bottom:.0001pt;line-height:normal;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Consolas;
+color:black'>          bw.write(s);</span></p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-top:0cm;margin-right:0cm;
+margin-bottom:0cm;margin-left:18.0pt;margin-bottom:.0001pt;line-height:normal;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Consolas;
+color:black'>          </span></p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-top:0cm;margin-right:0cm;
+margin-bottom:0cm;margin-left:18.0pt;margin-bottom:.0001pt;line-height:normal;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Consolas;
+color:black'>          </span><b><span style='font-size:10.0pt;font-family:
+Consolas;color:#7F0055'>if</span></b><span style='font-size:10.0pt;font-family:
+Consolas;color:black'>(dir.isDirectory()){</span></p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-top:0cm;margin-right:0cm;
+margin-bottom:0cm;margin-left:18.0pt;margin-bottom:.0001pt;line-height:normal;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Consolas;
+color:black'>                 </span><b><span style='font-size:10.0pt;
+font-family:Consolas;color:#7F0055'>for</span></b><span style='font-size:10.0pt;
+font-family:Consolas;color:black'>(File f : dir.listFiles()){</span></p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-top:0cm;margin-right:0cm;
+margin-bottom:0cm;margin-left:18.0pt;margin-bottom:.0001pt;line-height:normal;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Consolas;
+color:black'>                        readAndWrite(bw, f);</span></p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-top:0cm;margin-right:0cm;
+margin-bottom:0cm;margin-left:18.0pt;margin-bottom:.0001pt;line-height:normal;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Consolas;
+color:black'>                 }</span></p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-top:0cm;margin-right:0cm;
+margin-bottom:0cm;margin-left:18.0pt;margin-bottom:.0001pt;line-height:normal;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Consolas;
+color:black'>          }</span></p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-top:0cm;margin-right:0cm;
+margin-bottom:0cm;margin-left:18.0pt;margin-bottom:.0001pt;line-height:normal;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Consolas;
+color:black'>          </span><b><span style='font-size:10.0pt;font-family:
+Consolas;color:#7F0055'>if</span></b><span style='font-size:10.0pt;font-family:
+Consolas;color:black'>(file.isFile()){</span></p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-top:0cm;margin-right:0cm;
+margin-bottom:0cm;margin-left:18.0pt;margin-bottom:.0001pt;line-height:normal;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Consolas;
+color:black'>                 readAndWrite(bw, file);</span></p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-top:0cm;margin-right:0cm;
+margin-bottom:0cm;margin-left:18.0pt;margin-bottom:.0001pt;line-height:normal;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Consolas;
+color:black'>          }</span></p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-top:0cm;margin-right:0cm;
+margin-bottom:0cm;margin-left:18.0pt;margin-bottom:.0001pt;line-height:normal;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Consolas;
+color:black'>          </span></p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-top:0cm;margin-right:0cm;
+margin-bottom:0cm;margin-left:18.0pt;margin-bottom:.0001pt;line-height:normal;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Consolas;
+color:black'>          bw.flush();</span></p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-top:0cm;margin-right:0cm;
+margin-bottom:0cm;margin-left:18.0pt;margin-bottom:.0001pt;line-height:normal;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Consolas;
+color:black'>          bw.close();</span></p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-top:0cm;margin-right:0cm;
+margin-bottom:0cm;margin-left:18.0pt;margin-bottom:.0001pt;line-height:normal;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Consolas;
+color:black'>          </span></p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-top:0cm;margin-right:0cm;
+margin-bottom:0cm;margin-left:18.0pt;margin-bottom:.0001pt;line-height:normal;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Consolas;
+color:black'>          String[] results = </span><b><span style='font-size:
+10.0pt;font-family:Consolas;color:#7F0055'>new</span></b><span
+style='font-size:10.0pt;font-family:Consolas;color:black'> String[3];</span></p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-top:0cm;margin-right:0cm;
+margin-bottom:0cm;margin-left:54.0pt;margin-bottom:.0001pt;text-indent:18.0pt;
+line-height:normal;text-autospace:none'><span style='font-size:10.0pt;
+font-family:Consolas;color:black;background:aqua'>//</span><span lang=ZH-CN
+style='font-size:10.0pt;font-family:宋体;color:black;background:aqua'>通过</span><span
+style='font-size:10.0pt;font-family:Consolas;color:black;background:aqua'>TempFileUtil</span><span
+lang=ZH-CN style='font-size:10.0pt;font-family:宋体;color:black;background:aqua'>将</span><span
+style='font-size:10.0pt;font-family:Consolas;color:black;background:aqua'>File</span><span
+lang=ZH-CN style='font-size:10.0pt;font-family:宋体;color:black;background:aqua'>对象转换成</span><span
+style='font-size:10.0pt;font-family:Consolas;color:black;background:aqua'>String</span><span
+lang=ZH-CN style='font-size:10.0pt;font-family:宋体;color:black;background:aqua'>对象返回给系统</span></p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-top:0cm;margin-right:0cm;
+margin-bottom:0cm;margin-left:18.0pt;margin-bottom:.0001pt;line-height:normal;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Consolas;
+color:black'>          results[0] = <span style='background:silver'>TempFileUtil</span>.<i>file2String</i>(newFile);</span></p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-top:0cm;margin-right:0cm;
+margin-bottom:0cm;margin-left:18.0pt;margin-bottom:.0001pt;line-height:normal;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Consolas;
+color:black'>          </span></p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-top:0cm;margin-right:0cm;
+margin-bottom:0cm;margin-left:18.0pt;margin-bottom:.0001pt;line-height:normal;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Consolas;
+color:black'>          FileUtils.<i>copyFileToDirectory</i>(newFile, newDir);</span></p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-top:0cm;margin-right:0cm;
+margin-bottom:0cm;margin-left:18.0pt;margin-bottom:.0001pt;line-height:normal;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Consolas;
+color:black'>          results[1] = <span style='background:silver'>TempFileUtil</span>.<i>file2String</i>(newDir);</span></p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-top:0cm;margin-right:0cm;
+margin-bottom:0cm;margin-left:18.0pt;margin-bottom:.0001pt;line-height:normal;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Consolas;
+color:black'>          </span></p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-top:0cm;margin-right:0cm;
+margin-bottom:0cm;margin-left:18.0pt;margin-bottom:.0001pt;line-height:normal;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Consolas;
+color:black'>          results[2] = s;</span></p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-top:0cm;margin-right:0cm;
+margin-bottom:0cm;margin-left:18.0pt;margin-bottom:.0001pt;line-height:normal;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Consolas;
+color:black'>          </span></p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-top:0cm;margin-right:0cm;
+margin-bottom:0cm;margin-left:54.0pt;margin-bottom:.0001pt;text-indent:18.0pt;
+line-height:normal;text-autospace:none'><span style='font-size:10.0pt;
+font-family:Consolas;color:black;background:aqua'>//</span><span lang=ZH-CN
+style='font-size:10.0pt;font-family:宋体;color:black;background:aqua'>通过</span><span
+style='font-size:10.0pt;font-family:Consolas;color:black;background:aqua'>log</span><span
+lang=ZH-CN style='font-size:10.0pt;font-family:宋体;color:black;background:aqua'>方法打印到页面模拟控制台</span></p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-top:0cm;margin-right:0cm;
+margin-bottom:0cm;margin-left:18.0pt;margin-bottom:.0001pt;line-height:normal;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Consolas;
+color:black'>          log(results[0]);</span></p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-top:0cm;margin-right:0cm;
+margin-bottom:0cm;margin-left:18.0pt;margin-bottom:.0001pt;line-height:normal;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Consolas;
+color:black'>          log(results[1]);</span></p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-top:0cm;margin-right:0cm;
+margin-bottom:0cm;margin-left:18.0pt;margin-bottom:.0001pt;line-height:normal;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Consolas;
+color:black'>          log(</span><span style='font-size:10.0pt;font-family:
+Consolas;color:#2A00FF'>&quot;-----&gt;</span><span lang=ZH-CN
+style='font-size:10.0pt;font-family:宋体;color:#2A00FF'>结束</span><span
+style='font-size:10.0pt;font-family:Consolas;color:#2A00FF'>&quot;</span><span
+style='font-size:10.0pt;font-family:Consolas;color:black'>);</span></p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-top:0cm;margin-right:0cm;
+margin-bottom:0cm;margin-left:18.0pt;margin-bottom:.0001pt;line-height:normal;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Consolas;
+color:black'>          </span><b><span style='font-size:10.0pt;font-family:
+Consolas;color:#7F0055'>return</span></b><span style='font-size:10.0pt;
+font-family:Consolas;color:black'> results;</span></p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-left:18.0pt'><span
+style='font-size:10.0pt;line-height:115%;font-family:Consolas;color:black'>   }</span></p>
+
+<p class=MsoListParagraphCxSpLast style='margin-left:18.0pt'><span
+style='font-size:10.0pt;line-height:115%;font-family:Consolas;color:black'>&nbsp;</span></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;text-indent:
+18.0pt;line-height:normal;text-autospace:none'><b><span style='font-size:10.0pt;
+font-family:Consolas;color:#7F0055'>private</span></b><span style='font-size:
+10.0pt;font-family:Consolas;color:black'> </span><b><span style='font-size:
+10.0pt;font-family:Consolas;color:#7F0055'>void</span></b><span
+style='font-size:10.0pt;font-family:Consolas;color:black'>
+readAndWrite(BufferedWriter bw, File <span style='background:yellow'>f</span>)</span><b><span
+style='font-size:10.0pt;font-family:Consolas;color:#7F0055'>throws</span></b><span
+style='font-size:10.0pt;font-family:Consolas;color:black'> Exception{</span></p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:36.0pt;margin-bottom:.0001pt;text-indent:36.0pt;line-height:normal;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Consolas;
+color:black'>BufferedReader r = </span><b><span style='font-size:10.0pt;
+font-family:Consolas;color:#7F0055'>new</span></b><span style='font-size:10.0pt;
+font-family:Consolas;color:black'> BufferedReader(</span><b><span
+style='font-size:10.0pt;font-family:Consolas;color:#7F0055'>new</span></b><span
+style='font-size:10.0pt;font-family:Consolas;color:black'> InputStreamReader(</span><b><span
+style='font-size:10.0pt;font-family:Consolas;color:#7F0055'>new</span></b><span
+style='font-size:10.0pt;font-family:Consolas;color:black'> FileInputStream(<span
+style='background:silver'>f</span>)));</span></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
+normal;text-autospace:none'><span style='font-size:10.0pt;font-family:Consolas;
+color:black'>              String line = </span><b><span style='font-size:10.0pt;
+font-family:Consolas;color:#7F0055'>null</span></b><span style='font-size:10.0pt;
+font-family:Consolas;color:black'>;</span></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
+normal;text-autospace:none'><span style='font-size:10.0pt;font-family:Consolas;
+color:black'>              log(</span><span style='font-size:10.0pt;font-family:
+Consolas;color:#2A00FF'>&quot;</span><span lang=ZH-CN style='font-size:10.0pt;
+font-family:宋体;color:#2A00FF'>读取文件</span><span style='font-size:10.0pt;
+font-family:Consolas;color:#2A00FF'>&quot;</span><span style='font-size:10.0pt;
+font-family:Consolas;color:black'> + <span style='background:silver'>f</span>.getCanonicalPath());</span></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
+normal;text-autospace:none'><span style='font-size:10.0pt;font-family:Consolas;
+color:black'>              </span><b><span style='font-size:10.0pt;font-family:
+Consolas;color:#7F0055'>while</span></b><span style='font-size:10.0pt;
+font-family:Consolas;color:black'>((line = r.readLine()) != </span><b><span
+style='font-size:10.0pt;font-family:Consolas;color:#7F0055'>null</span></b><span
+style='font-size:10.0pt;font-family:Consolas;color:black'>){</span></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
+normal;text-autospace:none'><span style='font-size:10.0pt;font-family:Consolas;
+color:black'>                     </span><span style='font-size:10.0pt;
+font-family:Consolas;color:#3F7F5F'>//print to console</span></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
+normal;text-autospace:none'><span style='font-size:10.0pt;font-family:Consolas;
+color:black'>                     log(line);</span></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
+normal;text-autospace:none'><span style='font-size:10.0pt;font-family:Consolas;
+color:black'>                     </span></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
+normal;text-autospace:none'><span style='font-size:10.0pt;font-family:Consolas;
+color:black'>                     </span><span style='font-size:10.0pt;
+font-family:Consolas;color:#3F7F5F'>//print to a file</span></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
+normal;text-autospace:none'><span style='font-size:10.0pt;font-family:Consolas;
+color:black'>                     bw.append(line);</span></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
+normal;text-autospace:none'><span style='font-size:10.0pt;font-family:Consolas;
+color:black'>              }</span></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
+normal;text-autospace:none'><span style='font-size:10.0pt;font-family:Consolas;
+color:black'>              bw.flush();</span></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
+normal;text-autospace:none'><span style='font-size:10.0pt;font-family:Consolas;
+color:black'>              r.close();</span></p>
+
+<p class=MsoListParagraphCxSpFirst style='margin-left:18.0pt'><span
+style='font-size:10.0pt;line-height:115%;font-family:Consolas;color:black'>   }</span></p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-left:18.0pt'><span
+style='font-size:10.0pt;line-height:115%;font-family:Consolas;color:black'>&nbsp;</span></p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-left:18.0pt'><span
+lang=ZH-CN style='font-family:宋体'>然后打成</span>Jar<span lang=ZH-CN
+style='font-family:宋体'>包，进入发布界面，设置三个输入（分别是</span>zip<span lang=ZH-CN
+style='font-family:宋体'>文件、文件、字符串）和三个输出（分别是文件、文件、文字）。</span></p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-left:18.0pt'><img border=0
+width=575 height=504 id="Picture 4" src="Developer_Guide_files/image003.gif"
+alt="应用中心截屏_2013-10-31T06-11-02.203Z.png"></p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-left:18.0pt'>&nbsp;</p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-left:18.0pt'><span
+lang=ZH-CN style='font-family:宋体'>进入运行界面，上传一个</span>zip<span lang=ZH-CN
+style='font-family:宋体'>包，一个文件，并输入一段文字，打开控制台，看结果如图：</span></p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-left:18.0pt'><img border=0
+width=579 height=457 id="Picture 5" src="Developer_Guide_files/image004.gif"
+alt="应用中心截屏_2013-10-31T06-44-21.172Z.png"></p>
+
+<p class=MsoListParagraphCxSpLast style='margin-left:18.0pt'><span lang=ZH-CN
+style='font-family:宋体'>结果中有超链接，第一个是一个</span>txt<span lang=ZH-CN
+style='font-family:宋体'>文件，第二个是</span>zip<span lang=ZH-CN style='font-family:
+宋体'>文件。</span></p>
+
+</div>
+
+</body>
+
+</html>

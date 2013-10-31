@@ -42,10 +42,10 @@
 					<a href="/toolcloud/ctrl/tool/blocks"><span class="ui-icon ui-icon-gear"></span>管理</a>
 				</li>
 				<li>
-					<a href="/toolcloud/ctrl/user/list"><span class="ui-icon ui-icon-help"></span>文档</a>
+					<a href="/toolcloud/doc.jsp"><span class="ui-icon ui-icon-help"></span>文档</a>
 				</li>
 				<li>
-					<a href="/toolcloud/ctrl/user/list"><span class="ui-icon ui-icon-arrowthickstop-1-s"></span>下载</a>
+					<a href="/toolcloud/download.jsp"><span class="ui-icon ui-icon-arrowthickstop-1-s"></span>下载</a>
 				</li>
 			</ul>
 			<div style="float: right; position: relative; right:50px; margin:4px;">

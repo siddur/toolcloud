@@ -148,7 +148,7 @@ public class BasicToolManager implements IToolManager{
 			isOwner = true;
 		}
 		
-		boolean hasPerm = (boolean)context.get(Constants.HAS_PERM);
+		Boolean hasPerm = (Boolean)context.get(Constants.HAS_PERM);
 		if(!isOwner && !hasPerm){
 			//check status
 			boolean approved = tw.getStatus() == 1;
