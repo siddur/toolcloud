@@ -39,12 +39,12 @@
 	<classpathentry kind="lib" path="lib/jetty/org.eclipse.jdt.core-3.7.1.jar"/>
 	<classpathentry kind="lib" path="lib/jetty/servlet-api-3.0.jar"/>
 	<classpathentry kind="lib" path="lib/commons-codec-1.8.jar"/>
-	<classpathentry kind="lib" path="lib/javabase64-1.3.1.jar"/>
-	<classpathentry kind="lib" path="lib/juniversalchardet-1.0.3.jar"/>
-	<classpathentry kind="lib" path="lib/barcode4j.jar"/>
-	<classpathentry kind="lib" path="lib/ZXing-core-2.2.jar"/>
-	<classpathentry kind="lib" path="lib/ZXing-javase-2.2.jar"/>
-	<classpathentry kind="lib" path="lib/pinyin4j-2.5.0.jar"/>
-	<classpathentry kind="lib" path="lib/FileDiff/jlibdiff.jar"/>
+	<classpathentry kind="lib" path="lib/ext/barcode4j.jar"/>
+	<classpathentry kind="lib" path="lib/ext/javabase64-1.3.1.jar"/>
+	<classpathentry kind="lib" path="lib/ext/jlibdiff.jar"/>
+	<classpathentry kind="lib" path="lib/ext/juniversalchardet-1.0.3.jar"/>
+	<classpathentry kind="lib" path="lib/ext/pinyin4j-2.5.0.jar"/>
+	<classpathentry kind="lib" path="lib/ext/ZXing-core-2.2.jar"/>
+	<classpathentry kind="lib" path="lib/ext/ZXing-javase-2.2.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
