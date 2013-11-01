@@ -5,6 +5,7 @@ import java.util.Date;
 import org.apache.commons.lang3.StringUtils;
 
 public class ToolDescriptor {
+	private String pluginID;
 	private String pluginName;
 	private String lang;
 	private String catalog;
@@ -49,7 +50,18 @@ public class ToolDescriptor {
 	}
 	
 	public String getPluginID() {
-		return publishAt.getTime() + "";
+		return this.pluginID;
+	}
+	
+	public void createPluginID(boolean isExt) {
+		if(pluginID != null){
+			return;
+		}
+		String prefix = "";
+		if(isExt){
+			prefix = "ext";
+		}
+		this.pluginID = prefix + this.publishAt.getTime();
 	}
 	
 	public String getPluginName() {

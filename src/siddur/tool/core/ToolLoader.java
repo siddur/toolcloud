@@ -31,7 +31,7 @@ public class ToolLoader {
 	}
 	
 	public IToolWrapper loadTool(String toolID) throws Exception{
-		File toolDir = new File(FileSystemUtil.getToolDir(), toolID);
+		File toolDir = new File(FileSystemUtil.getToolDir(toolID), toolID);
 		return loadTool(toolDir);
 	}
 	

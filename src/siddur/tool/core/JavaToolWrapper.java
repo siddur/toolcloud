@@ -1,6 +1,7 @@
 package siddur.tool.core;
 
 import java.io.File;
+import java.io.FilenameFilter;
 import java.lang.ref.WeakReference;
 import java.net.URL;
 import java.net.URLClassLoader;
@@ -11,19 +12,23 @@ import org.apache.log4j.Logger;
 public class JavaToolWrapper extends ToolWrapper{
 	private static Logger log4j = Logger.getLogger(JavaToolWrapper.class);
 	
+	private boolean cacheClass = true;
+	private boolean singleton = false;
 	private WeakReference<Class<?>> toolClassRef;
 	private String classname;
+	private ITool tool;
+	private boolean firstLoad = true;
 	
 	public Class<?> getToolClass() {
 		Class<?> clz = null;
 		try {
-			if(toolClassRef != null){
+			if(cacheClass && toolClassRef != null){
 				clz = toolClassRef.get();
 			}
 			if(clz == null){
 				clz = getToolClass(this);
+				cacheClass(clz);
 			}
-			setToolClass(clz);
 		} catch (Exception e) {
 			log4j.error("", e);
 		}
@@ -31,28 +36,49 @@ public class JavaToolWrapper extends ToolWrapper{
 		return clz;
 	}
 	
-	private void setToolClass(Class<?> clz){
+	private void cacheClass(Class<?> clz){
 		toolClassRef = new WeakReference<Class<?>>(clz);
 	}
 	
 	
 	@Override
 	public ITool getTool() {
-		Class<?> clz = null;
-		if(toolClassRef != null){
-			clz = toolClassRef.get();
+		if(singleton && tool != null){
+			return tool;
 		}
-		if(clz == null){
-			clz = getToolClass();
-		}
+		
+		Class<?> clz = getToolClass();
+		
+		ITool t = null;
 		try {
-			return (ITool) clz.newInstance();
+			t = (ITool) clz.newInstance();
 		} catch (Exception e) {
 			log4j.error("", e);
 		} 
-		return null;
+		
+		if(firstLoad){
+			firstLoad = false;
+			awareTool(t, clz);
+		}
+		
+		return t;
 	}
 
+	//invoked only once; 
+	private void awareTool(ITool t, Class<?> clz){
+		if(t instanceof ISelfAware){
+			ISelfAware selfAware = (ISelfAware) t;
+			singleton = selfAware.cacheMyInstance();
+			cacheClass = selfAware.cacheMyClass();
+			
+			if(singleton){
+				tool = t;
+			}
+			else if(cacheClass){
+				cacheClass(clz);
+			}
+		}
+	}
 
 	public void setClassname(String classname) {
 		this.classname = classname;
@@ -60,8 +86,22 @@ public class JavaToolWrapper extends ToolWrapper{
 
 	
 	private static Class<?> getToolClass(JavaToolWrapper jtw) throws Exception{
-		URL[] urls = new URL[1];
-		urls[0] = new File(jtw.getToolfile()).toURI().toURL();
+		File jarFile = new File(jtw.getToolfile());
+		File parent = jarFile.getParentFile();
+		File[] jars = parent.listFiles(new FilenameFilter() {
+			
+			@Override
+			public boolean accept(File dir, String name) {
+				if(name.endsWith(".jar")){
+					return true;
+				}
+				return false;
+			}
+		});
+		URL[] urls = new URL[jars.length];
+		for (int i = 0; i < urls.length; i++) {
+			urls[i] = jars[i].toURI().toURL();
+		}
 		URLClassLoader rcl = new URLClassLoader(urls, Thread.currentThread().getContextClassLoader());
 		Class<?> claz = rcl.loadClass(jtw.classname);
 		return claz;

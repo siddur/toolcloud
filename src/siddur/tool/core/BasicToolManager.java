@@ -36,7 +36,17 @@ public class BasicToolManager implements IToolManager{
 	public void loadAll() {
 		em = JPAUtil.newEntityMgr();
 		try{
+			//load tools in tool dir
 			File[] files = FileSystemUtil.getToolDir().listFiles();
+			for (File file : files) {
+				String name = file.getName();
+				if(name.length() == 13 && file.isDirectory()){
+					load(name);
+				}
+			}
+			
+			//load tools in ext dir;
+			files = FileSystemUtil.getExtDir().listFiles();
 			for (File file : files) {
 				String name = file.getName();
 				if(name.length() == 13 && file.isDirectory()){
@@ -97,7 +107,7 @@ public class BasicToolManager implements IToolManager{
 			toolPersister.remove(toolID, em);
 			
 			log4j.info("Remove tool files");
-			File toolDir = new File(FileSystemUtil.getToolDir(), toolID);
+			File toolDir = new File(FileSystemUtil.getToolDir(toolID), toolID);
 			FileUtils.deleteDirectory(toolDir);
 			
 			log4j.info("Remove from memory");

@@ -18,7 +18,7 @@ public class ToolPersister {
 	 * save or update
 	 */
 	public void saveTool(ToolDescriptor td, File toolFile) throws Exception{
-		File parent = new File(FileSystemUtil.getToolDir(), td.getPluginID());
+		File parent = new File(FileSystemUtil.getToolDir(td.getPluginID()), td.getPluginID());
 		
 		log4j.info("Start to save tool with ID " + td.getPluginID());
 		if(toolFile != null){
@@ -52,7 +52,7 @@ public class ToolPersister {
 	}
 	
 	public void updateToolFile(File toolFile, String toolID) throws Exception{
-		File parent = new File(FileSystemUtil.getToolDir(), toolID);
+		File parent = new File(FileSystemUtil.getToolDir(toolID), toolID);
 		if(!parent.isDirectory()){
 			throw new Exception("The tool directory doesn't exist");
 		}
@@ -61,7 +61,7 @@ public class ToolPersister {
 	}
 	
 	public void updateToolDescriptor(ToolDescriptor td) throws Exception{
-		File parent = new File(FileSystemUtil.getToolDir(), td.getPluginID());
+		File parent = new File(FileSystemUtil.getToolDir(td.getPluginID()), td.getPluginID());
 		XmlUtil.toXml(td, new File(parent, Constants.TOOL_PLUGIN_FILENAME));
 	}
 	

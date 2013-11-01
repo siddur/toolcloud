@@ -205,6 +205,9 @@ public class ToolAction extends DBAction<Comment>{
 		}
 		populate(req, pd);
 		
+		UserInfo u = (UserInfo)req.getSession().getAttribute("user");
+		pd.createPluginID(u.isAdmin());
+		
 		tpm.save(pd, toolFile);		
 		return mine(req, resp);
 	}

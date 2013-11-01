@@ -10,6 +10,7 @@ import java.nio.channels.ReadableByteChannel;
 import java.nio.channels.WritableByteChannel;
 import java.util.Enumeration;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.tools.ant.Project;
 import org.apache.tools.ant.taskdefs.Zip;
 import org.apache.tools.ant.types.FileSet;
@@ -68,6 +69,14 @@ public class ZipUtil {
 			}
 		}
 		zip.close();
+		File[] files = dir.listFiles();
+		if(files.length == 1){
+			File f = files[0];
+			if(f.isDirectory() && f.getName().equals(dir.getName())){
+				FileUtils.copyDirectory(f, dir);
+				FileUtils.deleteDirectory(f);
+			}
+		}
 		return dir;
 	}
 	
