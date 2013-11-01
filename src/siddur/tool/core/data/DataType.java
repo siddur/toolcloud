@@ -14,6 +14,7 @@ public enum DataType {
 	HTML("html", true, false),
 	FILE("file", true, true),
 	ZIPFILE("zipfile", false, true),
+	FILETREE("filetree", true, false),
 	IMAGE("image", true, true);
 	
 	private String label;

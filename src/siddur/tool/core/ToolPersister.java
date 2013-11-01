@@ -2,11 +2,9 @@ package siddur.tool.core;
 
 import java.io.File;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
-
 import org.apache.commons.io.FileUtils;
+import org.apache.log4j.Logger;
 
-import siddur.common.jpa.JPAUtil;
 import siddur.common.miscellaneous.Constants;
 import siddur.common.miscellaneous.FileSystemUtil;
 import siddur.tool.cloud.ToolInfo;
@@ -14,51 +12,47 @@ import siddur.tool.core.data.ToolDescriptor;
 import siddur.tool.core.data.XmlUtil;
 
 public class ToolPersister {
-
+	
+	private final static Logger log4j = Logger.getLogger(ToolPersister.class);
 	/*
 	 * save or update
 	 */
 	public void saveTool(ToolDescriptor td, File toolFile) throws Exception{
-		File parent = new File(FileSystemUtil.getToolDir(), td.getPluginID());
+		File parent = new File(FileSystemUtil.getToolDir(td.getPluginID()), td.getPluginID());
 		
-		EntityManager em = JPAUtil.newEntityMgr();
-		try {
-			ToolInfo tool = em.find(ToolInfo.class, td.getPluginID());
-			if(tool == null){
-				//13=new Date().toString().length
-				if(toolFile.getName().endsWith(".zip")){
-					File dir = null;
-					File unzipped = ZipUtil.unZip(toolFile);
-					File[] list = unzipped.listFiles();
-					if(list.length == 1){
-						File f = list[0];
-						if(f.isDirectory()){
-							dir = f;
-						}else{
-							dir = unzipped;
-						}
+		log4j.info("Start to save tool with ID " + td.getPluginID());
+		if(toolFile != null){
+			log4j.info("This is a new tool");
+			//13=new Date().toString().length
+			if(toolFile.getName().endsWith(".zip")){
+				File dir = null;
+				File unzipped = ZipUtil.unZip(toolFile);
+				File[] list = unzipped.listFiles();
+				if(list.length == 1){
+					File f = list[0];
+					if(f.isDirectory()){
+						dir = f;
+					}else{
+						dir = unzipped;
 					}
-					FileUtils.copyDirectory(dir, parent);
-				}else{
-					File dest = new File(parent, toolFile.getName().substring(13));
-					FileUtils.copyFile(toolFile, dest);
 				}
-				tool = new ToolInfo();
-				tool.setId(td.getPluginID());
-				EntityTransaction et = em.getTransaction();
-				et.begin();
-				em.persist(tool);
-				et.commit();
+				log4j.info("Unzip the tool file");
+				log4j.info("Allocate the tool");
+				FileUtils.copyDirectory(dir, parent);
+			}else{
+				File dest = new File(parent, toolFile.getName().substring(13));
+				log4j.info("Allocate the tool");
+				FileUtils.copyFile(toolFile, dest);
 			}
-		} finally {
-			em.close();
 		}
 		
 		XmlUtil.toXml(td, new File(parent, Constants.TOOL_PLUGIN_FILENAME));
+		log4j.info("Save to file system");
+		log4j.info("Successfully save the tool with ID " + td.getPluginID());
 	}
 	
 	public void updateToolFile(File toolFile, String toolID) throws Exception{
-		File parent = new File(FileSystemUtil.getToolDir(), toolID);
+		File parent = new File(FileSystemUtil.getToolDir(toolID), toolID);
 		if(!parent.isDirectory()){
 			throw new Exception("The tool directory doesn't exist");
 		}
@@ -67,26 +61,21 @@ public class ToolPersister {
 	}
 	
 	public void updateToolDescriptor(ToolDescriptor td) throws Exception{
-		File parent = new File(FileSystemUtil.getToolDir(), td.getPluginID());
+		File parent = new File(FileSystemUtil.getToolDir(td.getPluginID()), td.getPluginID());
 		XmlUtil.toXml(td, new File(parent, Constants.TOOL_PLUGIN_FILENAME));
 	}
 	
-	public void updateToolStatus(String toolID, int status){
-		EntityManager em = JPAUtil.newEntityMgr();
-		try{
-			ToolInfo tool = em.find(ToolInfo.class, toolID);
-			EntityTransaction et = em.getTransaction();
-			et.begin();
-			tool.setStatus(status);
-			et.commit();
-		}finally{
-			em.close();
-		}
+	
+	public void remove(String toolID, EntityManager em){
+		ToolInfo tool = em.find(ToolInfo.class, toolID);
+		em.remove(tool);
 	}
 	
-	public void updateToolStatus(String toolID, int status, EntityManager em){
-		ToolInfo tool = em.find(ToolInfo.class, toolID);
-		tool.setStatus(status);
+	public void saveInfo(String toolID, EntityManager em){
+		ToolInfo ti = new ToolInfo();
+		ti.setId(toolID);
+		em.persist(ti);
+		
 	}
 	
 }

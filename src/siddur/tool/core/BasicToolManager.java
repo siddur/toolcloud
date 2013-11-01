@@ -13,10 +13,14 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
 import siddur.common.jpa.JPAUtil;
+import siddur.common.miscellaneous.Constants;
 import siddur.common.miscellaneous.FileSystemUtil;
+import siddur.common.security.UserInfo;
+import siddur.tool.cloud.ToolInfo;
 import siddur.tool.core.data.DataTemplate;
 import siddur.tool.core.data.ToolDescriptor;
 import siddur.tool.core.exception.ExecuteException;
+import siddur.tool.core.exception.ToolNotApprovedException;
 import siddur.tool.core.exception.ToolNotFoundException;
 
 public class BasicToolManager implements IToolManager{
@@ -26,27 +30,63 @@ public class BasicToolManager implements IToolManager{
 	private Map<String, IToolWrapper> toolMap = new HashMap<String, IToolWrapper>();
 	private ToolLoader toolLoader = new ToolLoader();
 	private ToolPersister toolPersister = new ToolPersister();
+	private EntityManager em;
 	
 	@Override
 	public void loadAll() {
-		File[] files = FileSystemUtil.getToolDir().listFiles();
-		for (File file : files) {
-			String name = file.getName();
-			if(name.length() == 13 && file.isDirectory()){
-				load(name);
+		em = JPAUtil.newEntityMgr();
+		try{
+			//load tools in tool dir
+			File[] files = FileSystemUtil.getToolDir().listFiles();
+			for (File file : files) {
+				String name = file.getName();
+				if(name.length() == 13 && file.isDirectory()){
+					load(name);
+				}
 			}
+			
+			//load tools in ext dir;
+			files = FileSystemUtil.getExtDir().listFiles();
+			for (File file : files) {
+				String name = file.getName();
+				if(name.length() == 13 && file.isDirectory()){
+					load(name);
+				}
+			}
+		}finally{
+			em.close();
+			em = null;
 		}
 	}
 
 	@Override
 	public void load(String toolID) {
+		EntityManager tempEm = null;
 		try {
 			IToolWrapper tw = toolLoader.loadTool(toolID);
+			
+			//fetch status from DB
+			ToolInfo toolInfo = null;
+			if(em != null){ //invoked by loadAll()
+				toolInfo = em.find(ToolInfo.class, toolID);
+			}else{ //invoked by save()
+				tempEm = JPAUtil.newEntityMgr();
+				toolInfo = tempEm.find(ToolInfo.class, toolID);
+			}
+			if(toolInfo != null){
+				tw.setStatus(1);
+			}
+			
 			toolMap.put(toolID, tw);
+			
 			log4j.info("Successfully load tool with ID " + toolID);
 		} catch (Exception e) {
 			log4j.info("Fail to load tool with ID " + toolID);
 			log4j.warn(e);
+		} finally{
+			if(tempEm != null){
+				tempEm.close();
+			}
 		}
 	}
 
@@ -61,13 +101,19 @@ public class BasicToolManager implements IToolManager{
 		EntityTransaction et = em.getTransaction();
 		et.begin();
 		try {
-			toolPersister.updateToolStatus(toolID, -1, em);
+			log4j.info("Start to delete tool with ID " + toolID);
 			
-			File toolDir = new File(FileSystemUtil.getToolDir(), toolID);
+			log4j.info("Remove from DB");
+			toolPersister.remove(toolID, em);
+			
+			log4j.info("Remove tool files");
+			File toolDir = new File(FileSystemUtil.getToolDir(toolID), toolID);
 			FileUtils.deleteDirectory(toolDir);
 			
+			log4j.info("Remove from memory");
 			unload(toolID);
 			et.commit();
+			log4j.info("Successfully delete tool with ID " + toolID);
 		} catch (IOException e) {
 			log4j.warn(e);
 			et.rollback();
@@ -87,6 +133,12 @@ public class BasicToolManager implements IToolManager{
 			log4j.warn(e.getMessage(), e);
 		}
 	}
+	
+	@Override
+	public void save(ToolDescriptor pd) {
+		this.save(pd, null);
+		
+	}
 
 	protected String[] execute(IToolWrapper tw, String[] params, Map<String, Object> context) throws Exception {
 		return tw.getTool().execute(params);
@@ -99,10 +151,21 @@ public class BasicToolManager implements IToolManager{
 			throw new ToolNotFoundException(toolID);
 		}
 		
-//		boolean approved = (tw.getStatus() == 1);
-//		if(!approved){
-//			throw new ToolNotApprovedException(toolID);
-//		}
+		UserInfo user = (UserInfo)context.get(Constants.USER);
+		
+		boolean isOwner = false;
+		if(Integer.toString(user.getUserId()).equals(tw.getDescriptor().getAuthorId())){
+			isOwner = true;
+		}
+		
+		Boolean hasPerm = (Boolean)context.get(Constants.HAS_PERM);
+		if(!isOwner && !hasPerm){
+			//check status
+			boolean approved = tw.getStatus() == 1;
+			if(!approved){
+				throw new ToolNotApprovedException(toolID);
+			}
+		}
 
 		String[] output = null;
 		ToolDescriptor td = tw.getDescriptor();
@@ -122,10 +185,31 @@ public class BasicToolManager implements IToolManager{
 		return output;
 	}
 
+	/*
+	 * Save ToolInfo
+	 * Set status of tool wrapper
+	 */
 	@Override
 	public void approve(String pluginID) {
-		toolMap.get(pluginID).setStatus(1);
-		toolPersister.updateToolStatus(pluginID, 1);
+		IToolWrapper tw = toolMap.get(pluginID);
+		if(tw != null){
+			EntityManager em = JPAUtil.newEntityMgr();
+			EntityTransaction et = em.getTransaction();
+			et.begin();
+			try {
+				toolPersister.saveInfo(pluginID, em);
+				tw.setStatus(1);
+				et.commit();
+				log4j.info("Succssfully save tool info with ID " + pluginID);
+			} catch (Exception e) {
+				log4j.warn(e);
+				et.rollback();
+			} finally{
+				if(em.isOpen()){
+					em.close();
+				}
+			}
+		}
 	}
 
 	@Override
@@ -243,4 +327,5 @@ public class BasicToolManager implements IToolManager{
 			FileUtils.copyDirectory(src, dest);
 		return relativePath;
 	}
+	
 }

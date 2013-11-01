@@ -7,6 +7,7 @@
 	<property name="sample" value="${basedir}/../sample"/>
 	<property name="web" value="${basedir}/../web"/>
 	<property name="srclib" value="${basedir}/../lib"/>
+	<property name="lang" value="${basedir}/../lang.conf"/>
 	<property name="classes" value="${dist_dir}/classes"/>
 	
 	<property name="standalone" value="${dist_dir}/standalone"/>
@@ -25,6 +26,10 @@
 	<target name="standalone" depends="jar">
 		<mkdir dir="${standalone}"/>
 		<move todir="${standalone}" file="${dist_dir}/${jarfile}"/>
+		<copy todir="${standalone}" file="${lang}"/>
+		<copy todir="${standalone}/db">
+			<fileset dir="${basedir}/db" />
+		</copy>
 		
 		<pathconvert property="win.mf.classpath" pathsep=";">
 			<mapper>
@@ -36,10 +41,11 @@
 			<path refid="classpath" />
 		</pathconvert>
 		<touch file="${standalone}/start.bat"/>
-		<echo file="${standalone}/start.bat">set server_lib_dir=file:/%cd:\=/%/lib/-
-set server_web_dir=file:/%cd:\=/%/web/-
-set toolcloud_jarfile=file:/%cd:\=/%/toolcloud.jar
-set client_code_dir=file:/%cd:\=/%/tools/-
+		<echo file="${standalone}/start.bat">set server_lib_dir=file:%cd:\=/%/lib/-
+set server_web_dir=file:%cd:\=/%/web/-
+set server_ext_dir=file:%cd:\=/%/ext/-
+set toolcloud_jarfile=file:%cd:\=/%/toolcloud.jar
+set client_code_dir=file:%cd:\=/%/tools/-
 set policy_file=my.policy
 
 echo grant codeBase "%server_lib_dir%" { > %policy_file%
@@ -47,6 +53,10 @@ echo ^    permission java.security.AllPermission; >> %policy_file%
 echo }; >>%policy_file%
 			
 echo grant codeBase "%server_web_dir%" { >> %policy_file%
+echo ^    permission java.security.AllPermission; >> %policy_file%
+echo }; >>%policy_file%
+			
+echo grant codeBase "%server_web_ext%" { >> %policy_file%
 echo ^    permission java.security.AllPermission; >> %policy_file%
 echo }; >>%policy_file%
 
@@ -71,13 +81,45 @@ java -Djava.security.manager -Djava.security.policy=%policy_file% -cp %LIB%;${ja
 			<path refid="classpath" />
 		</pathconvert>
 		<touch file="${standalone}/start.sh"/>
-		<echo file="${standalone}/start.sh">LIB="${linux.mf.classpath}"
-java -Djava.security.manager -Djava.security.policy="my.policy" -cp "$LIB:${jarfile}" siddur.tool.jetty.JettyStart</echo>
+		<echo file="${standalone}/start.sh">server_lib_dir=file:${PWD}/lib/-
+server_web_dir=file:${PWD}/web/-
+server_ext_dir=file:${PWD}/ext/-
+toolcloud_jarfile=file:${PWD}/toolcloud.jar
+client_code_dir=file:${PWD}/tools/-
+policy_file=my.policy
+
+echo 'grant codeBase "file:$${java.ext.dirs}/*" {' > ${policy_file}
+echo '	  permission java.security.AllPermission;' >> ${policy_file}
+echo '};' >>${policy_file}
+			
+echo "grant codeBase \"${server_lib_dir}\" {" >> ${policy_file}
+echo "    permission java.security.AllPermission;" >> ${policy_file}
+echo "};" >>${policy_file}
+			
+echo "grant codeBase \"${server_web_dir}\" {" >> ${policy_file}
+echo "    permission java.security.AllPermission;" >> ${policy_file}
+echo "};" >>${policy_file}
+			
+echo "grant codeBase \"${server_ext_dir}\" {" >> ${policy_file}
+echo "    permission java.security.AllPermission;" >> ${policy_file}
+echo "};" >>${policy_file}
+
+echo "grant codeBase \"${toolcloud_jarfile}\" {" >>${policy_file}
+echo "    permission java.security.AllPermission;" >> ${policy_file}
+echo "};" >>${policy_file}
+
+echo "grant codeBase \"${client_code_dir}\" {" >>${policy_file}
+echo "    permission java.io.FilePermission \"${PWD}/temp/*\", \"read,write\";" >> ${policy_file}
+echo "};" >>${policy_file}
+			
+LIB="${linux.mf.classpath}"
+java -Djava.security.manager -Djava.security.policy=$${policy_file} -cp $LIB:${jarfile} siddur.tool.jetty.JettyStart</echo>
 		
 		
 		<copy todir="${standalone}/lib">
 			<fileset dir="${srclib}" includes="*.jar"/>
 			<fileset dir="${srclib}/jetty" includes="*.jar"/>
+			<fileset dir="${srclib}/ext" includes="*.jar"/>
 		</copy>
 		<copy todir="${standalone}/web">
 			<fileset dir="${web}" excludes="**/persistence.xml"/>

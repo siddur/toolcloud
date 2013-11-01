@@ -1,7 +1,8 @@
 package siddur.common.security;
 
 public enum Permission{
-	TOOL_RUN("工具", "使用工具"),
+	TOOL_RUN("工具", "使用所有工具"),
+	TOOL_APPROVE("工具", "批准发布工具"),
 	TOOL_PUB("工具", "发布工具"),
 	TOOL_EDIT("工具", "修改工具"),
 	TOOL_DEL("工具", "删除工具"),

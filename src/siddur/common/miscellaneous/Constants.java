@@ -14,4 +14,7 @@ public class Constants {
 	public static final String CHECHED_FLAG = "checked_flag";
 	public static final String PERMS = "perms";
 	public static final String SPLIT_MAP = "split_map";
+	
+	
+	public static final String HAS_PERM = "hasPerm";
 }

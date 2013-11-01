@@ -10,9 +10,6 @@ public class ToolInfo {
 	@Id
 	private String id;
 	
-	@Column(length=1)
-	private int status = 0;
-	
 	@Column
 	private long clicks = 0;
 	
@@ -25,14 +22,6 @@ public class ToolInfo {
 
 	public void setId(String id) {
 		this.id = id;
-	}
-
-	public int getStatus() {
-		return status;
-	}
-
-	public void setStatus(int status) {
-		this.status = status;
 	}
 
 	public long getClicks() {

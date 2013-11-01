@@ -4,6 +4,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <s:site>
 <jsp:attribute name="headPart">
+<meta name="keywords" content="${tool.descriptor.keywords}"/>
+<meta name="description" content="${tool.descriptor.description}"/>
 <script>
 	var runUrl = "/toolcloud/ctrl/tool/exec";
 	<c:if test="${needConsole}">
@@ -190,6 +192,11 @@
 			</div>
 		</c:if>
 		</div>
+		<c:if test="${tool.status == 0}">
+			<div>
+				<a href="/toolcloud/ctrl/tool/approve?toolId=${tool.descriptor.pluginID}" >允许公开</a>
+			</div>
+		</c:if>
 		<div style="clear:left; padding-top:20px;">
 			<c:forEach var="t" items="${similars}">
 			<div class="left_float" style="padding-right:20px; padding-bottom:5px;">
@@ -205,6 +212,7 @@
 				</a>
 			</div>
 			</c:forEach>
+			<div style="font-size: 12px; clear:left;"><a href="/toolcloud/ctrl/tool/list">更多</a></div>
 		</div>
 		<div class="comments">
 			<c:forEach var="c" items="${comments}">

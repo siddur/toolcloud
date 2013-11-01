@@ -140,4 +140,8 @@ public class UserInfo {
 		}
 		return nickname;
 	}
+	
+	public boolean isAdmin(){
+		return role.getRolename().equals("admin");
+	}
 }
