@@ -64,14 +64,14 @@
 		</c:if>
 		$("#run_btn").attr("disabled", false);
 		if(results){
-			if(results != "error"){
+			if(!results.startsWith("error")){
 				$("#run_msg").css("color", "green").html("运行成功");
 				var r = eval(results);
 				$(".output").each(function(idx, item){
 					_showEachResult(r[idx], item);
 				});
 			}else{
-				$("#run_msg").css("color", "red").html("运行失败");
+				$("#run_msg").css("color", "red").html("运行失败:" + results.substring(5, results.length));
 			}
 		}
 	}
@@ -176,13 +176,11 @@
 				<s:input inputModel="${input}" index="${status.index}"></s:input>
 			</c:forEach>
 			</div>
-		<c:if test="${tool.descriptor.lang == 'java'}">
 			<div class="output_container">
 			<c:forEach var="output" items="${tool.descriptor.outputModel}">
 				<s:output_display outputData="${output}"></s:output_display>
 			</c:forEach>
 			</div>
-		</c:if>
 		<c:if test="${needConsole}">
 			<div>
 				<a id="switcher" href="javascript:switchConsole()">显示控制台</a>

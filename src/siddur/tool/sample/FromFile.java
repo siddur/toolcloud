@@ -4,15 +4,17 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
+import java.util.Map;
 
 import siddur.tool.core.ITool;
+import siddur.tool.core.IToolWrapper;
 import siddur.tool.core.TempFileUtil;
 
 public class FromFile implements ITool{
 
 	
 	@Override
-	public String[] execute(String[] inputs) throws Exception {
+	public String[] execute(String[] inputs, IToolWrapper toolWrapper, Map<String, Object> context) throws Exception {
 		String filepath = inputs[0];
 		String encoding = "UTF-8";
 		if(inputs.length > 1){
@@ -43,7 +45,7 @@ public class FromFile implements ITool{
 	
 	public static void main(String[] args) throws Exception {
 		FromFile f = new FromFile();
-		String r = f.execute(new String[]{"temp\\test.txt"})[0];
+		String r = f.execute(new String[]{"temp\\test.txt"}, null, null)[0];
 		System.out.println(r);
 	}
 }

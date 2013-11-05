@@ -1,16 +1,18 @@
 package siddur.tool.fileprocess;
 
+import java.util.Map;
 import java.util.Vector;
 
 import jlibdiff.Diff;
 import jlibdiff.Hunk;
 import siddur.tool.core.ITool;
+import siddur.tool.core.IToolWrapper;
 import siddur.tool.core.TempFileUtil;
 
 public class FileDiff implements ITool{
 
 	@Override
-	public String[] execute(String[] inputs) throws Exception {
+	public String[] execute(String[] inputs, IToolWrapper toolWrapper, Map<String, Object> context) throws Exception {
 		String file1 = TempFileUtil.findFile(inputs[0]).getCanonicalPath();
 		String file2 = TempFileUtil.findFile(inputs[1]).getCanonicalPath();
 		Diff diff = new Diff();
@@ -39,7 +41,7 @@ public class FileDiff implements ITool{
 	public static void main(String[] args) throws Exception {
 		FileDiff f = new FileDiff();
 		String[] inputs = new String[]{"temp\\common1.txt", "temp\\common2.txt"};
-		System.out.println(f.execute(inputs)[0]);
+		System.out.println(f.execute(inputs, null, null)[0]);
 	}
 
 }

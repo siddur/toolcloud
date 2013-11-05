@@ -2,6 +2,7 @@ package siddur.tool.code;
 
 import java.io.File;
 import java.util.Hashtable;
+import java.util.Map;
 
 import javax.imageio.ImageIO;
 
@@ -15,6 +16,7 @@ import com.google.zxing.client.j2se.BufferedImageLuminanceSource;
 import com.google.zxing.common.GlobalHistogramBinarizer;
 
 import siddur.tool.core.ITool;
+import siddur.tool.core.IToolWrapper;
 import siddur.tool.core.TempFileUtil;
 
 public class QRDecoder implements ITool{
@@ -24,7 +26,7 @@ public class QRDecoder implements ITool{
 	 * 	String Encoding
 	 */
 	@Override
-	public String[] execute(String[] inputs) throws Exception {
+	public String[] execute(String[] inputs, IToolWrapper toolWrapper, Map<String, Object> context) throws Exception {
 		String imagePath = inputs[0];
 		File imageFile = TempFileUtil.findFile(imagePath);
 		String encoding = inputs[1];
@@ -51,7 +53,7 @@ public class QRDecoder implements ITool{
 	
 	public static void main(String[] args) throws Exception {
 		QRDecoder b = new QRDecoder();
-		String[] outputs = b.execute(new String[]{"temp\\canvas.png", "iso-8859-1"});
+		String[] outputs = b.execute(new String[]{"temp\\canvas.png", "iso-8859-1"}, null, null);
 		System.out.println(outputs[0]);
 		System.out.println(outputs[1]);
 	}

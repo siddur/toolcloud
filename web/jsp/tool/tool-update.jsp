@@ -29,16 +29,16 @@
 	function selectLang(lang){
 		if(lang == "java"){
 			$(".input_tag").css("display", "none");
-			$(".output_tag").css("display", "none");
+			//$(".output_tag").css("display", "none");
 			
 			$(".out_default").css("display", "none");
 			$(".out_type").css("display", "block");
 		}else{
 			$(".input_tag").css("display", "block");
-			$(".output_tag").css("display", "block");
+			//$(".output_tag").css("display", "block");
 			
 			$(".out_default").css("display", "block");
-			$(".out_type").css("display", "none");
+			$(".out_type").css("display", "block");
 		}
 	
 	}

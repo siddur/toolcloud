@@ -2,8 +2,10 @@ package siddur.tool.encoding;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
+import java.util.Map;
 
 import siddur.tool.core.ITool;
+import siddur.tool.core.IToolWrapper;
 import siddur.tool.sample.Combination;
 
 public class CheckEncoding implements ITool{
@@ -13,7 +15,7 @@ public class CheckEncoding implements ITool{
 	 * text
 	 */
 	@Override
-	public String[] execute(String[] inputs) throws Exception {
+	public String[] execute(String[] inputs, IToolWrapper toolWrapper, Map<String, Object> context) throws Exception {
 		String text = inputs[0];
 		final StringBuilder sb = new StringBuilder();
 		append(text, sb);
@@ -81,6 +83,6 @@ public class CheckEncoding implements ITool{
 
 	public static void main(String[] args) throws Exception {
 		CheckEncoding ce = new CheckEncoding();
-		System.out.println(ce.execute(new String[]{"´¢»Û"})[0]);
+		System.out.println(ce.execute(new String[]{"´¢»Û"}, null, null)[0]);
 	}
 }

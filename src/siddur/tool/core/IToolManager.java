@@ -13,7 +13,7 @@ public interface IToolManager{
 	/*
 	 * Load a tool from DB/FS into memory.
 	 */
-	void load(String toolID);
+	IToolWrapper load(String toolID);
 	
 	/*
 	 * Remove the tool from memory.

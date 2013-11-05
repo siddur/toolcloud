@@ -78,6 +78,7 @@
 				<option value="IMAGE" <c:if test="${item.dataType == 'IMAGE'}">selected="selected"</c:if> >图片</option>
 				<option value="FILE" <c:if test="${item.dataType == 'FILE'}">selected="selected"</c:if> >文件</option>
 				<option value="ZIPFILE" <c:if test="${item.dataType == 'ZIPFILE'}">selected="selected"</c:if> >zip文件</option>
+				<option value="EMPTY" <c:if test="${item.dataType == 'EMPTY'}">selected="selected"</c:if> >空值</option>
 			</select>
 		</div>
 	</div>

@@ -2,9 +2,11 @@ package siddur.tool.sample;
 
 
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 import siddur.tool.core.ITool;
+import siddur.tool.core.IToolWrapper;
 
 
 public class Cal24 implements ITool {
@@ -14,7 +16,7 @@ public class Cal24 implements ITool {
 	
 
 	@Override
-	public String[] execute(String[] inputs) {
+	public String[] execute(String[] inputs, IToolWrapper toolWrapper, Map<String, Object> context) {
 		int[] digits = new int[4];
 		for (int i = 0; i < inputs.length; i++) {
 			digits[i] = Integer.valueOf(inputs[i]);

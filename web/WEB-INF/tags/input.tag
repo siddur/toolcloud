@@ -53,6 +53,11 @@
 		}
 
 		function doValidate(idx, item){
+			var i = $(item);
+			if(i.hasClass("EMPTY")){
+				return true;
+			}
+			
 			var tag = item.tagName;
 			var v = item.value.trim();
 			if(!v){
@@ -60,7 +65,6 @@
 				return false;
 			}
 
-			var i = $(item);
 			if(i.hasClass("INTEGER")){
 				if(isNaN(v) || v.indexOf(".") > -1){
 					showError(item);
@@ -128,6 +132,9 @@
 		</c:when>
 		<c:otherwise>
 			<c:choose>
+				<c:when test="${'EMPTY' == type}">
+					<input type="hidden" class="input ${type}" name="input">
+				</c:when>
 				<c:when test="${'STRING' == type
 					||'INTEGER' == type
 					||'DOUBLE' == type

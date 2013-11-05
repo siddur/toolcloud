@@ -2,6 +2,7 @@ package siddur.tool.code;
 
 import java.io.File;
 import java.util.Hashtable;
+import java.util.Map;
 
 import com.google.zxing.EncodeHintType;
 import com.google.zxing.MultiFormatWriter;
@@ -9,6 +10,7 @@ import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
 
 import siddur.tool.core.ITool;
+import siddur.tool.core.IToolWrapper;
 import siddur.tool.core.TempFileUtil;
 
 public class QREncoder implements ITool{
@@ -20,7 +22,7 @@ public class QREncoder implements ITool{
 	 * String mime //jpg,png
 	 */
 	@Override
-	public String[] execute(String[] inputs) throws Exception {
+	public String[] execute(String[] inputs, IToolWrapper toolWrapper, Map<String, Object> context) throws Exception {
 		String content = inputs[0];
 		int width = Integer.parseInt(inputs[1]);
 		String encoding = inputs[2];
@@ -51,7 +53,7 @@ public class QREncoder implements ITool{
 	
 	public static void main(String[] args) throws Exception {
 		QREncoder b = new QREncoder();
-		b.execute(new String[]{"中国"});
+		b.execute(new String[]{"中国"}, null, null);
 	}
 
 }

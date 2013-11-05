@@ -202,11 +202,12 @@ public class ToolAction extends DBAction<Comment>{
 			}
 			pd = new ToolDescriptor();
 			toolFile = FileSystemUtil.getFileByRelativePath(req.getParameter("toolfile"));
+			UserInfo u = (UserInfo)req.getSession().getAttribute("user");
+			if(u.isAdmin()){
+				pd.setExt(true);
+			}
 		}
 		populate(req, pd);
-		
-		UserInfo u = (UserInfo)req.getSession().getAttribute("user");
-		pd.createPluginID(u.isAdmin());
 		
 		tpm.save(pd, toolFile);		
 		return mine(req, resp);
@@ -311,7 +312,7 @@ public class ToolAction extends DBAction<Comment>{
 			results = tpm.run(toolID, params, context);
 		}catch(Exception e){
 			log4j.warn(e.getMessage(), e);
-			return Result.ajax("error");
+			return Result.ajax("error=" + e.getMessage());
 		}finally{
 			run.setEndAt(new Date());
 			run.setSuccess(results != null);

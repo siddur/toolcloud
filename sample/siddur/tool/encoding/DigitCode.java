@@ -1,8 +1,10 @@
 package siddur.tool.encoding;
 
 import java.util.Arrays;
+import java.util.Map;
 
 import siddur.tool.core.ITool;
+import siddur.tool.core.IToolWrapper;
 
 public class DigitCode implements ITool {
 
@@ -12,7 +14,7 @@ public class DigitCode implements ITool {
 	 * Integer
 	 */
 	@Override
-	public String[] execute(String[] inputs) throws Exception {
+	public String[] execute(String[] inputs, IToolWrapper toolWrapper, Map<String, Object> context) throws Exception {
 		String s = inputs[0];
 		int from = Integer.parseInt(inputs[1]);
 		int to = Integer.parseInt(inputs[2]);
@@ -39,7 +41,7 @@ public class DigitCode implements ITool {
 		DigitCode d = new DigitCode();
 		String [] inputs = new String[]{"ff", "16", "2"};
 		System.out.println(Arrays.toString(inputs));
-		String [] outputs = d.execute(inputs);
+		String [] outputs = d.execute(inputs, null, null);
 		System.out.println(outputs[0]);
 	}
 }

@@ -20,6 +20,7 @@ public class XmlUtil {
 	private static final String DATA = "data";
 	private static final String TYPE = "type";
 	private static final String TAG = "tag";
+	private static final String DEFUALT = "default";
 	private static final String DESCRIPTION = "description";
 	private static final String CONSTRAINT = "constraint";
 	
@@ -31,7 +32,7 @@ public class XmlUtil {
 		Element root = doc.addElement(PLUGIN);
 		
 		if(pd != null){
-			if(pd.getPluginID() != null) root.addElement("ID").addText(pd.getPluginID());
+			if(pd.getPublishAt() != null) root.addElement("ID").addText(pd.getPublishAt().getTime() + "");
 			if(pd.getLang() != null) root.addElement("lang").addText(pd.getLang());
 			if(pd.getKeywords() != null) root.addElement("keywords").addText(pd.getKeywords());
 			if(pd.getSimilars() != null) root.addElement("simulars").addText(pd.getSimilars());
@@ -64,6 +65,7 @@ public class XmlUtil {
 			Element item = parent.addElement(DATA);
 			if(td.getDataType() != null) item.addElement(TYPE).addText(td.getDataType());
 			if(td.getTag() != null) item.addElement(TAG).addText(td.getTag());
+			if(td.getDefaultValue() != null) item.addElement(DEFUALT).addText(td.getDefaultValue());
 			if(td.getDescription() != null) item.addElement(DESCRIPTION).addText(td.getDescription());
 			if(td.getConstraint() != null) item.addElement(CONSTRAINT).addText(td.getConstraint());
 		}
@@ -107,6 +109,7 @@ public class XmlUtil {
 			DataTemplate td = new DataTemplate();
 			td.setDataType(ele.elementText(TYPE));
 			td.setTag(ele.elementText(TAG));
+			td.setDefaultValue(ele.elementText(DEFUALT));
 			td.setDescription(ele.elementText(DESCRIPTION));
 			td.setConstraint(ele.elementText(CONSTRAINT));
 			tds[x++] = td;
