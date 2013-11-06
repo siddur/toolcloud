@@ -7,10 +7,12 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.util.Map;
 
 import org.apache.commons.io.FileUtils;
 
 import siddur.tool.core.ConsoleTool;
+import siddur.tool.core.IToolWrapper;
 import siddur.tool.core.TempFileUtil;
 
 
@@ -28,7 +30,7 @@ import siddur.tool.core.TempFileUtil;
 public class FileReadAndWrite extends ConsoleTool{
 
 	@Override
-	public String[] execute(String[] inputs) throws Exception {
+	public String[] execute(String[] inputs, IToolWrapper toolWrapper, Map<String, Object> context) throws Exception {
 		log("开始---->");
 		File dir = TempFileUtil.findFile(inputs[0]);
 		File file = TempFileUtil.findFile(inputs[1]);

@@ -1,8 +1,11 @@
 package siddur.tool.encoding;
 
 import java.io.UnsupportedEncodingException;
+import java.util.Map;
+
 import siddur.common.miscellaneous.ToolUtil;
 import siddur.tool.core.ITool;
+import siddur.tool.core.IToolWrapper;
 
 public class GuessEncoding implements ITool{
 	private static final String[] encodings = {"UTF-8", "GBK", "ISO-8859-1"};
@@ -11,7 +14,7 @@ public class GuessEncoding implements ITool{
 	 * text
 	 */
 	@Override
-	public String[] execute(String[] inputs) throws Exception {
+	public String[] execute(String[] inputs, IToolWrapper toolWrapper, Map<String, Object> context) throws Exception {
 		String text = inputs[0];
 		StringBuilder sb = new StringBuilder();
 		sb.append(text);
@@ -49,6 +52,6 @@ public class GuessEncoding implements ITool{
 
 	public static void main(String[] args) throws Exception {
 		GuessEncoding ce = new GuessEncoding();
-		System.out.println(ce.execute(new String[]{"-50, -46, -61, -57, -54, -57, -42, -48, -71, -6, -56, -53"})[0]);
+		System.out.println(ce.execute(new String[]{"-50, -46, -61, -57, -54, -57, -42, -48, -71, -6, -56, -53"}, null, null)[0]);
 	}
 }

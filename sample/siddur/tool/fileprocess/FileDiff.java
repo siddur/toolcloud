@@ -2,23 +2,18 @@ package siddur.tool.fileprocess;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.io.Reader;
 import java.io.Writer;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Vector;
 
-import freemarker.cache.TemplateLoader;
 import freemarker.template.Configuration;
 import freemarker.template.DefaultObjectWrapper;
 import freemarker.template.Template;
-import freemarker.template.TemplateException;
 
 import jlibdiff.Diff;
 import jlibdiff.Hunk;
@@ -26,12 +21,13 @@ import jlibdiff.HunkAdd;
 import jlibdiff.HunkChange;
 import jlibdiff.HunkDel;
 import siddur.tool.core.ITool;
+import siddur.tool.core.IToolWrapper;
 import siddur.tool.core.TempFileUtil;
 
 public class FileDiff implements ITool{
 
 	@Override
-	public String[] execute(String[] inputs) throws Exception {
+	public String[] execute(String[] inputs, IToolWrapper toolWrapper, Map<String, Object> context) throws Exception {
 		String file1 = TempFileUtil.findFile(inputs[0]).getCanonicalPath();
 		String file2 = TempFileUtil.findFile(inputs[1]).getCanonicalPath();
 		Diff diff = new Diff();
@@ -50,7 +46,7 @@ public class FileDiff implements ITool{
 	private static String test(String html) throws Exception{
 		Configuration cfg = new Configuration();
 		cfg.setDefaultEncoding("UTF-8");
-		cfg.setClassForTemplateLoading(FileDiff.class, ".");
+		cfg.setClassForTemplateLoading(FileDiff.class.getClassLoader().getClass(), ".");
 		cfg.setObjectWrapper(new DefaultObjectWrapper());
 		Map root = new HashMap();
 		root.put("html", html);
@@ -136,8 +132,8 @@ public class FileDiff implements ITool{
 	
 	public static void main(String[] args) throws Exception {
 		FileDiff f = new FileDiff();
-		String[] inputs = new String[]{"temp\\common2.txt", "temp\\common1.txt"};
-		System.out.println(f.execute(inputs)[0]);
+		String[] inputs = new String[]{"temp\\common1.txt", "temp\\common2.txt"};
+		System.out.println(f.execute(inputs, null, null)[0]);
 	}
 
 }

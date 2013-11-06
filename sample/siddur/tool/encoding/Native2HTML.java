@@ -1,11 +1,14 @@
 package siddur.tool.encoding;
 
+import java.util.Map;
+
 import siddur.tool.core.ITool;
+import siddur.tool.core.IToolWrapper;
 
 public class Native2HTML implements ITool{
 
 	@Override
-	public String[] execute(String[] inputs) throws Exception {
+	public String[] execute(String[] inputs, IToolWrapper toolWrapper, Map<String, Object> context) throws Exception {
 		String nativeText = inputs[0];
 		char[] chs = nativeText.toCharArray();
 		StringBuilder sb = new StringBuilder(chs.length);
@@ -44,7 +47,7 @@ public class Native2HTML implements ITool{
 		Native2HTML n = new Native2HTML();
 		String content = "这是一个例子,this is a example";
 		String[] inputs = new String[]{content};
-		String[] outputs = n.execute(inputs);
+		String[] outputs = n.execute(inputs, null, null);
 		System.out.println(outputs[0]);
 	}
 }

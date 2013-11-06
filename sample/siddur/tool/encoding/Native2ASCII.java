@@ -1,13 +1,14 @@
 package siddur.tool.encoding;
 
-import java.util.Properties;
+import java.util.Map;
 
 import siddur.tool.core.ITool;
+import siddur.tool.core.IToolWrapper;
 
 public class Native2ASCII implements ITool {
 
 	@Override
-	public String[] execute(String[] inputs) throws Exception {
+	public String[] execute(String[] inputs, IToolWrapper toolWrapper, Map<String, Object> context) throws Exception {
 		String nativeText = inputs[0];
 		boolean filter123_abc = "1".equals(inputs[1]);
 		char[] chs = nativeText.toCharArray();
@@ -44,9 +45,9 @@ public class Native2ASCII implements ITool {
 	
 	public static void main(String[] args) throws Exception {
 		Native2ASCII n = new Native2ASCII();
-		String content = "言";
+		String content = "世界";
 		String[] inputs = new String[]{content, "0"};
-		String[] outputs = n.execute(inputs);
+		String[] outputs = n.execute(inputs, null, null);
 		System.out.println(outputs[0]);
 //		Properties p = new Properties();
 //		p.load(Native2ASCII.class.getResourceAsStream("test.properties"));

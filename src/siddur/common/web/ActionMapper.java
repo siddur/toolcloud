@@ -26,6 +26,7 @@ import siddur.common.security.DoNotAuthenticate;
 import siddur.common.security.Permission;
 import siddur.common.security.PermissionManager;
 import siddur.common.security.PermissionManager.PermissionGroup;
+import siddur.common.security.RequestUtil;
 import siddur.common.security.UserInfo;
 
 public class ActionMapper{
@@ -91,7 +92,10 @@ public class ActionMapper{
 								&& c.length == 2 
 								&& HttpServletRequest.class.isAssignableFrom(c[0]) 
 								&& HttpServletResponse.class.isAssignableFrom(c[1])){
-							String methodName = m.getName().toLowerCase();
+							String methodName = m.getName().toLowerCase(); 
+							/*
+							 *  /path/methodName
+							 */
 							String mpath = path + "/" + methodName;
 							mpath = mpath.replace("\\", "/").replace("//", "/");
 							methodMap.put(mpath, m);
@@ -124,7 +128,11 @@ public class ActionMapper{
 	}
 	
 	public void doAction(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
-		String path = req.getPathInfo();
+		/*
+		 *  path = "/path/methodName"
+		 */
+		String path = RequestUtil.getActionPath(req.getPathInfo());
+		
 		Permission perm = permMap.get(path);
 		checkCookie(req);
 		

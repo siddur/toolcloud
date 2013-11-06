@@ -1,6 +1,6 @@
 package siddur.tool.code;
 
-import java.util.Arrays;
+import java.util.Map;
 
 import net.sourceforge.pinyin4j.PinyinHelper;
 import net.sourceforge.pinyin4j.format.HanyuPinyinCaseType;
@@ -8,11 +8,12 @@ import net.sourceforge.pinyin4j.format.HanyuPinyinOutputFormat;
 import net.sourceforge.pinyin4j.format.HanyuPinyinToneType;
 import net.sourceforge.pinyin4j.format.HanyuPinyinVCharType;
 import siddur.tool.core.ITool;
+import siddur.tool.core.IToolWrapper;
 
 public class Pinyin implements ITool{
 
 	@Override
-	public String[] execute(String[] inputs) throws Exception {
+	public String[] execute(String[] inputs, IToolWrapper toolWrapper, Map<String, Object> context) throws Exception {
 		String text = inputs[0];
 		
 		HanyuPinyinOutputFormat hanYuPinOutputFormat = new HanyuPinyinOutputFormat();
@@ -49,7 +50,7 @@ public class Pinyin implements ITool{
 	public static void main(String[] args) throws Exception {
 		String s = "中华1223=‘；x;；";
 		
-		String r = new Pinyin().execute(new String[]{s})[0];
+		String r = new Pinyin().execute(new String[]{s}, null, null)[0];
 		System.out.println(r);
 	}
 }

@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.exec.CommandLine;
 import org.apache.commons.exec.DefaultExecutor;
@@ -43,7 +44,7 @@ public abstract class CommandTool extends ConsoleTool{
 			String[] params, DataTemplate[] tooldatas) throws Exception;
 
 	@Override
-	public String[] execute(String[] inputs) throws Exception {
+	public String[] execute(String[] inputs, IToolWrapper toolWrapper, Map<String, Object> context) throws Exception {
 		
 		//copy script file from tool dir to temp dir.
 		File temp = copyTemp();
@@ -70,11 +71,10 @@ public abstract class CommandTool extends ConsoleTool{
 		//extract file from outputModel
 		if(outputModel != null){
 			for(DataTemplate td : outputModel){
-				if(td.isFile()){
-					String v = td.getDefaultValue();
-					if(!v.equals("")){
-						outputs.add(findFile(v, temp.getParent()));
-					}
+				//must be file
+				String v = td.getDefaultValue();
+				if(!v.equals("")){
+					outputs.add(findFile(v, temp.getParentFile().getName()));
 				}
 			}
 		}
@@ -89,12 +89,13 @@ public abstract class CommandTool extends ConsoleTool{
 
 	private File copyTemp() throws IOException{
 		File src = new File(filepath);
-		String parent = src.getParentFile().getName();
-		File workspace = new File(FileSystemUtil.getTempDir(), parent);
+		File parent = src.getParentFile();
+		File workspace = new File(FileSystemUtil.getTempDir(), parent.getName());
 		workspace.mkdir();
-		File dest = new File(workspace, src.getName());
-		FileUtils.copyFile(src, dest);
-		return dest;
+//		File dest = new File(workspace, src.getName());
+//		FileUtils.copyFile(src, dest);
+		FileUtils.copyDirectory(parent, workspace);
+		return new File(workspace, src.getName());
 	}
 	
 	

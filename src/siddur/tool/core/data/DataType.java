@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public enum DataType {
+	EMPTY("empty", false, true),
 	STRING("string", true, true),
 	INT("integer", false, true),
 	DOUBLE("double", false, true),

@@ -1,6 +1,9 @@
 package siddur.tool.encoding;
 
+import java.util.Map;
+
 import siddur.tool.core.ITool;
+import siddur.tool.core.IToolWrapper;
 
 public class DigitUpCase implements ITool {
 	private static String A[] = new String[]{"零", "壹", "贰", "叁", "肆", "伍", "陆", "柒", "捌", "玖"};
@@ -10,7 +13,7 @@ public class DigitUpCase implements ITool {
 	private boolean found0 = false;
 
 	@Override
-	public String[] execute(String[] inputs) throws Exception {
+	public String[] execute(String[] inputs, IToolWrapper toolWrapper, Map<String, Object> context) throws Exception {
 		String digitText = inputs[0];
 		long digit = Long.parseLong(digitText);
 		StringBuilder sb = new StringBuilder(20);
@@ -77,9 +80,9 @@ public class DigitUpCase implements ITool {
 		DigitUpCase d = new DigitUpCase();
 		String[] inputs = new String[]{"120078"};
 		System.out.print(inputs[0]);
-		System.out.println(d.execute(inputs)[0]);
+		System.out.println(d.execute(inputs, null, null)[0]);
 		inputs = new String[]{"123456789"};
 		System.out.print(inputs[0]);
-		System.out.println(d.execute(inputs)[0]);
+		System.out.println(d.execute(inputs, null, null)[0]);
 	}
 }

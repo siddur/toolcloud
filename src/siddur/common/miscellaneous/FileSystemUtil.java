@@ -24,13 +24,6 @@ public class FileSystemUtil {
 		return getChildDir("tools");
 	}
 	
-	public static File getToolDir(String toolId){
-		if(toolId.startsWith("ext")){
-			return getExtDir();
-		}
-		return getChildDir("tools");
-	}
-	
 	public static File getExtDir(){
 		return getChildDir("ext");
 	}

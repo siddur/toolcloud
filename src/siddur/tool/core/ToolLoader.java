@@ -31,12 +31,18 @@ public class ToolLoader {
 	}
 	
 	public IToolWrapper loadTool(String toolID) throws Exception{
-		File toolDir = new File(FileSystemUtil.getToolDir(toolID), toolID);
-		return loadTool(toolDir);
+		boolean isExt = false;
+		File toolDir = new File(FileSystemUtil.getToolDir(), toolID);
+		if(!toolDir.isDirectory()){
+			toolDir = new File(FileSystemUtil.getExtDir(), toolID);
+			isExt = true;
+		}
+		return loadTool(toolDir, isExt);
 	}
 	
-	public IToolWrapper loadTool(File toolDir) throws Exception{
+	public IToolWrapper loadTool(File toolDir, boolean isExt) throws Exception{
 		ToolDescriptor td = loadConfig(toolDir);
+		td.setExt(isExt);
 		
 		if("java".equals(td.getLang())){
 			return loadJavaTool(toolDir, td);
@@ -64,25 +70,28 @@ public class ToolLoader {
 				urls[i] = tools[i].toURI().toURL();
 			}
 			URLClassLoader rcl = new URLClassLoader(urls, Thread.currentThread().getContextClassLoader());
-			
 			for(File j : tools){
 				JarFile jarFile = new JarFile(j);
-				Enumeration<JarEntry> en = jarFile.entries();
-				while(en.hasMoreElements()){
-					JarEntry entry = en.nextElement();
-					String classname = entry.getName();
-					if(classname.endsWith(".class")){
-						classname = classname.substring(0, classname.length() - 6);
-						classname = classname.replace("/", ".").replace("\\", ".");
-						Class<?> claz = rcl.loadClass(classname);
-						
-						if(ITool.class.isAssignableFrom(claz)){
-							jtw.setClassname(claz.getName());
-							jtw.setToolfile(j.getCanonicalPath());
-							jtw.setDescriptor(td);
-							return jtw;
+				try{
+					Enumeration<JarEntry> en = jarFile.entries();
+					while(en.hasMoreElements()){
+						JarEntry entry = en.nextElement();
+						String classname = entry.getName();
+						if(classname.endsWith(".class")){
+							classname = classname.substring(0, classname.length() - 6);
+							classname = classname.replace("/", ".").replace("\\", ".");
+							Class<?> claz = rcl.loadClass(classname);
+							
+							if(ITool.class.isAssignableFrom(claz)){
+								jtw.setClassname(claz.getName());
+								jtw.setToolfile(j.getCanonicalPath());
+								jtw.setDescriptor(td);
+								return jtw;
+							}
 						}
 					}
+				}finally{
+					jarFile.close();
 				}
 			}
 		} catch (Exception e) {

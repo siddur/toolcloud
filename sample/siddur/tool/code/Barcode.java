@@ -3,6 +3,7 @@ package siddur.tool.code;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.util.Map;
 
 import org.krysalis.barcode4j.impl.AbstractBarcodeBean;
 import org.krysalis.barcode4j.impl.codabar.CodabarBean;
@@ -15,6 +16,7 @@ import org.krysalis.barcode4j.tools.MimeTypes;
 import org.krysalis.barcode4j.tools.UnitConv;
 
 import siddur.tool.core.ITool;
+import siddur.tool.core.IToolWrapper;
 import siddur.tool.core.TempFileUtil;
 
 public class Barcode implements ITool{
@@ -38,7 +40,7 @@ public class Barcode implements ITool{
 	 * String Content
 	 */
 	@Override
-	public String[] execute(String[] inputs) throws Exception {
+	public String[] execute(String[] inputs, IToolWrapper toolWrapper, Map<String, Object> context) throws Exception {
 		
 		String type = inputs[0];
 		float width = Float.parseFloat(inputs[1]);
@@ -118,10 +120,10 @@ public class Barcode implements ITool{
 	 */
 	public static void main(String[] args) throws Exception {
 		Barcode b = new Barcode();
-		b.execute(new String[]{CODE128, "1", "96", "png", "12345678"});
-		b.execute(new String[]{CODE39, "1", "96", "jpg", "12345678"});
-		b.execute(new String[]{CODABAR, "1", "96", "gif", "12345678"});
-		b.execute(new String[]{INTERLEAVED2OF5, "1", "96", "png", "12345678"});
-		b.execute(new String[]{PDF417, "1", "96", "jpg", "12345678"});
+		b.execute(new String[]{CODE128, "1", "96", "png", "12345678"}, null, null);
+		b.execute(new String[]{CODE39, "1", "96", "jpg", "12345678"}, null, null);
+		b.execute(new String[]{CODABAR, "1", "96", "gif", "12345678"}, null, null);
+		b.execute(new String[]{INTERLEAVED2OF5, "1", "96", "png", "12345678"}, null, null);
+		b.execute(new String[]{PDF417, "1", "96", "jpg", "12345678"}, null, null);
 	}
 }

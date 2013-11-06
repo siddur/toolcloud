@@ -60,10 +60,11 @@ public class BasicToolManager implements IToolManager{
 	}
 
 	@Override
-	public void load(String toolID) {
+	public IToolWrapper load(String toolID) {
 		EntityManager tempEm = null;
+		IToolWrapper tw = null;
 		try {
-			IToolWrapper tw = toolLoader.loadTool(toolID);
+			tw = toolLoader.loadTool(toolID);
 			
 			//fetch status from DB
 			ToolInfo toolInfo = null;
@@ -73,6 +74,8 @@ public class BasicToolManager implements IToolManager{
 				tempEm = JPAUtil.newEntityMgr();
 				toolInfo = tempEm.find(ToolInfo.class, toolID);
 			}
+			
+			//if toolIn fo not null, this tool is approved
 			if(toolInfo != null){
 				tw.setStatus(1);
 			}
@@ -88,6 +91,8 @@ public class BasicToolManager implements IToolManager{
 				tempEm.close();
 			}
 		}
+		
+		return tw;
 	}
 
 	@Override
@@ -107,7 +112,10 @@ public class BasicToolManager implements IToolManager{
 			toolPersister.remove(toolID, em);
 			
 			log4j.info("Remove tool files");
-			File toolDir = new File(FileSystemUtil.getToolDir(toolID), toolID);
+			File toolDir = new File(FileSystemUtil.getToolDir(), toolID);
+			if(!toolDir.isDirectory()){
+				toolDir = new File(FileSystemUtil.getExtDir(), toolID);
+			}
 			FileUtils.deleteDirectory(toolDir);
 			
 			log4j.info("Remove from memory");
@@ -141,7 +149,7 @@ public class BasicToolManager implements IToolManager{
 	}
 
 	protected String[] execute(IToolWrapper tw, String[] params, Map<String, Object> context) throws Exception {
-		return tw.getTool().execute(params);
+		return tw.getTool().execute(params, tw, context);
 	}
 	
 	@Override
@@ -151,22 +159,26 @@ public class BasicToolManager implements IToolManager{
 			throw new ToolNotFoundException(toolID);
 		}
 		
-		UserInfo user = (UserInfo)context.get(Constants.USER);
-		
-		boolean isOwner = false;
-		if(Integer.toString(user.getUserId()).equals(tw.getDescriptor().getAuthorId())){
-			isOwner = true;
-		}
-		
-		Boolean hasPerm = (Boolean)context.get(Constants.HAS_PERM);
-		if(!isOwner && !hasPerm){
-			//check status
-			boolean approved = tw.getStatus() == 1;
-			if(!approved){
+		/* start-- check perm */
+		boolean approved = tw.getStatus() == 1;
+		if(!approved){
+			UserInfo user = (UserInfo)context.get(Constants.USER);
+			if(user == null){
+				throw new ToolNotApprovedException(toolID);
+			}
+			
+			boolean isOwner = false;
+			if(Integer.toString(user.getUserId()).equals(tw.getDescriptor().getAuthorId())){
+				isOwner = true;
+			}
+			
+			Boolean hasPerm = (Boolean)context.get(Constants.HAS_PERM);
+			if(!isOwner && !hasPerm){
 				throw new ToolNotApprovedException(toolID);
 			}
 		}
-
+		/* finish-- check perm */
+		
 		String[] output = null;
 		ToolDescriptor td = tw.getDescriptor();
 		

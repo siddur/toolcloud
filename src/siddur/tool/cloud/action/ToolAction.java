@@ -202,11 +202,12 @@ public class ToolAction extends DBAction<Comment>{
 			}
 			pd = new ToolDescriptor();
 			toolFile = FileSystemUtil.getFileByRelativePath(req.getParameter("toolfile"));
+			UserInfo u = (UserInfo)req.getSession().getAttribute("user");
+			if(u.isAdmin()){
+				pd.setExt(true);
+			}
 		}
 		populate(req, pd);
-		
-		UserInfo u = (UserInfo)req.getSession().getAttribute("user");
-		pd.createPluginID(u.isAdmin());
 		
 		tpm.save(pd, toolFile);		
 		return mine(req, resp);
@@ -279,11 +280,13 @@ public class ToolAction extends DBAction<Comment>{
 	
 	@DoNotAuthenticate
 	public Result exec(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
-		String toolID = (req.getParameter("id"));
+		String pathInfo = req.getPathInfo();
+		String toolID = RequestUtil.findNode(pathInfo, 2);
 		String[] params = req.getParameterValues("input[]");
 		Map<String, Object> context = new HashMap<String, Object>();
 		context.put(Constants.TICKET, req.getParameter(Constants.TICKET));
-
+		context.put(Constants.SUB_PATH, RequestUtil.substring(pathInfo, 3));
+		
 		String[] splitters = req.getParameterValues("splitter[]");
 		if(splitters != null && splitters.length > 0){
 			Map<Integer, String> splitMap = new HashMap<Integer, String>(splitters.length);
@@ -311,7 +314,7 @@ public class ToolAction extends DBAction<Comment>{
 			results = tpm.run(toolID, params, context);
 		}catch(Exception e){
 			log4j.warn(e.getMessage(), e);
-			return Result.ajax("error");
+			return Result.ajax("error=" + e.getMessage());
 		}finally{
 			run.setEndAt(new Date());
 			run.setSuccess(results != null);
