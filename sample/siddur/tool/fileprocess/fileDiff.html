@@ -1,0 +1,46 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+		<title>JS test</title>
+		<style>
+			#test:after {
+				content: '.';
+				visibility: hidden;
+				display: block;
+				clear: both;
+				height: 0;
+			}
+			td.lineNo {
+				background-color: #B3B3B3;
+				text-align: center;
+			}
+			td.diff {
+				border-left: 1px solid red;
+				border-right: 1px solid red;
+			}
+			td.diff_start {
+				border-top: 1px solid red;
+			}
+			td.diff_end {
+				border-bottom: 1px solid red;
+			}
+			pre{
+				margin:0;
+				width:100%;
+			}
+			.file{
+				width: 500px;
+				height: 500px;
+				float: left;
+				margin: 5px;
+				overflow: auto;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="test">
+			${html}
+		</div>
+	</body>
+</html>

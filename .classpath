@@ -46,5 +46,6 @@
 	<classpathentry kind="lib" path="lib/ext/pinyin4j-2.5.0.jar"/>
 	<classpathentry kind="lib" path="lib/ext/ZXing-core-2.2.jar"/>
 	<classpathentry kind="lib" path="lib/ext/ZXing-javase-2.2.jar"/>
+	<classpathentry kind="lib" path="lib/freemarker.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
