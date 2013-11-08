@@ -40,13 +40,13 @@ public class FileSystemUtil {
 		return file;
 	}
 	
-	public static File getOutputDir(){
-		File file = new File(getFileServer(), "output");
-		if(!file.isDirectory()){
-			file.mkdir();
-		}
-		return file;
-	}
+//	public static File getOutputDir(){
+//		File file = new File(getFileServer(), "output");
+//		if(!file.isDirectory()){
+//			file.mkdir();
+//		}
+//		return file;
+//	}
 	
 	public static File getTempDir(){
 		return getChildDir("temp");
@@ -60,6 +60,10 @@ public class FileSystemUtil {
 			file = file.substring(1);
 		}
 		return file;
+	}
+	
+	public static String getTempRelativePath(String file)throws IOException{
+		return getRelativePath(file, getTempDir().getCanonicalPath());
 	}
 	
 	public static String getRelativePath(String file) throws IOException{
@@ -86,18 +90,17 @@ public class FileSystemUtil {
 				+ "/" + namespace, path);
 	}
 	
-	public static String copy2Server(File dir) throws IOException{
+	public static String copy2Temp(File dir)throws IOException{
 		if(dir.isDirectory()){
 			String dirname = dir.getName();
-			FileUtils.copyDirectory(dir, new File(FileSystemUtil.getOutputDir(), dirname));
+			FileUtils.copyDirectory(dir, new File(FileSystemUtil.getTempDir(), dirname));
 			return dirname;
 		}
 		return null;
 	}
-	
-	public static String copy2Server(File f, String namespace) throws IOException{
+	public static String copy2Temp(File f, String namespace)throws IOException{
 		if(f.exists()){
-			File downloadableDir = new File(FileSystemUtil.getOutputDir(), namespace);
+			File downloadableDir = new File(FileSystemUtil.getTempDir(), namespace);
 			if(!downloadableDir.isDirectory()){
 				downloadableDir.mkdir();
 			}
@@ -106,17 +109,43 @@ public class FileSystemUtil {
 				FileUtils.copyFile(f, dest);
 			else
 				FileUtils.copyDirectory(f, dest);
-			return FileSystemUtil.getRelativePath(dest.getCanonicalPath(), 
-					FileSystemUtil.getOutputDir().getCanonicalPath());
+			return FileSystemUtil.getRelativePath(dest.getCanonicalPath(),
+					FileSystemUtil.getTempDir().getCanonicalPath());
 		}
 		return null;
 	}
 	
-	public static boolean containedInOutputDir(File f) throws IOException{
-		String p = f.getCanonicalFile().getPath();
-		String output = getOutputDir().getCanonicalFile().getPath() + File.separator;
-		return p.length() > output.length() && p.startsWith(output);
-	}
+//	public static String copy2Server(File dir) throws IOException{
+//		if(dir.isDirectory()){
+//			String dirname = dir.getName();
+//			FileUtils.copyDirectory(dir, new File(FileSystemUtil.getOutputDir(), dirname));
+//			return dirname;
+//		}
+//		return null;
+//	}
+//	
+//	public static String copy2Server(File f, String namespace) throws IOException{
+//		if(f.exists()){
+//			File downloadableDir = new File(FileSystemUtil.getOutputDir(), namespace);
+//			if(!downloadableDir.isDirectory()){
+//				downloadableDir.mkdir();
+//			}
+//			File dest = new File(downloadableDir, f.getName());
+//			if(f.isFile())
+//				FileUtils.copyFile(f, dest);
+//			else
+//				FileUtils.copyDirectory(f, dest);
+//			return FileSystemUtil.getRelativePath(dest.getCanonicalPath(), 
+//					FileSystemUtil.getOutputDir().getCanonicalPath());
+//		}
+//		return null;
+//	}
+//	
+//	public static boolean containedInOutputDir(File f) throws IOException{
+//		String p = f.getCanonicalFile().getPath();
+//		String output = getOutputDir().getCanonicalFile().getPath() + File.separator;
+//		return p.length() > output.length() && p.startsWith(output);
+//	}
 	
 	public static boolean isRelative(String s) throws IOException{
 		return !((s.startsWith("/") 

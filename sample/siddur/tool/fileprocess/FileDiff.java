@@ -1,33 +1,29 @@
 package siddur.tool.fileprocess;
 
 import java.io.BufferedReader;
-import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
 import java.io.Writer;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Vector;
-
-import freemarker.template.Configuration;
-import freemarker.template.DefaultObjectWrapper;
-import freemarker.template.Template;
 
 import jlibdiff.Diff;
 import jlibdiff.Hunk;
 import jlibdiff.HunkAdd;
 import jlibdiff.HunkChange;
 import jlibdiff.HunkDel;
-import siddur.tool.core.ITool;
+import siddur.tool.core.HtmlResponseTool;
 import siddur.tool.core.IToolWrapper;
 import siddur.tool.core.TempFileUtil;
 
-public class FileDiff implements ITool{
+public class FileDiff extends HtmlResponseTool{
 
 	@Override
-	public String[] execute(String[] inputs, IToolWrapper toolWrapper, Map<String, Object> context) throws Exception {
+	protected void execute(String[] inputs, IToolWrapper toolWrapper,
+			File workspace, Writer out, Map<String, Object> context)
+			throws Exception {
 		String file1 = TempFileUtil.findFile(inputs[0]).getCanonicalPath();
 		String file2 = TempFileUtil.findFile(inputs[1]).getCanonicalPath();
 		Diff diff = new Diff();
@@ -37,27 +33,10 @@ public class FileDiff implements ITool{
 		StringBuilder sb = new StringBuilder();
 		append(sb, file1, hunks, 0);
 		append(sb, file2, hunks, 1);
-		for (Hunk hunk : hunks) {
-			System.out.println(hunk.convert());
-		}
-		return new String[]{test(sb.toString())};
+		
+		buildHtml(sb.toString(), out);
 	}
 	
-	private static String test(String html) throws Exception{
-		Configuration cfg = new Configuration();
-		cfg.setDefaultEncoding("UTF-8");
-		cfg.setClassForTemplateLoading(FileDiff.class.getClassLoader().getClass(), ".");
-		cfg.setObjectWrapper(new DefaultObjectWrapper());
-		Map root = new HashMap();
-		root.put("html", html);
-		Template temp = cfg.getTemplate("fileDiff.html");
-		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		Writer out = new OutputStreamWriter(baos);
-		temp.process(root, out);
-		String s = new String(baos.toByteArray());
-		return s;
-	}
-
 	
 	private static int append(StringBuilder sb, String f, Vector<Hunk> hunks, int index) throws IOException{
 		BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(f)));
@@ -116,24 +95,12 @@ public class FileDiff implements ITool{
 		sb.append("</table></div>");
 		return lineNo;
 	}
-	
-	
-	@Override
-	public void init() {
-		// TODO Auto-generated method stub
-		
-	}
 
-	@Override
-	public void destroy() {
-		// TODO Auto-generated method stub
-		
-	}
+
 	
 	public static void main(String[] args) throws Exception {
 		FileDiff f = new FileDiff();
 		String[] inputs = new String[]{"temp\\common1.txt", "temp\\common2.txt"};
-		System.out.println(f.execute(inputs, null, null)[0]);
+		f.execute(inputs, null, null);
 	}
-
 }

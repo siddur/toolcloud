@@ -326,17 +326,11 @@ public class BasicToolManager implements IToolManager{
 		
 		String relativePath = null;
 		if(FileSystemUtil.isRelative(path)){
-			src = new File(FileSystemUtil.getTempDir(), path);
 			relativePath = path;
 		}else{
 			src = new File(path);
 			relativePath = TempFileUtil.getRelativePath(src.getCanonicalPath());
 		}
-		File dest = new File(FileSystemUtil.getOutputDir(), relativePath);
-		if(src.isFile())
-			FileUtils.copyFile(src, dest);
-		else if(src.isDirectory())
-			FileUtils.copyDirectory(src, dest);
 		return relativePath;
 	}
 	

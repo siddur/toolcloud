@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
 		<meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
-		<title>JS test</title>
+		<title>File Diff</title>
 		<style>
 			#test:after {
 				content: '.';
@@ -12,8 +12,9 @@
 				height: 0;
 			}
 			td.lineNo {
-				background-color: #B3B3B3;
+				background-color: #CCCCCC;
 				text-align: center;
+				color: #955555;
 			}
 			td.diff {
 				border-left: 1px solid red;
@@ -30,17 +31,31 @@
 				width:100%;
 			}
 			.file{
-				width: 500px;
-				height: 500px;
+				width: 430px;
 				float: left;
 				margin: 5px;
-				overflow: auto;
+				overflow: scroll;
+				background-color: #455355;
+				color: white;
+				height:450px;
 			}
 		</style>
 	</head>
 	<body>
-		<div id="test">
-			${html}
+		<div id="fileDiff">
+			${data}
 		</div>
+		
+		<script>
+			var divs = document.getElementById("fileDiff").children;
+			var left = divs[0];
+			var right = divs[1];
+			left.onscroll = function()
+			{
+				right.scrollLeft = this.scrollLeft;
+				right.scrollTop = this.scrollTop;
+			}			
+			
+		</script>
 	</body>
 </html>

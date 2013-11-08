@@ -4,6 +4,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.Writer;
 import java.nio.ByteBuffer;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
@@ -12,8 +13,19 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
 
+import org.apache.commons.io.FileUtils;
+
+import freemarker.template.Configuration;
+import freemarker.template.DefaultObjectWrapper;
+import freemarker.template.Template;
+
+import siddur.tool.core.IToolWrapper;
+
 public class ToolUtil {
 
+	/**
+	 * convert digit to byte;
+	 */
 	public static byte[] parse(String text){
 		StringTokenizer st = new StringTokenizer(text, ",");
 		List<Byte> list = new ArrayList<Byte>();
@@ -55,4 +67,28 @@ public class ToolUtil {
 		
 		return baos.toByteArray();
 	}
+	
+	public static File buildWorkspace(IToolWrapper toolWrapper) throws IOException{
+		File src = new File(toolWrapper.getToolfile());
+		File parent = src.getParentFile();
+		File workspace = new File(FileSystemUtil.getTempDir(), parent.getName());
+		if(workspace.isDirectory()){
+			FileUtils.deleteDirectory(workspace);
+		}else if(workspace.isFile()){
+			workspace.delete();
+		}
+		workspace.mkdir();
+		FileUtils.copyDirectory(parent, workspace);
+		return workspace;
+	}
+	
+	public static void buildHtml(Class<?> claz, Object dataModel, Writer out, String templateFile) throws Exception{
+		Configuration cfg = new Configuration();
+		cfg.setDefaultEncoding("UTF-8");
+		cfg.setClassForTemplateLoading(claz, ".");
+		cfg.setObjectWrapper(new DefaultObjectWrapper());
+		Template temp = cfg.getTemplate(templateFile);
+		temp.process(dataModel, out);
+	}
+
 }

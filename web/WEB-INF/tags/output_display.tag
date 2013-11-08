@@ -9,8 +9,8 @@
 	<script>
 		function populate(data){
 			var tag = this.tagName;
-			if(tag == "SPAN"){
-				$(this).html(data);
+			if(tag == "IFRAME"){
+				this.src= "/toolcloud/file/" + data;
 			}
 			else if(tag == "TEXTAREA"){
 				$(this).val(data);
@@ -46,7 +46,7 @@
 		<textarea class="output" style="width:99%; height:120px;"></textarea>
 	</c:when>
 	<c:when test="${'HTML' == type}">
-		<span class="output"></span>
+		<iframe class="output"></iframe>
 	</c:when>
 	<c:when test="${'FILE' == type}">
 		<a class="output"></a>

@@ -33,14 +33,16 @@ public class WebBatchToolManager extends BasicToolManager{
 		String[] output = null;
 		@SuppressWarnings("unchecked")
 		Map<Integer, String> splitMap = (Map<Integer, String>)context.get(Constants.SPLIT_MAP);
-		if(splitMap != null && !splitMap.isEmpty()){
-			output = exec(tw, params, splitMap, context);
-		}else{
-			output = tool.execute(params, tw, context);
-		}
-		
-		if(useLog){
-			LogCache.dispose(ticket);
+		try {
+			if (splitMap != null && !splitMap.isEmpty()) {
+				output = exec(tw, params, splitMap, context);
+			} else {
+				output = tool.execute(params, tw, context);
+			}
+		} finally{
+			if(useLog){
+				LogCache.dispose(ticket);
+			}
 		}
 		
 		return output;

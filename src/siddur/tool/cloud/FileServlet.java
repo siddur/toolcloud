@@ -57,7 +57,7 @@ public class FileServlet extends HttpServlet{
 		if(path.startsWith("/fileserver")){
 			f = new File(FileSystemUtil.getHome(), path);
 		}else{
-			f = new File(FileSystemUtil.getOutputDir(), path);
+			f = new File(FileSystemUtil.getTempDir(), path);
 		}
 		if(f.exists() /*&& FileSystemUtil.containedInOutputDir(f)*/){
 			boolean download = "1".equals(req.getParameter("d"));

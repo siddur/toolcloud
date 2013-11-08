@@ -80,7 +80,7 @@ public class TempFileUtil {
 	}
 	
 	public static String file2String(File f) throws IOException{
-		return f.getCanonicalPath();
+		return FileSystemUtil.getTempRelativePath(f.getCanonicalPath()) ;
 	}
 	
 	public static File findFile(String relativePath){

@@ -32,7 +32,7 @@ public class FileAction extends Action{
 	
 	public Result file(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
 		String relativePath = req.getParameter("path");
-		File file = new File(FileSystemUtil.getOutputDir(), relativePath);
+		File file = new File(FileSystemUtil.getTempDir(), relativePath);
 		if(file.isDirectory()){
 			return Result.ajax(new Gson().toJson(getFileModel(file, null)));
 		}
@@ -52,7 +52,7 @@ public class FileAction extends Action{
 	}
 	
 	private String getFileModel(String path){
-		File file = new File(FileSystemUtil.getOutputDir(), path);
+		File file = new File(FileSystemUtil.getTempDir(), path);
 		FileModel fm = getFileModel(file, null);
 		String result = new Gson().toJson(fm);
 		return result;

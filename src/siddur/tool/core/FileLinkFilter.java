@@ -63,6 +63,6 @@ public class FileLinkFilter implements LogFilter{
 		else{
 			f = new File(s);
 		}
-		return FileSystemUtil.copy2Server(f, namespace);
+		return FileSystemUtil.copy2Temp(f, namespace);
 	}
 }

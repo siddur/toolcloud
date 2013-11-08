@@ -81,7 +81,7 @@ public class LogCache {
 	public void log(String msg){
 		lock.lock();
 		try {
-			System.out.println(msg);
+			log4j.info(msg);
 			logs.add(msg);
 			notEmpty.signal();
 		} finally{
@@ -162,7 +162,7 @@ public class LogCache {
 		lock.lock();
 		try {
 			while(logs.isEmpty() && !toClose){
-				notEmpty.await();
+				notEmpty.await(1, TimeUnit.MINUTES);
 			}
 			flip.addAll(filter(logs));
 			logs.clear();

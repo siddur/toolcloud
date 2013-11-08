@@ -7,7 +7,7 @@
 <meta name="keywords" content="${tool.descriptor.keywords}"/>
 <meta name="description" content="${tool.descriptor.description}"/>
 <script>
-	var runUrl = "/toolcloud/ctrl/tool/exec/${tool.descriptor.pluginID}";
+	var runUrl = "/toolcloud/ctrl/tool/exec";
 	<c:if test="${needConsole}">
 	var consoleUrl = "/toolcloud/console?ticket=";
 	var _console;
@@ -42,6 +42,7 @@
 			splitters.push(v);
 		});
 		var data = {
+				id:"${tool.descriptor.pluginID}",
 				input:inputs,
 				splitter:splitters,
 				ticket:ticket
@@ -141,6 +142,11 @@
 	}
 	.output{
 		word-wrap: break-word;
+	}
+	iframe.output{
+		width:99.5%;
+		height:500px;
+		border:none;
 	}
 	.run_div{
 		float:right; 

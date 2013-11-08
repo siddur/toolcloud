@@ -139,7 +139,7 @@ public class ToolAction extends DBAction<Comment>{
 		if(tpu.getDescriptor().getLang().equals("client-side")){
 			File f = new File(tpu.getToolfile());
 			File dir = f.getParentFile();
-			FileSystemUtil.copy2Server(dir);
+			FileSystemUtil.copy2Temp(dir);
 			req.setAttribute("toolFile", dir.getName() + "/" + f.getName());
 			return Result.forward("/jsp/tool/tool-cs-detail.jsp");
 		}else{
@@ -280,13 +280,11 @@ public class ToolAction extends DBAction<Comment>{
 	
 	@DoNotAuthenticate
 	public Result exec(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
-		String pathInfo = req.getPathInfo();
-		String toolID = RequestUtil.findNode(pathInfo, 2);
+		String toolID = (req.getParameter("id"));
 		String[] params = req.getParameterValues("input[]");
 		Map<String, Object> context = new HashMap<String, Object>();
 		context.put(Constants.TICKET, req.getParameter(Constants.TICKET));
-		context.put(Constants.SUB_PATH, RequestUtil.substring(pathInfo, 3));
-		
+
 		String[] splitters = req.getParameterValues("splitter[]");
 		if(splitters != null && splitters.length > 0){
 			Map<Integer, String> splitMap = new HashMap<Integer, String>(splitters.length);
@@ -310,6 +308,7 @@ public class ToolAction extends DBAction<Comment>{
 			context.put(Constants.USER, u);
 		}
 		run.setIp(req.getRemoteAddr());
+		log4j.info("Running tool with ID" + toolID);
 		try {
 			results = tpm.run(toolID, params, context);
 		}catch(Exception e){

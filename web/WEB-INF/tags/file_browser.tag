@@ -105,7 +105,7 @@ var addTab = function(fileUrl, id, text, index){
 		$(".viewer").tabs("refresh");
 		$(".viewer").tabs("option", "active", index);
 	}
-	$.get("/toolcloud/ctrl/file/file", {path: fileUrl}, load)
+	$.get("/toolcloud/ctrl/file/file", {path: fileUrl}, load);
 }
 
 var initTree = function(url, context){
