@@ -36,6 +36,7 @@ public class XmlUtil {
 			if(pd.getLang() != null) root.addElement("lang").addText(pd.getLang());
 			if(pd.getKeywords() != null) root.addElement("keywords").addText(pd.getKeywords());
 			if(pd.getSimilars() != null) root.addElement("simulars").addText(pd.getSimilars());
+			if(pd.getOverrodeParam() != null) root.addElement("overrodeParam").addText(pd.getOverrodeParam());
 			if(pd.getPluginName() != null) root.addElement("name").addText(pd.getPluginName());
 			if(pd.getAuthorId() != null) root.addElement("authorId").addText(pd.getAuthorId());
 			if(pd.getCatalog() != null) root.addElement("catalog").addText(pd.getCatalog());
@@ -82,6 +83,7 @@ public class XmlUtil {
 		pd.setLang(root.elementText("lang"));
 		pd.setKeywords(root.elementText("keywords"));
 		pd.setSimilars(root.elementText("simulars"));
+		pd.setOverrodeParam(root.elementText("overrodeParam"));
 		pd.setCatalog(root.elementText("catalog"));
 		pd.setAuthorId(root.elementText("authorId"));
 		pd.setIcon(root.elementText("icon"));

@@ -20,6 +20,7 @@ import freemarker.template.DefaultObjectWrapper;
 import freemarker.template.Template;
 
 import siddur.tool.core.IToolWrapper;
+import siddur.tool.core.TempFileUtil;
 
 public class ToolUtil {
 
@@ -71,7 +72,7 @@ public class ToolUtil {
 	public static File buildWorkspace(IToolWrapper toolWrapper) throws IOException{
 		File src = new File(toolWrapper.getToolfile());
 		File parent = src.getParentFile();
-		File workspace = new File(FileSystemUtil.getTempDir(), parent.getName());
+		File workspace = TempFileUtil.createEmptyDir();
 		if(workspace.isDirectory()){
 			FileUtils.deleteDirectory(workspace);
 		}else if(workspace.isFile()){
@@ -85,7 +86,8 @@ public class ToolUtil {
 	public static void buildHtml(Class<?> claz, Object dataModel, Writer out, String templateFile) throws Exception{
 		Configuration cfg = new Configuration();
 		cfg.setDefaultEncoding("UTF-8");
-		cfg.setClassForTemplateLoading(claz, ".");
+		cfg.setClassForTemplateLoading(claz, "");
+		cfg.setLocalizedLookup(false);
 		cfg.setObjectWrapper(new DefaultObjectWrapper());
 		Template temp = cfg.getTemplate(templateFile);
 		temp.process(dataModel, out);

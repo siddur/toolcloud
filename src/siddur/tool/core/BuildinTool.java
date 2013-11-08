@@ -3,15 +3,16 @@ package siddur.tool.core;
 
 import java.io.File;
 
-import siddur.tool.core.data.DataTemplate;
+import siddur.tool.core.data.ToolDescriptor;
 
 public class BuildinTool extends CommandTool{
 
 	@Override
-	protected String getCommand(String scriptName, File scriptFile,
-			String[] params, DataTemplate[] tooldatas) throws Exception {
+	protected String getCommand(ToolDescriptor td, File scriptFile,
+			String[] params) throws Exception {
 		String orderName = scriptFile.getName();
-		return ScriptUtil.getExecuteString(orderName, params, tooldatas);
+		return ScriptUtil.getSystemExecuteString(orderName, 
+				td.getOverrodeParam(), params, td.getInputModel());
 	}
 	
 	

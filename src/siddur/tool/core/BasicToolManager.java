@@ -11,6 +11,7 @@ import javax.persistence.EntityTransaction;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
+import org.eclipse.jetty.util.log.Log;
 
 import siddur.common.jpa.JPAUtil;
 import siddur.common.miscellaneous.Constants;
@@ -82,7 +83,7 @@ public class BasicToolManager implements IToolManager{
 			
 			toolMap.put(toolID, tw);
 			
-			log4j.info("Successfully load tool with ID " + toolID);
+			log4j.info("Successfully load "+tw.getDescriptor().getPluginName()+" with ID " + toolID);
 		} catch (Exception e) {
 			log4j.info("Fail to load tool with ID " + toolID);
 			log4j.warn(e);
@@ -263,12 +264,19 @@ public class BasicToolManager implements IToolManager{
 		if(inputModel != null){
 			for (int i = 0; i < inputModel.length; i++) {
 				if(inputModel[i].isFile()){
-					input[i] = TempFileUtil.findFile(input[i]).getCanonicalPath();
-				}
-				else if(inputModel[i].isZip()){
-					File zip = TempFileUtil.findFile(input[i]);
-					File dir = ZipUtil.unZip(zip);
-					input[i] = dir.getCanonicalPath();
+					File file = TempFileUtil.findFile(input[i]);
+					if(inputModel[i].isZip()){
+						try {
+							File dir = ZipUtil.unZip(file);
+							file = dir;
+						} catch (Exception e) {
+							log4j.info(file.getName() + " is not a zip file");
+							File dir = ZipUtil.makeDir(file);
+							FileUtils.copyFileToDirectory(file, dir);
+							file = dir;
+						}
+					}
+					input[i] = file.getCanonicalPath();
 				}
 			}
 		}

@@ -37,10 +37,7 @@ public class ZipUtil {
 	}
 	
 	public static File unZip(File zipFile) throws IOException{
-		String path = zipFile.getCanonicalPath();
-		path = path.substring(0, path.length() - 4);
-		File dir = new File(path);
-		dir.mkdir();
+		File dir = makeDir(zipFile);
 		
 		ZipFile zip = new ZipFile(zipFile);
 		@SuppressWarnings("rawtypes")
@@ -77,6 +74,17 @@ public class ZipUtil {
 				FileUtils.deleteDirectory(f);
 			}
 		}
+		return dir;
+	}
+	
+	public static File makeDir(File zipFile){
+		String filename = zipFile.getName();
+		int dot = filename.lastIndexOf(".");
+		if(dot > 0){
+			filename = filename.substring(0, dot);
+		}
+		File dir = new File(zipFile.getParent(), filename);
+		dir.mkdir();
 		return dir;
 	}
 	

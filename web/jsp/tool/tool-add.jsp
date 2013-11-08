@@ -25,26 +25,27 @@
 
 	
  	function selectLang(lang){
+ 		$(".overrodeParam").css("display", "block");
+ 		$(".input").css("display", "block");
+		$(".output").css("display", "block");
+		$(".input_tag").css("display", "block");
+		$(".output_tag").css("display", "block");
+		$(".out_default").css("display", "block");
+		
+ 	 	
 		if(lang == "client-side"){
 			$(".input").css("display", "none");
 			$(".output").css("display", "none");
+			$(".paramOverride").css("display", "none");
+		}
+		else if(lang == "java"){
+			$(".input_tag").css("display", "none");
+			$(".output_tag").css("display", "none");
+			$(".overrodeParam").css("display", "none");
+			
+			$(".out_default").css("display", "none");
 		}else{
-			$(".input").css("display", "block");
-			$(".output").css("display", "block");
-
-			if(lang == "java"){
-				$(".input_tag").css("display", "none");
-				$(".output_tag").css("display", "none");
-				
-				$(".out_default").css("display", "none");
-				$(".out_type").css("display", "block");
-			}else{
-				$(".input_tag").css("display", "block");
-				$(".output_tag").css("display", "block");
-				
-				$(".out_default").css("display", "block");
-				$(".out_type").css("display", "none");
-			}
+			//$(".out_type").css("display", "none");
 		}
 
 	}
@@ -91,8 +92,7 @@
 						${lang}
 					</option>
 				</c:forEach>
-					<option value="cmd">cmd</option>
-					<option value="bash">bash</option>
+					<option value="cmd">command(cmd/bash)</option>
 					<option value="client-side">javascript</option>
 				</select>
 			</div>
@@ -104,6 +104,10 @@
 				<span class="label">描述:</span>
 				<br>
 				<textarea cols="40" rows="3" name="description"></textarea>
+			</div>
+			<div class="overrodeParam">
+				<span class="label">参数重写</span>
+				<input name="overrodeParam">
 			</div>
 			<div class="input">
 				<span class="label" class="title">输入</span>

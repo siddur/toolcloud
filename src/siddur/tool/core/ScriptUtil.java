@@ -5,6 +5,11 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Properties;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import org.apache.commons.exec.OS;
+import org.apache.commons.lang3.StringUtils;
 
 import siddur.tool.core.data.DataTemplate;
 
@@ -12,6 +17,8 @@ import siddur.tool.core.data.DataTemplate;
 public class ScriptUtil {
 
 	private static Properties p;
+	private static boolean isWindows = OS.isFamilyWindows();
+	private static final Pattern pattern = Pattern.compile("\\{(\\d+?)\\}");
 	
 	private static void loadPropertes(){
 		if(p == null){
@@ -64,7 +71,7 @@ public class ScriptUtil {
 		return type;
 	}
 	
-	public static String getExecuteString(String scriptName, String scriptFile, 
+	public static String getScriptExecuteString(String scriptName, String scriptFile, String template,
 			String[] params, DataTemplate[] tooldatas) throws Exception{
 		StringBuilder sb = new StringBuilder();
 		sb.append(getOrderPath(scriptName));
@@ -72,26 +79,53 @@ public class ScriptUtil {
 		appendQuot(sb);
 		sb.append(scriptFile);
 		appendQuot(sb);
-		appendParams(sb, params, tooldatas);
+		sb.append(overrideParam(template, params, tooldatas));
 		return sb.toString();
 	}
 	
+	//template like this: -r {0} {1} -d {2}
+	private static String overrideParam(String template, String[] params, DataTemplate[] tooldatas){
+		if(StringUtils.isEmpty(template)){
+			return concatParams(params, tooldatas);
+		}else{
+			Matcher m = pattern.matcher(template);
+			StringBuffer sb = new StringBuffer();
+			while(m.find()){
+				int i = Integer.parseInt(m.group(1));
+				String param = params[i];
+				if(tooldatas[i].isFile()){
+					param = param.replace("\\", "\\\\\\");
+				}
+				m.appendReplacement(sb, tooldatas[i].getTag() + " " + param);
+			}
+			m.appendTail(sb);
+			return sb.toString();
+		}
+	}
 	
-	public static String getExecuteString(String orderName, 
+		
+	public static String getSystemExecuteString(String orderName, String template,
 			String[] params, DataTemplate[] tooldatas) throws Exception{
 		StringBuilder sb = new StringBuilder();
-		sb.append("cmd /c ");
+		if(isWindows){
+			sb.append("cmd /c ");
+		}else{
+			sb.append("bash -c ");
+		}
 		sb.append(orderName);
-		appendParams(sb, params, tooldatas);
+		sb.append(" ");
+		sb.append(overrideParam(template, params, tooldatas));
 		return sb.toString();
 	}
 	
-	private static void appendParams(StringBuilder sb, String[]params, DataTemplate[] tooldatas){
+	private static String concatParams(String[]params, DataTemplate[] tooldatas){
+		StringBuilder sb = new StringBuilder(); 
 		if(tooldatas != null){
 			for (int i = 0; i < tooldatas.length; i++) {
 				sb.append(" ");
 				sb.append(tooldatas[i].getTag() + " " + params[i]);
 			}
 		}
+		return sb.toString();
 	}
 }

@@ -10,20 +10,18 @@
 		font-size: 11px;
 		visibility: hidden;
 	}
-	
-	.navigator{
-		height: 100%;
-		overflow: auto;
-		background-color: white;
-		margin-right:5px;
-		font-family: Verdana,helvetica,arial,sans-serif;
-		float: left;
+	.navigator-parent{
 		width: 200px;
+		height: 100%;
+		float: left;
+		margin-right:5px;
 		border: 1px solid #AAAAAA;
 		border-bottom-right-radius: 4px;
 		border-bottom-left-radius: 4px;
 		border-top-right-radius: 4px;
 		border-top-left-radius: 4px;
+		background-color: white;
+		font-family: Verdana,helvetica,arial,sans-serif;
 	}
 	.viewer{
 		height: 100%;
@@ -158,13 +156,15 @@ var initNode = function(parent, fileModel){
 
 </script>
 <div class="file-browser">
-	<div class="navigator">
-		<div id="treecontrol" style="display:block;  padding:4px; margin:0; border-bottom:solid 1px gray;">
-			<a class="toggle" href="#">收起</a>
-			<a class="toggle" href="#">展开</a>
+	<div class="navigator-parent">
+		<div class="navigator">
+			<div id="treecontrol" style="display:block;  padding:4px; margin:0; border-bottom:solid 1px gray;">
+				<a class="toggle" href="#">收起</a>
+				<a class="toggle" href="#">展开</a>
+			</div>
+			<ul class="browser filetree">
+			</ul>
 		</div>
-		<ul class="browser filetree">
-		</ul>
 	</div>
 	<div class="viewer">
 	 	<ul></ul>

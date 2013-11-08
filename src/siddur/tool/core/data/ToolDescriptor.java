@@ -11,6 +11,7 @@ public class ToolDescriptor {
 	private String description;
 	private String keywords;
 	private String similars;
+	private String overrodeParam;
 	private String icon;
 	private String authorId;
 	private Date publishAt = new Date();
@@ -116,7 +117,12 @@ public class ToolDescriptor {
 	public void setSimilars(String similars) {
 		this.similars = similars;
 	}
-	
+	public String getOverrodeParam() {
+		return overrodeParam;
+	}
+	public void setOverrodeParam(String overrodeParam) {
+		this.overrodeParam = overrodeParam;
+	}
 	public boolean deleSimilar(String toolID){
 		String similars = this.similars;
 		if(StringUtils.isEmpty(similars))

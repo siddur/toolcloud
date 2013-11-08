@@ -25,7 +25,32 @@
 		selectLang('${td.lang}');
 	}
 	
-	
+	function selectLang(lang){
+ 		$(".paramOverride").css("display", "block");
+ 		$(".input").css("display", "block");
+		$(".output").css("display", "block");
+		$(".input_tag").css("display", "block");
+		$(".output_tag").css("display", "block");
+		$(".out_default").css("display", "block");
+		
+ 	 	
+		if(lang == "client-side"){
+			$(".input").css("display", "none");
+			$(".output").css("display", "none");
+			$(".overrodeParam").css("display", "none");
+		}
+		else if(lang == "java"){
+			$(".input_tag").css("display", "none");
+			$(".output_tag").css("display", "none");
+			$(".overrodeParam").css("display", "none");
+			
+			$(".out_default").css("display", "none");
+		}else{
+			//$(".out_type").css("display", "none");
+		}
+
+	}
+	/*
 	function selectLang(lang){
 		if(lang == "java"){
 			$(".input_tag").css("display", "none");
@@ -42,6 +67,7 @@
 		}
 	
 	}
+	*/
 </c:if>
 	function validate(){
 		$(".error").removeClass("error");
@@ -90,6 +116,10 @@
 				<span class="label">描述:</span>
 				<br>
 				<textarea cols="40" rows="3" name="description">${td.description}</textarea>
+			</div>
+			<div class="overrodeParam">
+				<span class="label">参数重写</span>
+				<input name="overrodeParam" value="${td.overrodeParam}">
 			</div>
 			<c:if test="${td.lang != 'client-side' }">
 				<div class="input">

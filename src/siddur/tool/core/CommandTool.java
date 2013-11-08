@@ -14,41 +14,23 @@ import org.apache.commons.exec.PumpStreamHandler;
 import org.apache.commons.io.FileUtils;
 
 import siddur.common.miscellaneous.FileSystemUtil;
+import siddur.common.miscellaneous.ToolUtil;
 import siddur.tool.core.data.DataTemplate;
+import siddur.tool.core.data.ToolDescriptor;
 
 public abstract class CommandTool extends ConsoleTool{
 	
-	protected String language;
-	protected String filepath;
-	protected DataTemplate[] inputModel;
-	protected DataTemplate[] outputModel;
-	
-	
-	public String getLanguage() {
-		return language;
-	}
 
-	public void setLanguage(String language) {
-		this.language = language;
-	}
-
-	public String getFilepath() {
-		return filepath;
-	}
-
-	public void setFilepath(String filepath) {
-		this.filepath = filepath;
-	}
-
-	protected abstract String getCommand(String scriptName, File scriptFile, 
-			String[] params, DataTemplate[] tooldatas) throws Exception;
+	protected abstract String getCommand(ToolDescriptor td, File scriptFile,
+			String[] params) throws Exception;
 
 	@Override
 	public String[] execute(String[] inputs, IToolWrapper toolWrapper, Map<String, Object> context) throws Exception {
-		
+		ToolDescriptor td = toolWrapper.getDescriptor();
 		//copy script file from tool dir to temp dir.
-		File temp = copyTemp();
-		String s = getCommand(language, temp, inputs, inputModel);
+		File wp = ToolUtil.buildWorkspace(toolWrapper);
+		File exeFile = new File(wp, toolWrapper.getToolfile());
+		String s = getCommand(td, exeFile, inputs);
 		CommandLine cl = CommandLine.parse(s);
 		
 		// executing time < 10min
@@ -60,7 +42,7 @@ public abstract class CommandTool extends ConsoleTool{
 		de.setStreamHandler(psh);
 		
 		//work dir
-		de.setWorkingDirectory(temp.getParentFile());
+		de.setWorkingDirectory(wp);
 		de.execute(cl);
 		
 		//do close()
@@ -69,12 +51,12 @@ public abstract class CommandTool extends ConsoleTool{
 		List<String> outputs = new ArrayList<String>(10);
 
 		//extract file from outputModel
-		if(outputModel != null){
-			for(DataTemplate td : outputModel){
+		if(td.getOutputModel() != null){
+			for(DataTemplate dt : td.getOutputModel()){
 				//must be file
-				String v = td.getDefaultValue();
+				String v = dt.getDefaultValue();
 				if(!v.equals("")){
-					outputs.add(findFile(v, temp.getParentFile().getName()));
+					outputs.add(findFile(v, wp.getName()));
 				}
 			}
 		}
@@ -87,10 +69,13 @@ public abstract class CommandTool extends ConsoleTool{
 		return outputFile.getCanonicalPath();
 	}
 
-	private File copyTemp() throws IOException{
+	private File copyTemp(String filepath) throws IOException{
 		File src = new File(filepath);
 		File parent = src.getParentFile();
 		File workspace = new File(FileSystemUtil.getTempDir(), parent.getName());
+		if(workspace.isDirectory()){
+			FileUtils.deleteDirectory(workspace);
+		}
 		workspace.mkdir();
 //		File dest = new File(workspace, src.getName());
 //		FileUtils.copyFile(src, dest);
@@ -99,22 +84,6 @@ public abstract class CommandTool extends ConsoleTool{
 	}
 	
 	
-	public DataTemplate[] getInputModel() {
-		return inputModel;
-	}
-
-	public void setInputModel(DataTemplate[] inputModel) {
-		this.inputModel = inputModel;
-	}
-	
-	
-	public DataTemplate[] getOutputModel() {
-		return outputModel;
-	}
-
-	public void setOutputModel(DataTemplate[] outputModel) {
-		this.outputModel = outputModel;
-	}
 
 	@Override
 	public void init() {

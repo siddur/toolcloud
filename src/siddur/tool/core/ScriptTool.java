@@ -2,14 +2,15 @@ package siddur.tool.core;
 
 import java.io.File;
 
-import siddur.tool.core.data.DataTemplate;
+import siddur.tool.core.data.ToolDescriptor;
 
 
 public class ScriptTool extends CommandTool{
 	
-	protected String getCommand(String scriptName, File scriptFile, 
-			String[] params, DataTemplate[] tooldatas) throws Exception{
-		return ScriptUtil.getExecuteString(language, scriptFile.getCanonicalPath(), params, inputModel);
+	protected String getCommand(ToolDescriptor td, File scriptFile,
+			String[] params) throws Exception {
+		return ScriptUtil.getScriptExecuteString(td.getLang(), 
+				scriptFile.getCanonicalPath(), td.getOverrodeParam(), params, td.getInputModel());
 	}
 	
 }
