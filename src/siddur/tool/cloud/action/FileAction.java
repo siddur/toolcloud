@@ -51,20 +51,19 @@ public class FileAction extends Action{
 		return Result.ajax(baos.toString());
 	}
 	
-	private String getFileModel(String path){
+	private String getFileModel(String path) throws IOException{
 		File file = new File(FileSystemUtil.getTempDir(), path);
 		FileModel fm = getFileModel(file, null);
 		String result = new Gson().toJson(fm);
 		return result;
 	}
 	
-	private FileModel getFileModel(File f, FileModel parent){
+	private FileModel getFileModel(File f, FileModel parent) throws IOException{
 		FileModel fm = new FileModel();
 		fm.name = f.getName();
-		fm.url = fm.name;
+		fm.url = FileSystemUtil.getTempRelativePath(f.getCanonicalPath());
 		if(parent != null){
 			parent.children.add(fm);
-			fm.url = parent.url + "/" + fm.url;
 		}
 		
 		if(f.isDirectory()){
@@ -94,7 +93,7 @@ public class FileAction extends Action{
 		private boolean isDir;
 	}
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		System.out.println(new FileAction().getFileModel("tabs"));
 	}
 }

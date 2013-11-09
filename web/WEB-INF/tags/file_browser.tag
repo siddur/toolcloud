@@ -69,13 +69,8 @@ var increment = 100;
 //click the tree node(<li>)
 var itemClick = function(){
 	var me = $(this);
+	var file = me.attr("url");
 	var t = me.children().first().html();
-	var url = [t];
-	me.parents("li").each(function(idx, item){
-		var text = $(item).children("span").html();
-		url.push(text);
-	});
-	var file = url.reverse().join("/");
 	var id = me.attr("fileId");
 	
 	var exist = false;
@@ -138,7 +133,7 @@ var initTree = function(url, context){
 }
 
 var initNode = function(parent, fileModel){
-	var folder = $('<li></li>').appendTo(parent).attr("fileId", "f" + fileModel.id);
+	var folder = $('<li url="'+fileModel.url+'"></li>').appendTo(parent).attr("fileId", "f" + fileModel.id);
 	if(fileModel.isDir){
 		$('<span class="folder">'+ fileModel.name +'</span>').appendTo(folder);
 		if(fileModel.children.length > 0){
