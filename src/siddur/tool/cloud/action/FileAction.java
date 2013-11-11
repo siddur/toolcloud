@@ -54,7 +54,15 @@ public class FileAction extends Action{
 	private String getFileModel(String path) throws IOException{
 		File file = new File(FileSystemUtil.getTempDir(), path);
 		FileModel fm = getFileModel(file, null);
-		String result = new Gson().toJson(fm);
+		
+		FileModel javaFileModel = fm.clone();
+		if(fm.isDir){
+			for (FileModel f : fm.children) {
+				toJavaPackageFileModel(javaFileModel, f, "");
+			}
+		}
+		
+		String result = new Gson().toJson(javaFileModel);
 		return result;
 	}
 	
@@ -63,12 +71,11 @@ public class FileAction extends Action{
 		fm.name = f.getName();
 		fm.url = FileSystemUtil.getTempRelativePath(f.getCanonicalPath());
 		if(parent != null){
-			parent.children.add(fm);
+			parent.addChild(fm);
 		}
 		
 		if(f.isDirectory()){
 			fm.isDir = true;
-			fm.children = new ArrayList<FileModel>();
 			for(File curFile : f.listFiles()){
 				getFileModel(curFile, fm);
 			}
@@ -91,9 +98,66 @@ public class FileAction extends Action{
 		private String url;
 		private List<FileModel> children;
 		private boolean isDir;
+		
+		public void addChild(FileModel f){
+			if(children == null){
+				children = new ArrayList<FileModel>();
+			}
+			children.add(f);
+		}
+		
+		public FileModel clone(){
+			FileModel fm = new FileModel();
+			fm.id = this.id;
+			fm.name = this.name;
+			fm.url = this.url;
+			fm.isDir = this.isDir;
+			if(fm.isDir){
+				fm.children = new ArrayList<FileModel>();
+			}
+			return fm;
+		}
+		
+		@Override
+		public String toString() {
+			return name + "=" + url;
+		}
+	}
+	
+	
+	private boolean singleFolder(FileModel f){
+		boolean singleFolder = false;  //one file or more than one folders
+		if(f.isDir){
+			if(f.children.size() == 1){
+				singleFolder = f.children.get(0).isDir;
+			}
+			else{
+				singleFolder = false;
+			}
+		}
+		return singleFolder;
+	}
+	
+	public void toJavaPackageFileModel(FileModel targetParent, FileModel source, String prefix){
+		if(singleFolder(source)){
+			FileModel f = source.children.get(0);
+			prefix +=  source.name + "/";
+			toJavaPackageFileModel(targetParent, f, prefix);
+		}else{
+			FileModel newTgtParent = source.clone();
+			newTgtParent.name = prefix + newTgtParent.name;
+			if(source.isDir){
+				targetParent.addChild(newTgtParent);
+				for(FileModel f : source.children){
+					toJavaPackageFileModel(newTgtParent, f, "");
+				}
+			}else{
+				targetParent.addChild(newTgtParent);
+			}
+		}
 	}
 	
 	public static void main(String[] args) throws IOException {
-		System.out.println(new FileAction().getFileModel("tabs"));
+		System.out.println(new FileAction().getFileModel("1384151787843FileBrower"));
 	}
 }

@@ -52,6 +52,12 @@
 		white-space: pre-wrap;
 		
 	}
+	.ui-tabs .ui-tabs-nav li a.ui-tabs-anchor{
+		text-overflow: ellipsis;
+		overflow: hidden;
+		padding: 0.5em 0 0.5em 0.8em;
+		width: 80px;
+	}
 	.ui-icon-close { 
 		float: left; 
 		margin: 0.1em 0.1em 0 0; 
