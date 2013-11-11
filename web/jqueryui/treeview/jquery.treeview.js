@@ -39,7 +39,8 @@
 			animated ?
 				this.animate({ height: "toggle" }, animated, callback) :
 				this.each(function(){
-					jQuery(this)[ jQuery(this).is(":hidden") ? "show" : "hide" ]();
+					//jQuery(this)[ jQuery(this).is(":hidden") ? "show" : "hide" ]();
+					$(this)[$(this).css("display") == 'none' ? "show" : "hide"]();
 					if(callback)
 						callback.apply(this, arguments);
 				});

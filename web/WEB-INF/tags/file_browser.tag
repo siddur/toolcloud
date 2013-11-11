@@ -23,12 +23,21 @@
 		background-color: white;
 		font-family: Verdana,helvetica,arial,sans-serif;
 	}
+	.browser{
+		overflow: auto;
+		word-wrap:normal;
+		height:570px;
+	}
 	.viewer{
 		height: 100%;
 		background-color: white;
 		float: left;
 		width: 720px;
+	}
+	.viewer pre{
+		height:540px;
 		overflow: auto;
+		clear: left;
 	}
 	.ui-tabs-nav {
 		height: 28px;
@@ -88,6 +97,9 @@ var itemClick = function(){
 	}
 }
 
+var updateHeight = function(){
+	$(".viewer pre").height(($(".viewer").height() - $(".viewer pre:visible").position().top) - 25);
+}
 
 var addTab = function(fileUrl, id, text, index){
 	var tabId = "tab-" + (increment++);
@@ -97,6 +109,7 @@ var addTab = function(fileUrl, id, text, index){
 		$('<pre id="'+tabId+'"></pre>').appendTo(".viewer").text(file);
 		$(".viewer").tabs("refresh");
 		$(".viewer").tabs("option", "active", index);
+		updateHeight();
 	}
 	$.get("/toolcloud/ctrl/file/file", {path: fileUrl}, load);
 }
@@ -108,6 +121,7 @@ var initTree = function(url, context){
 		var context = me.find(".browser");
 		//reset tree
 		context.empty();
+		$(".toggle").unbind();
 
 		initNode(context, fileModel);
 
@@ -128,6 +142,7 @@ var initTree = function(url, context){
 			var panelId = $( this ).closest( "li" ).remove().attr( "aria-controls" );
 			$( "#" + panelId ).remove();
 			tabs.tabs( "refresh" );
+			updateHeight();
 		});
 	});
 }

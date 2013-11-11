@@ -185,6 +185,7 @@ public class ActionMapper{
 		else if(r.isAjax){
 			resp.setContentType("text/plain; charset=utf-8");
 			Writer w = resp.getWriter();
+			log4j.info(r.getMessage());
 			w.write(r.getMessage());
 			w.flush();
 			w.close();

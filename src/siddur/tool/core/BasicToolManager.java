@@ -11,7 +11,6 @@ import javax.persistence.EntityTransaction;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
-import org.eclipse.jetty.util.log.Log;
 
 import siddur.common.jpa.JPAUtil;
 import siddur.common.miscellaneous.Constants;

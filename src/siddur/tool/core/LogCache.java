@@ -106,6 +106,7 @@ public class LogCache {
 	
 	public OutputStream getOutputStream(){
 		return new OutputStream() {
+			private final int maxLine = 1024;
 			private final int N = (int)'\n';
 			private final int R = (int)'\r';
 			private final byte[] buffer = new byte[1024];
@@ -114,7 +115,7 @@ public class LogCache {
 			private boolean foundN = false;
 			@Override
 			public void write(int b) throws IOException {
-				if(index == 1024){
+				if(index == maxLine){
 					return;
 				}
 				
@@ -140,6 +141,9 @@ public class LogCache {
 			}
 			
 			private String getLine() throws UnsupportedEncodingException{
+				if(index == maxLine){
+					return "... more";
+				}
 				return new String(buffer, 0, index + 1, "gbk");
 			}
 			
