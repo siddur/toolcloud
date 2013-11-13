@@ -175,10 +175,10 @@ public class ActionMapper{
 		else if(r.isRedirect()){
 			String url = r.message;
 			if(url.startsWith("/")){
-				url = "/toolcloud" + url;
+				url = Constants.WEBSITE_ROOT + url;
 			}
 			else if(!url.startsWith("http")){
-				url = "/toolcloud/ctrl/" + url;
+				url = Constants.WEBSITE_ROOT + "/ctrl/" + url;
 			}
 			resp.sendRedirect(url);
 		}

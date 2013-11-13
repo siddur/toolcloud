@@ -26,11 +26,11 @@
 	</div>
 	<div class="body">
 		<div class="add">
-			<a class="btn1" href="/toolcloud/ctrl/role/detail">New Role</a>
+			<a class="btn1" href="${root}/ctrl/role/detail">New Role</a>
 		</div>
 		<c:forEach var="r" items="${list}">
 			<div class="role-item">
-				<a class="txt" href="/toolcloud/ctrl/role/detail?roleId=${r.roleId }">${r.rolename }</a>
+				<a class="txt" href="${root}/ctrl/role/detail?roleId=${r.roleId }">${r.rolename }</a>
 			</div>
 		</c:forEach>
 	</div>

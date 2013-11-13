@@ -38,7 +38,7 @@
 	<div class="comment_content">
 		<c:if test="${closable == true }">
 			<span class="close_btn ui-icon ui-icon-closethick" 
-				onclick="location.href='/toolcloud/ctrl/tool/delcomment?id=${comment.commentId}&toolId=${toolId}'">
+				onclick="location.href='${root}/ctrl/tool/delcomment?id=${comment.commentId}&toolId=${toolId}'">
 			</span>
 		</c:if>
 		<pre style="margin:0">${comment.preContent }</pre>

@@ -12,6 +12,7 @@ import org.eclipse.jetty.server.handler.ResourceHandler;
 import org.eclipse.jetty.webapp.WebAppContext;
 
 
+import siddur.common.miscellaneous.Constants;
 import siddur.common.miscellaneous.FileSystemUtil;
 
 
@@ -45,8 +46,8 @@ public class JettyStart {
 		requestLogHandler.setRequestLog(requestLog);
 		app.setHandler(requestLogHandler);
 		
-		//must not change context path:/toolcloud
-		app.setContextPath("/toolcloud");
+		//must not change context path:Constants.WEBSITE_ROOT
+		app.setContextPath(Constants.WEBSITE_ROOT);
 		
 		ResourceHandler rh = new ResourceHandler();
 		rh.setDirectoriesListed(true);

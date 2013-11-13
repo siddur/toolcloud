@@ -10,19 +10,19 @@
 		function populate(data){
 			var tag = this.tagName;
 			if(tag == "IFRAME"){
-				this.src= "/toolcloud/file/" + data;
+				this.src= "${root}/file/" + data;
 			}
 			else if(tag == "TEXTAREA"){
 				$(this).val(data);
 			}
 			else if(tag == "A"){
-				$(this).attr("href", "/toolcloud/file/" + data + "?d=1").html(data);
+				$(this).attr("href", "${root}/file/" + data + "?d=1").html(data);
 			}
 			else if(tag == "TABLE"){
 
 			}
 			else if(tag == "IMG"){
-				$(this).attr("src", "/toolcloud/file/" + data);
+				$(this).attr("src", "${root}/file/" + data);
 			}
 			else{//file-browser
 				initTree(data, this);

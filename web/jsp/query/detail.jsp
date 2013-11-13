@@ -48,7 +48,7 @@
 <div class="screen">
 	<script>
 		function changePage(){
-			location.href = "/toolcloud/ctrl/query/detail?id=${query.id}&pageIndex=" + pageIndex + "&pageSize=" + pageSize;
+			location.href = "${root}/ctrl/query/detail?id=${query.id}&pageIndex=" + pageIndex + "&pageSize=" + pageSize;
 		}
 	</script>
 	<div class="query_item">
@@ -67,7 +67,7 @@
 			<div class="comment_content">
 				<c:if test="<%RequestUtil.hasPerm(request, Permission.COMMENT_DEL)%>">
 					<span class="close_btn ui-icon ui-icon-closethick" 
-						onclick="location.href='/toolcloud/ctrl/query/delcomment?id=${comment.commentId}&queryId=${query.id}'">
+						onclick="location.href='${root}/ctrl/query/delcomment?id=${comment.commentId}&queryId=${query.id}'">
 					</span>
 				</c:if>
 				<pre style="margin:0">${comment.preContent }</pre>
@@ -83,7 +83,7 @@
 	<a href="javascript:history.back()">返回</a>
 	
 	<div style="clear:left; padding-top:50px;">
-		<form method="post" action="/toolcloud/ctrl/query/comment">
+		<form method="post" action="${root}/ctrl/query/comment">
 			<textarea name="comment" id="comment" rows="6" cols="35"></textarea>
 			<input type="hidden" name="queryId" value="${query.id}">
 			<input type="submit" class="btn" value="评论">

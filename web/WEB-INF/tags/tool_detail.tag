@@ -17,7 +17,7 @@
 <div class="left_float">
 	<div>
 	<c:if test="${updatable == true}">
-		<a href="/toolcloud/ctrl/tool/update?toolId=${toolDescriptor.pluginID }">
+		<a href="${root}/ctrl/tool/update?toolId=${toolDescriptor.pluginID }">
 			<b>${toolDescriptor.pluginName}</b>
 		</a>
 	</c:if>

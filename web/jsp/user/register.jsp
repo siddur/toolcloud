@@ -34,7 +34,7 @@
 <jsp:body>
 	<div class="body">
 		<div class="add_user">
-			<form method="post" action="/toolcloud/ctrl/user/register">
+			<form method="post" action="${root}/ctrl/user/register">
 				<div>
 					Username<span class="asterisk">*</span>:
 					<input name="username">

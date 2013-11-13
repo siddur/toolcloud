@@ -34,9 +34,9 @@
 </jsp:attribute>
 <jsp:body>
 	<div class="left_bar">
-		<a href="/toolcloud/ctrl/user/list">User Manage</a><br>
-		<a href="/toolcloud/ctrl/role/list">Role Manage</a><br>
-		<a href="/toolcloud/ctrl/tool/blocks">Tool Manage</a><br>
+		<a href="${root}/ctrl/user/list">User Manage</a><br>
+		<a href="${root}/ctrl/role/list">Role Manage</a><br>
+		<a href="${root}/ctrl/tool/blocks">Tool Manage</a><br>
 	</div>
 	<jsp:doBody/>
 </jsp:body>

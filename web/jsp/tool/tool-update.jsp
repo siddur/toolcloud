@@ -100,7 +100,7 @@
 	</div>
 	<s:file_upload_head multiple="false"/>
 	<div class="body attr-item-container">
-		<form method="post" action="/toolcloud/ctrl/tool/save" >
+		<form method="post" action="${root}/ctrl/tool/save" >
 			<input type="hidden" name="toolId" value="${td.pluginID}">
 			<div>
 				<span class="label">名称:</span>

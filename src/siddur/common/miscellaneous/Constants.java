@@ -1,6 +1,8 @@
 package siddur.common.miscellaneous;
 
 public class Constants {
+	public static final String WEBSITE_ROOT = "";
+	
 	public static final String TOOL_PLUGIN_MANAGE = "filetoolpluginmanage";
 	public static final String TOOL_HOME = "TOOL_HOME";
 	public static final String ENTITY_MANAGER_WRAPPER = "EntityManagerWrapper";

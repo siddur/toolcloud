@@ -83,7 +83,7 @@
 <jsp:body>
 	<s:file_upload_head multiple="false"></s:file_upload_head>
 	<div class="body attr-item-container">
-		<form method="post" action="/toolcloud/ctrl/tool/save" >
+		<form method="post" action="${root}/ctrl/tool/save" >
 			<div>
 				<span class="label">编程语言:</span>
 				<select id="lang" name="lang" onchange="selectLang(this.value)">

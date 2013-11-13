@@ -50,7 +50,7 @@
 			Login
 		</div>
 		<div class="login-body">
-			<form method="post" action="/toolcloud/ctrl/user/login">
+			<form method="post" action="${root}/ctrl/user/login">
 				<div>Username</div>
 				<div><input class="input-item" name="username"></div>
 				<div>Password</div>

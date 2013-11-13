@@ -3,9 +3,9 @@
     pageEncoding="UTF-8"%>
 <s:site>
 	<div style="width: 960px; margin:0 auto">
-		<h4><a href="/toolcloud/docs/Overview.jsp">ToolCloud概述</a></h4>
-		<h4><a href="/toolcloud/docs/Developer_Guide.jsp">ToolCloud开发者指南</a></h4>
-		<h4><a href="/toolcloud/docs/User_Guide.jsp">ToolCloud用户指南</a></h4>
+		<h4><a href="${root}/docs/Overview.jsp">ToolCloud概述</a></h4>
+		<h4><a href="${root}/docs/Developer_Guide.jsp">ToolCloud开发者指南</a></h4>
+		<h4><a href="${root}/docs/User_Guide.jsp">ToolCloud用户指南</a></h4>
 		<hr>
 		<div>
 			<jsp:include page="Overview.htm"></jsp:include>

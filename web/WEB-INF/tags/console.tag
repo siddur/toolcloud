@@ -1,6 +1,6 @@
 <%@ tag language="java" pageEncoding="UTF-8"%>
-<script src="/toolcloud/js/console.js"></script>
-<link href="/toolcloud/css/console.css"  rel="stylesheet"/>
+<script src="${root}/js/console.js"></script>
+<link href="${root}/css/console.css"  rel="stylesheet"/>
 
 <div class="console">
 	<div class="console-head"></div>

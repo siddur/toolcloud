@@ -9,7 +9,7 @@
 	<div class="home_title">
 		<b>${title }</b>
 		<div style="float:right;">
-			<a href="/toolcloud/ctrl/tool/list">更多</a>
+			<a href="${root}/ctrl/tool/list">更多</a>
 		</div>
 	</div>
 	<c:forEach var="item" items="${tools}">

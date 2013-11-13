@@ -1,9 +1,9 @@
 <%@ tag language="java" pageEncoding="UTF-8"%>
 
 
-<script type="text/javascript" src="/toolcloud/jqueryui/jquery-ui-1.10.3.custom.min.js"></script>
-<script type="text/javascript" src="/toolcloud/jqueryui/treeview/jquery.treeview.js"></script>
-<link rel="stylesheet" href="/toolcloud/jqueryui/treeview/jquery.treeview.css" />
+<script type="text/javascript" src="${root}/jqueryui/jquery-ui-1.10.3.custom.min.js"></script>
+<script type="text/javascript" src="${root}/jqueryui/treeview/jquery.treeview.js"></script>
+<link rel="stylesheet" href="${root}/jqueryui/treeview/jquery.treeview.css" />
 <style>
 	.file-browser{
 		height: 600px;
@@ -117,12 +117,12 @@ var addTab = function(fileUrl, id, text, index){
 		$(".viewer").tabs("option", "active", index);
 		updateHeight();
 	}
-	$.get("/toolcloud/ctrl/file/file", {path: fileUrl}, load);
+	$.get("${root}/ctrl/file/file", {path: fileUrl}, load);
 }
 
 var initTree = function(url, context){
 	var me = $(context);
-	$.get("/toolcloud/ctrl/file/dir", {path: url}, function(fileModel){
+	$.get("${root}/ctrl/file/dir", {path: url}, function(fileModel){
 		var fileModel = $.parseJSON(fileModel);
 		var context = me.find(".browser");
 		//reset tree

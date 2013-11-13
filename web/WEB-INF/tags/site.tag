@@ -8,11 +8,11 @@
 	<meta http-equiv="Content-Language" content="zh-CN" />
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 	<title>Tool Cloud</title>
-	<script type="text/javascript" src="/toolcloud/jquery/js/jquery-1.9.1.js"></script>
-	<script type="text/javascript" src="/toolcloud/js/search.js"></script>
-	<link rel="stylesheet" type="text/css" href="/toolcloud/css/common.css" />
-	<link rel="stylesheet" type="text/css" href="/toolcloud/jqueryui/jquery-ui.css" />
-	<link rel="stylesheet" type="text/css" href="/toolcloud/css/tag.css" />
+	<script type="text/javascript" src="${root}/jquery/js/jquery-1.9.1.js"></script>
+	<script type="text/javascript" src="${root}/js/search.js"></script>
+	<link rel="stylesheet" type="text/css" href="${root}/css/common.css" />
+	<link rel="stylesheet" type="text/css" href="${root}/jqueryui/jquery-ui.css" />
+	<link rel="stylesheet" type="text/css" href="${root}/css/tag.css" />
 	<jsp:invoke fragment="headPart"></jsp:invoke>
 </head>
 <body>
@@ -20,12 +20,12 @@
 		<div class="user">
 		<c:choose>
 			<c:when test="${user != null }">
-				<a href="/toolcloud/ctrl/user/me"><span class="ui-icon ui-icon-person"></span><b>${user.name }</b></a>&nbsp;&nbsp;
-				<a href="/toolcloud/ctrl/user/logout"><span class="ui-icon ui-icon-arrowreturnthick-1-w"></span>退出</a>
+				<a href="${root}/ctrl/user/me"><span class="ui-icon ui-icon-person"></span><b>${user.name }</b></a>&nbsp;&nbsp;
+				<a href="${root}/ctrl/user/logout"><span class="ui-icon ui-icon-arrowreturnthick-1-w"></span>退出</a>
 			</c:when>
 			<c:otherwise>
-				<a href="/toolcloud/jsp/user/login.jsp"><span class="ui-icon ui-icon-arrowreturnthick-1-e"></span>登录</a>
-				<a href="/toolcloud/jsp/user/register.jsp"><span class="ui-icon ui-icon-arrowthickstop-1-e"></span>注册</a>
+				<a href="${root}/jsp/user/login.jsp"><span class="ui-icon ui-icon-arrowreturnthick-1-e"></span>登录</a>
+				<a href="${root}/jsp/user/register.jsp"><span class="ui-icon ui-icon-arrowthickstop-1-e"></span>注册</a>
 			</c:otherwise>
 		</c:choose>
 		</div>
@@ -36,16 +36,16 @@
 		<div class="toolbar">
 			<ul>
 				<li>
-					<a href="/toolcloud"><span class="ui-icon ui-icon-home"></span>首页</a>
+					<a href="${root}/"><span class="ui-icon ui-icon-home"></span>首页</a>
 				</li>
 				<li>
-					<a href="/toolcloud/ctrl/tool/blocks"><span class="ui-icon ui-icon-gear"></span>管理</a>
+					<a href="${root}/ctrl/tool/blocks"><span class="ui-icon ui-icon-gear"></span>管理</a>
 				</li>
 				<li>
-					<a href="/toolcloud/doc.jsp"><span class="ui-icon ui-icon-help"></span>文档</a>
+					<a href="${root}/doc.jsp"><span class="ui-icon ui-icon-help"></span>文档</a>
 				</li>
 				<li>
-					<a href="/toolcloud/download.jsp"><span class="ui-icon ui-icon-arrowthickstop-1-s"></span>下载</a>
+					<a href="${root}/download.jsp"><span class="ui-icon ui-icon-arrowthickstop-1-s"></span>下载</a>
 				</li>
 			</ul>
 			<div style="float: right; position: relative; right:50px; margin:4px;">

@@ -65,7 +65,7 @@
 			});
 
 			function appendFile(file, container){
-				var url = "/toolcloud/file/" + file.filepath;
+				var url = "${root}/file/" + file.filepath;
 				if(container.children().length == 1 || multiple){
 					var fileItemDiv = createFileComponent();
 					container.append(fileItemDiv);
@@ -94,7 +94,7 @@
 				var theForm = $("#file_form");
 				theForm.append(who); //move into form
 
-				var action = "/toolcloud/file/";
+				var action = "${root}/file/";
 				if(isImage){
 					action += "image";
 				}

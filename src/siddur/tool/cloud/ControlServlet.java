@@ -3,6 +3,7 @@ package siddur.tool.cloud;
 import java.io.IOException;
 import java.util.HashMap;
 
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -22,7 +23,9 @@ public class ControlServlet extends HttpServlet{
 	
 	
 	@Override
-	public void init() throws ServletException {
+	public void init(ServletConfig config) throws ServletException {
+		config.getServletContext().setAttribute("root", Constants.WEBSITE_ROOT);
+		
 		HashMap<String, Object> context = new HashMap<String, Object>();
 		//init tool
 		IToolManager tm = new WebBatchToolManager();
@@ -36,6 +39,8 @@ public class ControlServlet extends HttpServlet{
 		
 		
 		actionMapper = new ActionMapper(context);
+		
+		super.init(config);
 	}
 	
 	@Override

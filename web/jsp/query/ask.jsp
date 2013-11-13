@@ -4,7 +4,7 @@
 
 <s:site>
 <div class="screen">
-	<form method="post" action="/toolcloud/ctrl/query/doask">
+	<form method="post" action="${root}/ctrl/query/doask">
 		<div>
 			<span>标题</span>
 			<input name="title">

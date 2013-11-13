@@ -32,12 +32,12 @@
 	}
 
 </style>
-<script type="text/javascript" src="/toolcloud/jquery/js/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="${root}/jquery/js/jquery-1.9.1.js"></script>
 <script>
 	$(document).ready(function(){
 		$(".item").click(function(){
 			var userId = this.children[6].children[0].children[0].value;
-			location.href = "/toolcloud/ctrl/user/detail?userId=" + userId;
+			location.href = "${root}/ctrl/user/detail?userId=" + userId;
 		});
 	});
 </script>
@@ -66,7 +66,7 @@
 			<td>${u.realname }</td>
 			<td>${u.nickname }</td>
 			<td>
-				<form action="/toolcloud/ctrl/user/delete">
+				<form action="${root}/ctrl/user/delete">
 					<input type="hidden" name="userId" value="${u.userId }">
 					<c:if test="${canDelete}">
 						<input class="btn" type="submit" value="delete">
@@ -78,7 +78,7 @@
 	</table>
 	<c:if test="${canAdd}">
 		<div class="add_user">
-			<form method="post" action="/toolcloud/ctrl/user/add">
+			<form method="post" action="${root}/ctrl/user/add">
 				<div>
 					Username<span class="asterisk">*</span>:
 					<input name="username">

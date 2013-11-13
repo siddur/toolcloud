@@ -53,16 +53,16 @@
 		<div class="detail_head">
 			<s:tool_detail toolDescriptor="${tool.descriptor}"/>
 		</div>
-		<iframe class="tool_container" name="tool_container" src="/toolcloud/file/${toolFile}"></iframe>
+		<iframe class="tool_container" name="tool_container" src="${root}/file/${toolFile}"></iframe>
 		<c:if test="${tool.status == 0}">
 			<div>
-				<a href="/toolcloud/ctrl/tool/approve?toolId=${tool.descriptor.pluginID}" >允许公开</a>
+				<a href="${root}/ctrl/tool/approve?toolId=${tool.descriptor.pluginID}" >允许公开</a>
 			</div>
 		</c:if>
 		<div style="clear:left; padding-top:20px;">
 			<c:forEach var="t" items="${similars}">
 			<div class="left_float" style="padding-right:20px; padding-bottom:5px;">
-				<a id="${t.descriptor.pluginID}" href="/toolcloud/ctrl/tool/detail?toolId=${t.descriptor.pluginID}">
+				<a id="${t.descriptor.pluginID}" href="${root}/ctrl/tool/detail?toolId=${t.descriptor.pluginID}">
 					<c:choose>
 						<c:when test="${empty t.descriptor.icon}">
 							<div class="tool_logo"><span>${t.descriptor.pluginName}</span></div>
@@ -74,7 +74,7 @@
 				</a>
 			</div>
 			</c:forEach>
-			<div style="font-size: 12px; clear:left;"><a href="/toolcloud/ctrl/tool/list">更多</a></div>
+			<div style="font-size: 12px; clear:left;"><a href="${root}/ctrl/tool/list">更多</a></div>
 		</div>
 		<div class="comments">
 			<c:forEach var="c" items="${comments}">
@@ -83,7 +83,7 @@
 					closable="${canDelComment}" ></s:comment>
 			</c:forEach>
 			
-			<form method="post" action="/toolcloud/ctrl/tool/comment">
+			<form method="post" action="${root}/ctrl/tool/comment">
 				<textarea name="comment" id="comment" rows="6" cols="60"></textarea>
 				<input type="hidden" name="toolId" value="${tool.descriptor.pluginID}">
 				<input type="submit" class="btn" value="评论">

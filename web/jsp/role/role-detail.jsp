@@ -20,7 +20,7 @@
 		<div class="left_float" style="width:500px;">
 		<c:choose>
 			<c:when test="${not empty role}">
-				<form method="post" action="/toolcloud/ctrl/role/update">
+				<form method="post" action="${root}/ctrl/role/update">
 				    <input type="hidden" name="roleId" value="${role.roleId}">
 				    <c:forEach var="perm" items="${allPerms}" varStatus="status">
 				    	<div class="perm-item">
@@ -32,7 +32,7 @@
 				</form>
 			</c:when>
 			<c:otherwise>
-				<form method="post" action="/toolcloud/ctrl/role/add">
+				<form method="post" action="${root}/ctrl/role/add">
 					<label>rolename:</label><input type="text" name="rolename">
 					<c:forEach var="perm" items="${allPerms}" varStatus="status">
 					    <div class="perm-item">

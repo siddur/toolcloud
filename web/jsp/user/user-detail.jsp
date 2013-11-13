@@ -20,7 +20,7 @@
 		${crumb}
 	</div>
 	<div class="body">
-		<form action="/toolcloud/ctrl/user/update">
+		<form action="${root}/ctrl/user/update">
 			<input type="hidden" name="userId" value="${user.userId}">
 			<div class="user_item"><span>USERNAME</span><span class="txt">${user.username}</span></div>
 			<div class="user_item"><span>PASSWORD</span><span class="txt">${user.password}</span></div>

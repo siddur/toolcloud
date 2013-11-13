@@ -74,14 +74,14 @@
 			<div class="comment_list" style="clear:left;">
 				<div class="home_title">
 					<b>需求讨论</b>
-					<a href="/toolcloud/ctrl/query/ask">我来发布需求</a>
+					<a href="${root}/ctrl/query/ask">我来发布需求</a>
 					<div style="float:right;">
-						<a href="/toolcloud/ctrl/query/list">更多</a>
+						<a href="${root}/ctrl/query/list">更多</a>
 					</div>
 				</div>
 				<c:forEach items="${queries}" var="item">
 					<div class="query_item">
-						<a href="/toolcloud/ctrl/query/detail?id=${item.id}">
+						<a href="${root}/ctrl/query/detail?id=${item.id}">
 							<span class="ui-icon ui-icon-document"></span>
 							<span>${item.title}</span>
 							<span style="color:#BBBBBB; float:right;">
@@ -95,7 +95,7 @@
 		
 		
 		<div class="right">
-			<div style="margin-bottom:10px;"><input type="button" class='btn' value="发布工具" onclick="location.href='/toolcloud/ctrl/tool/toadd'"></div>
+			<div style="margin-bottom:10px;"><input type="button" class='btn' value="发布工具" onclick="location.href='${root}/ctrl/tool/toadd'"></div>
 			<div class="favorite">
 				<div class="home_title">
 					您使用过的：
@@ -103,7 +103,7 @@
 				<div style="clear:right;"></div>
 				<c:forEach items="${favorite}" var="item">
 					<div class="favorite_item">
-						<a href="/toolcloud/ctrl/tool/detail?toolId=${item.descriptor.pluginID }">
+						<a href="${root}/ctrl/tool/detail?toolId=${item.descriptor.pluginID }">
 							<span class="ui-icon ui-icon-gear"></span>
 							${item.descriptor.pluginName }
 						</a>

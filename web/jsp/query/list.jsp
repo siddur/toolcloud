@@ -29,13 +29,13 @@
 <div class="screen">
 	<script>
 		function changePage(){
-			location.href = "/toolcloud/ctrl/query/list?pageIndex=" + pageIndex + "&pageSize=" + pageSize;
+			location.href = "${root}/ctrl/query/list?pageIndex=" + pageIndex + "&pageSize=" + pageSize;
 		}
 	</script>
 	<c:forEach var="item" items="${queries.data}">
 		<div class="query_item">
 			<div>
-				<a href="/toolcloud/ctrl/query/detail?id=${item.id}">
+				<a href="${root}/ctrl/query/detail?id=${item.id}">
 					<span class="query_title">${item.title }</span>
 					<span class="query_date">
 						<f:formatDate value="${item.publishAt}" pattern="yyyy-MM-dd hh:mm"/>
@@ -49,6 +49,6 @@
 	</c:forEach>
 	
 	<s:paging pageIndex="${queries.pageIndex }" pageSize="20" total="${queries.total }"></s:paging>
-	<a href="/toolcloud">返回首页</a>
+	<a href="${root}">返回首页</a>
 </div>
 </s:site>

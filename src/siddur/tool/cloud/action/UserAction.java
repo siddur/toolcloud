@@ -39,7 +39,7 @@ public class UserAction extends DBAction<UserInfo>{
 			if(u.getPassword().equals(password)){
 				req.getSession().setAttribute(Constants.USER, u);
 				Cookie c = new Cookie("username", username);
-				c.setPath("/toolcloud");
+				c.setPath("Constants.WEBSITE_ROOT");
 				c.setMaxAge(60 * 60 * 24 * 7);
 				resp.addCookie(c);
 				return Result.redirect("tool/home");
@@ -52,7 +52,7 @@ public class UserAction extends DBAction<UserInfo>{
 		UserInfo u = (UserInfo)req.getSession().getAttribute(Constants.USER);
 		if(u != null){
 			Cookie c = new Cookie("username", u.getUsername());
-			c.setPath("/toolcloud");
+			c.setPath("Constants.WEBSITE_ROOT");
 			c.setMaxAge(0);
 			resp.addCookie(c);
 		}

@@ -3,7 +3,7 @@
 <%@ attribute name="toolDescriptor" type="siddur.tool.core.data.ToolDescriptor"%>
 
 <div class="tool_item">
-	<a href="/toolcloud/ctrl/tool/detail?toolId=${toolDescriptor.pluginID }">
+	<a href="${root}/ctrl/tool/detail?toolId=${toolDescriptor.pluginID }">
 		<span class="ui-icon ui-icon-gear"></span>
 		<span class="title">
 			[${toolDescriptor.pluginName}]

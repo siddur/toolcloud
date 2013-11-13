@@ -55,7 +55,7 @@
 
 	var deleTool = function(id){
 		if(confirm("确实要删除吗？")){
-			location.href = "/toolcloud/ctrl/tool/delete?id=" + id;
+			location.href = "${root}/ctrl/tool/delete?id=" + id;
 		}
 	}
 </script>
@@ -65,11 +65,11 @@
 	${crumb}
 </div>
 <div class="body">
-	<form action="/toolcloud/ctrl/tool/blocks" method="POST">
+	<form action="${root}/ctrl/tool/blocks" method="POST">
 		<div id="currentItem">
 			<c:if test="${not empty current}">
 				<div>
-					<a href="/toolcloud/ctrl/tool/update?toolId=${current.descriptor.pluginID }" class="txt">${current.descriptor.pluginName}</a>
+					<a href="${root}/ctrl/tool/update?toolId=${current.descriptor.pluginID }" class="txt">${current.descriptor.pluginName}</a>
 					<input class="btn" type="button" value="删除" onclick="deleTool('${current.descriptor.pluginID }')">
 				</div>
 				<div>${current.descriptor.description}</div>
@@ -95,7 +95,7 @@
 					</c:when>
 					<c:otherwise>
 						<div class="item">
-							<span class="left_float ui-icon ui-icon-circle-arrow-n" onclick="location.href='/toolcloud/ctrl/tool/blocks?toolId=${item.descriptor.pluginID}'"></span>
+							<span class="left_float ui-icon ui-icon-circle-arrow-n" onclick="location.href='${root}/ctrl/tool/blocks?toolId=${item.descriptor.pluginID}'"></span>
 							<span class="txt" id="${item.descriptor.pluginID}" onclick="select(this)">${item.descriptor.pluginName}</span>		
 						</div>
 					</c:otherwise>

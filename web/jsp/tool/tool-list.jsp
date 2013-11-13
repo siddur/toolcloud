@@ -7,7 +7,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <s:site>
 <jsp:attribute name="headPart">
-<link rel="stylesheet" type="text/css" href="/toolcloud/css/tag.css" />
+<link rel="stylesheet" type="text/css" href="${root}/css/tag.css" />
 <style>
 	.list{
 		margin:7px;
@@ -35,12 +35,12 @@
 }
 </style>
 <script>
-	var url = "/toolcloud/ctrl/tool/list";
+	var url = "${root}/ctrl/tool/list";
 	var onlyForMine = function(obj){
 		if(obj.checked){
-			url = "/toolcloud/ctrl/tool/mine";
+			url = "${root}/ctrl/tool/mine";
 		}else{
-			url = "/toolcloud/ctrl/tool/list";
+			url = "${root}/ctrl/tool/list";
 		}
 		location.href = url;
 	}
@@ -54,7 +54,7 @@
 	</div>
 	<c:forEach var="t" items="${paging.data}">
 		<c:if test="${t.status == 0}"></c:if>
-		<div class="list <c:if test="${t.status == 0}">notApproved</c:if> left_float" onclick="location.href='/toolcloud/ctrl/tool/detail?toolId=${t.descriptor.pluginID}';">
+		<div class="list <c:if test="${t.status == 0}">notApproved</c:if> left_float" onclick="location.href='${root}/ctrl/tool/detail?toolId=${t.descriptor.pluginID}';">
 			<s:tool_detail updatable="${editable}" toolDescriptor="${t.descriptor}"></s:tool_detail>
 		</div>
 	</c:forEach>

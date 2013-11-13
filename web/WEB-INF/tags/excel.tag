@@ -4,9 +4,9 @@
 
 <c:if test="${table_tag != true }">
 	<c:set var="table_tag" value="true" scope="request"></c:set>
-	<script src="/toolcloud/js/ZeroClipboard.min.js"></script>
-	<script src="/toolcloud/js/table.js"></script>
-	<link rel="stylesheet" href="/toolcloud/css/table.css"/>
+	<script src="${root}/js/ZeroClipboard.min.js"></script>
+	<script src="${root}/js/table.js"></script>
+	<link rel="stylesheet" href="${root}/css/table.css"/>
 </c:if>
 <div id="${containerId}"></div>
 <input type="hidden" name="input" class="tableHidden">

@@ -25,10 +25,10 @@
 			<input type='hidden' name='file' value="${f}">
 			<c:choose>
 				<c:when test="${isImage}">
-					<img src="/toolcloud/file/${f}">
+					<img src="${root}/file/${f}">
 				</c:when>
 				<c:otherwise>
-					<a href="/toolcloud/file/${f}"></a>
+					<a href="${root}/file/${f}"></a>
 				</c:otherwise>
 			</c:choose>
 			<span class="ui-icon ui-icon-close" onclick="close(this)"></span>
@@ -39,10 +39,10 @@
 			<input type='hidden' name='file' value="${file}">
 			<c:choose>
 				<c:when test="${isImage}">
-					<img src="/toolcloud/file/${file}">
+					<img src="${root}/file/${file}">
 				</c:when>
 				<c:otherwise>
-					<a href="/toolcloud/file/${file}"></a>
+					<a href="${root}/file/${file}"></a>
 				</c:otherwise>
 			</c:choose>
 			<span class="ui-icon ui-icon-close" onclick="close(this)"></span>
