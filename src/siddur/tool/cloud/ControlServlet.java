@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import siddur.common.jpa.EntityManagerWrapper;
 import siddur.common.jpa.JPAUtil;
 import siddur.common.miscellaneous.Constants;
+import siddur.common.miscellaneous.TempFileCleaner;
 import siddur.common.web.ActionMapper;
 import siddur.tool.core.IToolManager;
 import siddur.tool.core.WebBatchToolManager;
@@ -37,9 +38,12 @@ public class ControlServlet extends HttpServlet{
 		//init entitymanage wrapper
 		context.put(Constants.ENTITY_MANAGER_WRAPPER, new EntityManagerWrapper());
 		
-		
 		actionMapper = new ActionMapper(context);
 		
+		
+		//start temp file cleaner
+		TempFileCleaner cleaner = new TempFileCleaner();
+		cleaner.startClean();
 		super.init(config);
 	}
 	
