@@ -284,6 +284,7 @@ public class ToolAction extends DBAction<Comment>{
 		String[] params = req.getParameterValues("input[]");
 		Map<String, Object> context = new HashMap<String, Object>();
 		context.put(Constants.TICKET, req.getParameter(Constants.TICKET));
+		context.put(Constants.FILE_ENCODING, req.getParameterValues(Constants.FILE_ENCODING + "[]"));
 
 		String[] splitters = req.getParameterValues("splitter[]");
 		if(splitters != null && splitters.length > 0){

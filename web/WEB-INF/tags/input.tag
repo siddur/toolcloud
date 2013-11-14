@@ -166,6 +166,12 @@
 				</c:when>
 				<c:when test="${'FILE' == type || 'ZIPFILE' == type}">
 					<s:file_upload fieldname="input" displayname="上传文件.."/>
+					&nbsp;
+					<font size="2">文件编码:</font><select class="file-encoding">
+						<option value="ISO-8859-1">ISO-8859-1</option>
+						<option value="GBK">GBK</option>
+						<option value="UTF-8">UTF-8</option>
+					</select>
 				</c:when>
 				<c:when test="${'IMAGE' == type}">
 					<s:file_upload fieldname="input" displayname="上传图片.." isImage="true"/>

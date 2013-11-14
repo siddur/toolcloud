@@ -20,4 +20,5 @@ public class Constants {
 	
 	
 	public static final String HAS_PERM = "hasPerm";
+	public static final String FILE_ENCODING = "file_encoding";
 }

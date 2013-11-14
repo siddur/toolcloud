@@ -41,11 +41,20 @@
 			v = index + "=" + v;
 			splitters.push(v);
 		});
+
+		var fileEncodings = [];
+		var encodingSelects = $(".file-encoding");
+		encodingSelects.each(function(idx, item){
+			var v = item.value;
+			fileEncodings.push(v);
+		});
+		
 		var data = {
 				id:"${tool.descriptor.pluginID}",
 				input:inputs,
 				splitter:splitters,
-				ticket:ticket
+				ticket:ticket,
+				file_encoding:fileEncodings
 			};
 		$.post(
 			runUrl,

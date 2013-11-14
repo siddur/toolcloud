@@ -110,7 +110,11 @@ public class ScriptUtil {
 		if(isWindows){
 			sb.append("cmd /c ");
 		}else{
-			sb.append("bash -c ");
+			if(orderName.endsWith(".exe")){
+				sb.append("wine ");
+			}else{
+				sb.append("bash -c ");
+			}
 		}
 		sb.append(orderName);
 		sb.append(" ");

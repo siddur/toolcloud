@@ -11,6 +11,7 @@ import java.nio.channels.ReadableByteChannel;
 import java.nio.channels.WritableByteChannel;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.StringTokenizer;
 
 import org.apache.commons.io.FileUtils;
@@ -91,6 +92,10 @@ public class ToolUtil {
 		cfg.setObjectWrapper(new DefaultObjectWrapper());
 		Template temp = cfg.getTemplate(templateFile);
 		temp.process(dataModel, out);
+	}
+	
+	public static String[] getEncodings(Map<String, Object> context){
+		return (String[])context.get(Constants.FILE_ENCODING);
 	}
 
 }
