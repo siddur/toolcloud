@@ -189,21 +189,17 @@ ul
 
 <p class=MsoNormal>&nbsp;</p>
 
-<p class=MsoToc1><span class=MsoHyperlink><a href="#_Toc370997525">1.<span
-style='color:windowtext;text-decoration:none'>      </span><span lang=ZH-CN
-style='font-family:宋体'>搭建环境</span></a></span></p>
+<p class=MsoToc1><a href="#_Toc370997525">1.<span style='color:windowtext;
+text-decoration:none'>      </span><span lang=ZH-CN style='font-family:宋体'>搭建环境</span></a></p>
 
-<p class=MsoToc1><span class=MsoHyperlink><a href="#_Toc370997526">2.<span
-style='color:windowtext;text-decoration:none'>      </span><span lang=ZH-CN
-style='font-family:宋体'>几个重要类</span></a></span></p>
+<p class=MsoToc1><a href="#_Toc370997526">2.<span style='color:windowtext;
+text-decoration:none'>      </span><span lang=ZH-CN style='font-family:宋体'>几个重要类</span></a></p>
 
-<p class=MsoToc1><span class=MsoHyperlink><a href="#_Toc370997527">3.<span
-style='color:windowtext;text-decoration:none'>      </span><span lang=ZH-CN
-style='font-family:宋体'>开发工具</span></a></span></p>
+<p class=MsoToc1><a href="#_Toc370997527">3.<span style='color:windowtext;
+text-decoration:none'>      </span><span lang=ZH-CN style='font-family:宋体'>开发工具</span></a></p>
 
-<p class=MsoToc1><span class=MsoHyperlink><a href="#_Toc370997528">4.<span
-style='color:windowtext;text-decoration:none'>      </span><span lang=ZH-CN
-style='font-family:宋体'>开发示例</span></a></span></p>
+<p class=MsoToc1><a href="#_Toc370997528">4.<span style='color:windowtext;
+text-decoration:none'>      </span><span lang=ZH-CN style='font-family:宋体'>开发示例</span></a></p>
 
 <p class=MsoNormal>&nbsp;</p>
 
@@ -324,7 +320,8 @@ font-family:Consolas;color:#646464'>@Override</span></p>
 .0001pt;line-height:normal;text-autospace:none'><span style='font-size:10.0pt;
 font-family:Consolas;color:black'>       </span><b><span style='font-size:10.0pt;
 font-family:Consolas;color:#7F0055'>public</span></b><span style='font-size:
-10.0pt;font-family:Consolas;color:black'> String[] execute(String[] inputs) {</span></p>
+10.0pt;font-family:Consolas;color:black'> String[] execute(String[] inputs,
+IToolWrapper toolWrapper, Map&lt;String, Object&gt; context) {</span></p>
 
 <p class=MsoListParagraphCxSpMiddle style='margin-bottom:0cm;margin-bottom:
 .0001pt;line-height:normal;text-autospace:none'><span style='font-size:10.0pt;
@@ -462,9 +459,10 @@ style='font-family:宋体'>方法</span></p>
 margin-bottom:0cm;margin-left:18.0pt;margin-bottom:.0001pt;line-height:normal;
 text-autospace:none'><b><span style='font-size:10.0pt;font-family:Consolas;
 color:#7F0055'>public</span></b><span style='font-size:10.0pt;font-family:Consolas;
-color:black'> String[] execute(String[] inputs) </span><b><span
-style='font-size:10.0pt;font-family:Consolas;color:#7F0055'>throws</span></b><span
-style='font-size:10.0pt;font-family:Consolas;color:black'> Exception {</span></p>
+color:black'> String[] execute(String[] inputs, IToolWrapper toolWrapper,
+Map&lt;String, Object&gt; context) </span><b><span style='font-size:10.0pt;
+font-family:Consolas;color:#7F0055'>throws</span></b><span style='font-size:
+10.0pt;font-family:Consolas;color:black'> Exception {</span></p>
 
 <p class=MsoListParagraphCxSpMiddle style='margin-top:0cm;margin-right:0cm;
 margin-bottom:0cm;margin-left:18.0pt;margin-bottom:.0001pt;line-height:normal;
