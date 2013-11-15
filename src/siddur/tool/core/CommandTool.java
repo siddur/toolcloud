@@ -11,7 +11,7 @@ import org.apache.commons.exec.CommandLine;
 import org.apache.commons.exec.DefaultExecutor;
 import org.apache.commons.exec.ExecuteWatchdog;
 import org.apache.commons.exec.PumpStreamHandler;
-import org.apache.commons.io.FileUtils;
+import org.apache.log4j.Logger;
 
 import siddur.common.miscellaneous.FileSystemUtil;
 import siddur.common.miscellaneous.ToolUtil;
@@ -19,7 +19,7 @@ import siddur.tool.core.data.DataTemplate;
 import siddur.tool.core.data.ToolDescriptor;
 
 public abstract class CommandTool extends ConsoleTool{
-	
+	private static final Logger log4j = Logger.getLogger(CommandTool.class);
 
 	protected abstract String getCommand(ToolDescriptor td, File scriptFile,
 			String[] params) throws Exception;
@@ -31,6 +31,7 @@ public abstract class CommandTool extends ConsoleTool{
 		File wp = ToolUtil.buildWorkspace(toolWrapper);
 		File exeFile = new File(wp, toolWrapper.getToolfile());
 		String s = getCommand(td, exeFile, inputs);
+		log4j.info(s);
 		CommandLine cl = CommandLine.parse(s);
 		
 		// executing time < 10min
@@ -69,20 +70,6 @@ public abstract class CommandTool extends ConsoleTool{
 		return outputFile.getCanonicalPath();
 	}
 
-	private File copyTemp(String filepath) throws IOException{
-		File src = new File(filepath);
-		File parent = src.getParentFile();
-		File workspace = new File(FileSystemUtil.getTempDir(), parent.getName());
-		if(workspace.isDirectory()){
-			FileUtils.deleteDirectory(workspace);
-		}
-		workspace.mkdir();
-//		File dest = new File(workspace, src.getName());
-//		FileUtils.copyFile(src, dest);
-		FileUtils.copyDirectory(parent, workspace);
-		return new File(workspace, src.getName());
-	}
-	
 	
 
 	@Override

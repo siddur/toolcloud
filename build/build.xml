@@ -56,7 +56,7 @@ echo grant codeBase "%server_web_dir%" { >> %policy_file%
 echo ^    permission java.security.AllPermission; >> %policy_file%
 echo }; >>%policy_file%
 			
-echo grant codeBase "%server_web_ext%" { >> %policy_file%
+echo grant codeBase "%server_ext_dir%" { >> %policy_file%
 echo ^    permission java.security.AllPermission; >> %policy_file%
 echo }; >>%policy_file%
 
@@ -69,7 +69,7 @@ echo ^    permission java.io.FilePermission "%cd:\=/%/temp/*", "read,write"; >> 
 echo }; >>%policy_file%
 			
 set LIB=${win.mf.classpath}
-java -Djava.security.manager -Djava.security.policy=%policy_file% -cp %LIB%;${jarfile} siddur.tool.jetty.JettyStart</echo>
+java -Djava.security.manager -Djava.security.policy=%policy_file% -cp %LIB%;${jarfile} siddur.tool.jetty.JettyStart %1 %2</echo>
 		
 		<pathconvert property="linux.mf.classpath" pathsep=":">
 			<mapper>
@@ -113,7 +113,7 @@ echo "    permission java.io.FilePermission \"${PWD}/temp/*\", \"read,write\";" 
 echo "};" >>${policy_file}
 			
 LIB="${linux.mf.classpath}"
-java -Djava.security.manager -Djava.security.policy=$${policy_file} -cp $LIB:${jarfile} siddur.tool.jetty.JettyStart</echo>
+java -Djava.security.manager -Djava.security.policy=$${policy_file} -cp $LIB:${jarfile} siddur.tool.jetty.JettyStart $*</echo>
 		
 		
 		<copy todir="${standalone}/lib">
