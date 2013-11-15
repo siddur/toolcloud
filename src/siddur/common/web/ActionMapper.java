@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
 import siddur.common.jpa.EntityManagerWrapper;
@@ -291,6 +292,9 @@ public class ActionMapper{
 		}
 		
 		public static Result error(String msg){
+			if(StringUtils.isEmpty(msg)){
+				msg = "操作失败";
+			}
 			return new Result(msg, ResultType.error);
 		}
 		

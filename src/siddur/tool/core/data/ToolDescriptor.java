@@ -4,6 +4,8 @@ import java.util.Date;
 
 import org.apache.commons.lang3.StringUtils;
 
+import siddur.common.miscellaneous.Constants;
+
 public class ToolDescriptor {
 	private String pluginName;
 	private String lang;
@@ -85,10 +87,10 @@ public class ToolDescriptor {
 	}
 	public String getDisplayIcon(){
 		if(icon == null || icon.equals("")){
-			return "Constants.WEBSITE_ROOT/ctrl/util/icon?words=" + pluginName;
+			return Constants.WEBSITE_ROOT + "/ctrl/util/icon?words=" + pluginName;
 		}
 		if(!icon.startsWith("/")){
-			return "Constants.WEBSITE_ROOT/file/" + icon;
+			return Constants.WEBSITE_ROOT + "/file/" + icon;
 		}
 		return icon;
 	}

@@ -12,6 +12,7 @@
 	var consoleUrl = "${root}/console?ticket=";
 	var _console;
 	</c:if>
+
 	function doSubmit(){
 		$(".duplication").remove();
 		

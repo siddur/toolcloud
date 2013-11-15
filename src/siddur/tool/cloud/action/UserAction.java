@@ -39,7 +39,7 @@ public class UserAction extends DBAction<UserInfo>{
 			if(u.getPassword().equals(password)){
 				req.getSession().setAttribute(Constants.USER, u);
 				Cookie c = new Cookie("username", username);
-				c.setPath("Constants.WEBSITE_ROOT");
+				c.setPath(Constants.WEBSITE_ROOT);
 				c.setMaxAge(60 * 60 * 24 * 7);
 				resp.addCookie(c);
 				return Result.redirect("tool/home");
@@ -78,6 +78,16 @@ public class UserAction extends DBAction<UserInfo>{
 	
 	@DoNotAuthenticate
 	public Result register(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
+		String input = req.getParameter(UtilAction.AUTHENTICODE);
+		String origin = (String)req.getSession().getAttribute(UtilAction.AUTHENTICODE);
+		boolean check = false;
+		if(input != null && input.equalsIgnoreCase(origin)){
+			check = true;
+		}
+		if(!check){
+			return Result.error("验证码不正确");
+		}
+		
 		UserInfo u = new UserInfo();
 		u.setUsername(req.getParameter("username"));
 		u.setPassword(req.getParameter("password"));
@@ -155,6 +165,23 @@ public class UserAction extends DBAction<UserInfo>{
 		update(u, req);
 		me(req, resp);
 		return Result.ok();
+	}
+	
+	public Result updatePwd(HttpServletRequest req,HttpServletResponse resp) throws ServletException, IOException{
+		UserInfo u = (UserInfo)req.getSession().getAttribute(Constants.USER);
+		
+		String oldPassword = req.getParameter("oldPassword");
+		String DbPwd = u.getPassword();
+		if(oldPassword != null){
+			if(oldPassword.equals(DbPwd)){
+				u.setPassword(req.getParameter("newPassword"));
+				update(u, req);
+				return me(req,resp);
+			}else{
+				req.setAttribute("noMatch", "The original password is incorrect");
+			}
+		}
+		return Result.forward("/jsp/user/user-pwd.jsp");
 	}
 	
 	@Perm(Permission.USER_EDIT)

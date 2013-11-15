@@ -5,29 +5,67 @@
 <s:site>
 <jsp:attribute name="headPart">
 <style>
-	.add_user div{
+	.add_user .item{
 		padding-bottom:10px;
+	}
+	
+	#checkCodeMsg1, #checkCodeMsg2{
+		display: none;
+	}
+	#img{
+		position: relative;
+		top:9px;
 	}
 </style>
 <script>
+	var correctCode = false;
+
 	function preSubmit(){
-		var username = document.getElementsByName("username")[1].value;
+		var username = document.getElementsByName("username")[0].value;
 		var passwords = document.getElementsByName("password");
 
 		if(!username){
-			alert("username is required");	
+			alert("Username is required");	
 			return false;
 		}
 
-		if(!passwords[1].value){
-			alert("password is required");
+		if(!passwords[0].value){
+			alert("Password is required");
 			return false;
 		}
 
-		if(passwords[1].value != passwords[2].value){
-			alert("passwords are not the same");
+		if(passwords[0].value != passwords[1].value){
+			alert("Passwords are not the same");
 			return false;
 		}
+
+		if(correctCode == false){
+			alert("Captcha is not correct");
+			return false;
+		}
+	}
+
+	function getVerificationCode() {
+		var img = $("#img");
+		img.attr("src","${root}/ctrl/util/authenticode?a=" + new Date().getMilliseconds());
+		$("#checkCodeMsg1").hide();
+		$("#checkCodeMsg2").hide();
+		correctCode = false;
+	}
+	
+	function verify(code){
+		var url = "${root}/ctrl/util/checkcode?authenticode=" + $.trim(code);
+		$.get(url, function(result){
+			if(result == "1"){
+				$("#checkCodeMsg1").css("display", "inline-block");
+				$("#checkCodeMsg2").hide();
+				correctCode = true;
+			}else{
+				$("#checkCodeMsg2").css("display", "inline-block");
+				$("#checkCodeMsg1").hide();
+				correctCode = false;
+			}
+		})
 	}
 </script>
 </jsp:attribute>
@@ -35,30 +73,44 @@
 	<div class="body">
 		<div class="add_user">
 			<form method="post" action="${root}/ctrl/user/register">
-				<div>
+				<div class="item">
+					Captcha
+					<input name="authenticode" id="verificationCode" onchange="verify(this.value)"/>
+					<div id="checkCodeMsg1" class="ui-state-highlight">
+						<div class="ui-icon ui-icon-circle-check"></div>
+					</div>
+					<div id="checkCodeMsg2" class="ui-state-error">
+						<div class="ui-icon ui-icon-circle-close"></div>
+					</div>
+					&nbsp;&nbsp;
+					<img height="27px" src="${root}/ctrl/util/authenticode" id="img">
+					<a href="javascript:getVerificationCode()">Change it</a>
+				</div>
+				<div class="item">
 					Username<span class="asterisk">*</span>:
 					<input name="username">
 				</div>
-				<div>
+				<div class="item">
 					Password<span class="asterisk">*</span>:
 					<input type="password" name="password">
 				</div>
-				<div>
+				<div class="item">
 					Password again<span class="asterisk">*</span>:
 					<input type="password" name="password">
 				</div>
-				<div>
-					Email:
+				<div class="item">
+					Email
 					<input name="email">
 				</div>
-				<div>
-					Realname:
+				<div class="item">
+					Realname
 					<input name="realname">
 				</div>
-				<div>
-					Nickname:
+				<div class="item">
+					Nickname
 					<input name="nickname">
 				</div>
+				
 				<input class="btn" type="submit" value="sign up" onclick="return preSubmit();">
 			</form>
 		</div>

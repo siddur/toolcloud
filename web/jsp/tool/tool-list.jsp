@@ -20,7 +20,7 @@
 	}
 	
 	.notApproved{
-	 	background-color: #888888;
+	 	background-color: #22EEEE;
 	}
 	
 	
