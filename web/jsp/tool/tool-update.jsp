@@ -6,7 +6,6 @@
 <s:site>
 <jsp:attribute name="headPart">
 <script>
-<c:if test="${td.lang != 'client-side' }">
 	var inputDiv, outputDiv;
 	$(document).ready(function(){
 		inputDiv = $("div.input div.instance div.unit").clone();
@@ -50,25 +49,7 @@
 		}
 
 	}
-	/*
-	function selectLang(lang){
-		if(lang == "java"){
-			$(".input_tag").css("display", "none");
-			//$(".output_tag").css("display", "none");
-			
-			$(".out_default").css("display", "none");
-			$(".out_type").css("display", "block");
-		}else{
-			$(".input_tag").css("display", "block");
-			//$(".output_tag").css("display", "block");
-			
-			$(".out_default").css("display", "block");
-			$(".out_type").css("display", "block");
-		}
 	
-	}
-	*/
-</c:if>
 	function validate(){
 		$(".error").removeClass("error");
 		var name = $("[name='name']");
