@@ -10,7 +10,7 @@ function showTip(obj){
 
 function basicSearch() {
 	var basicKeword = document.getElementById("basicKeword").value;
-	window.location = "/toolcloud/ctrl/tool/list?&key=" + basicKeword;
+	window.location = "/ctrl/tool/list?&key=" + basicKeword;
 }
 
 $(document).ready(function(){

@@ -107,7 +107,7 @@
 			</div>
 			<div class="overrodeParam">
 				<span class="label">参数重写</span>
-				<input name="overrodeParam">
+				<input style="width:500px;"  name="overrodeParam">
 			</div>
 			<div class="input">
 				<span class="label" class="title">输入</span>

@@ -119,7 +119,7 @@
 			</div>
 			<div class="overrodeParam">
 				<span class="label">参数重写</span>
-				<input name="overrodeParam" value="${td.overrodeParam}">
+				<input style="width:500px;" name="overrodeParam" value="${td.overrodeParam}">
 			</div>
 			<c:if test="${td.lang != 'client-side' }">
 				<div class="input">

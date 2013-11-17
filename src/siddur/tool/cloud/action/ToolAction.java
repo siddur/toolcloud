@@ -85,7 +85,7 @@ public class ToolAction extends DBAction<Comment>{
 	@DoNotAuthenticate
 	public Result list(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
 		String key = req.getParameter("key");
-		int pageSize = 20;
+		int pageSize = 12;
 		int pageIndex = 1;
 		try {
 			pageSize = Integer.parseInt(req.getParameter("pageSize"));
@@ -149,13 +149,14 @@ public class ToolAction extends DBAction<Comment>{
 		}
 	}
 	
+	@Perm(Permission.TOOL_PUB)
 	public Result toAdd(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
 		req.setAttribute("langs", ScriptUtil.getLangs());
 		return Result.forward("/jsp/tool/tool-add.jsp");
 	}
 	
 	public Result mine(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
-		int pageSize = 20;
+		int pageSize = 12;
 		int pageIndex = 1;
 		try {
 			pageSize = Integer.parseInt(req.getParameter("pageSize"));

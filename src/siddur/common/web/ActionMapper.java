@@ -139,7 +139,7 @@ public class ActionMapper{
 		
 		if(!excludeAuth.contains(path)){
 			boolean hasUser = authenticate(req, resp);
-			if(!hasUser && perm != null){
+			if(!hasUser){
 				req.getRequestDispatcher("/jsp/user/login.jsp").forward(req, resp);
 				return;
 			}

@@ -60,7 +60,9 @@ public class ToolPersister {
 	
 	public void remove(String toolID, EntityManager em){
 		ToolInfo tool = em.find(ToolInfo.class, toolID);
-		em.remove(tool);
+		if(tool != null){
+			em.remove(tool);
+		}
 	}
 	
 	public void saveInfo(String toolID, EntityManager em){

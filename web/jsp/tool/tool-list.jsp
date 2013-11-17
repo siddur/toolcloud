@@ -11,7 +11,7 @@
 <style>
 	.list{
 		margin:7px;
-		width:225px;
+		width:220px;
 		height:150px;
 		overflow: hidden;
 		background-color: #CDCDCD;
@@ -35,14 +35,30 @@
 }
 </style>
 <script>
-	var url = "${root}/ctrl/tool/list";
+	var isMine = ${mine};
+	var url = "${root}/ctrl/tool/";
 	var onlyForMine = function(obj){
+		pageIndex = 1;
+		pageSize = 12;
+		var aUrl = url;
 		if(obj.checked){
-			url = "${root}/ctrl/tool/mine";
+			aUrl += "mine";
 		}else{
-			url = "${root}/ctrl/tool/list";
+			aUrl += "list";
 		}
-		location.href = url;
+		aUrl += "?pageSize=" + pageSize + "&pageIndex=" + pageIndex;
+		location.href = aUrl;
+	}
+	
+	function changePage(){
+		var aUrl = url;
+		if(isMine){
+			aUrl += "mine";
+		}else{
+			aUrl += "list";
+		}
+		aUrl += "?pageSize=" + pageSize + "&pageIndex=" + pageIndex;
+		location.href = aUrl;
 	}
 </script>
 </jsp:attribute>

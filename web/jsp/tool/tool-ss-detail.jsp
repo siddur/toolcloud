@@ -4,7 +4,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <s:site>
 <jsp:attribute name="headPart">
-<meta name="keywords" content="${tool.descriptor.keywords}"/>
+<meta name="keywords" content="在线， ${tool.descriptor.keywords}"/>
 <meta name="description" content="${tool.descriptor.description}"/>
 <script>
 	var runUrl = "${root}/ctrl/tool/exec";

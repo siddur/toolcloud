@@ -97,7 +97,7 @@ Table = function(options){
 		
 		//clipboard
 		var clip = new ZeroClipboard( $(".copyBtn"), {
-			moviePath: "/toolcloud/js/ZeroClipboard.swf"
+			moviePath: "/js/ZeroClipboard.swf"
 		});
 		clip.on( 'dataRequested', function (client, args) {
 			var text = model.getTextString();
