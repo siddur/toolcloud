@@ -63,7 +63,7 @@ public class QueryAction extends DBAction<QueryInfo>{
 		Integer id = Integer.parseInt(req.getParameter("id"));
 		EntityManager em = getEntityManager(req);
 		TypedQuery<Comment> q = em.createQuery("from Comment c where c.subject = 'q" 
-				+ id + "' order by c.saidAt desc", 
+				+ id + "'", 
 					Comment.class);
 		
 		TypedQuery<Long> totalQuery = em.createQuery("select count(c) from Comment c where c.subject = 'q" 

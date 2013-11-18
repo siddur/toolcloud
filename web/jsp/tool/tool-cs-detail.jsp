@@ -81,6 +81,7 @@
 				<s:comment comment="${c}" 
 					subjectId="${tool.descriptor.pluginID}"
 					index="${vs.index + 1}"
+					scope="tool"
 					closable="${canDelComment}" >
 				</s:comment>
 			</c:forEach>

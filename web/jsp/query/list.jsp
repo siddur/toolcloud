@@ -12,12 +12,16 @@
 		border:solid 1px #AAAAAA;
 	}
 	
+	.query_content{
+		font-size: 13px;
+	}
+	
 	.query_item a{
 		text-decoration: none;
 	}
 	
 	.query_title{
-		font-size: 18px;
+		font-size: 15px;
 		color:blue;
 	}
 	.query_date{

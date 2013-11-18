@@ -5,6 +5,7 @@
 <%@ attribute name="subjectId" required="false" type="java.lang.String"%>
 <%@ attribute name="closable" required="true" type="java.lang.Boolean"%>
 <%@ attribute name="index" required="true" type="java.lang.String"%>
+<%@ attribute name="scope" required="true" type="java.lang.String"%>
 
 <c:if test="${comment_tag != true }">
 	<c:set var="comment_tag" value="true" scope="request"></c:set>
@@ -39,7 +40,7 @@
 	<div class="comment_content">
 		<c:if test="${closable == true }">
 			<span class="close_btn ui-icon ui-icon-closethick" 
-				onclick="location.href='${root}/ctrl/tool/delcomment?id=${comment.commentId}&subjectId=${subjectId}'">
+				onclick="location.href='${root}/ctrl/${scope}/delcomment?id=${comment.commentId}&subjectId=${subjectId}'">
 			</span>
 		</c:if>
 		<pre style="margin:0"><font size="2" color="#777722">[${index}楼]</font> ${comment.preContent }</pre>

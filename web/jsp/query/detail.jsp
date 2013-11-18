@@ -66,6 +66,7 @@
 		<s:comment comment="${comment}" 
 			subjectId="${query.id}"
 			index="${vs.index + 1}"
+			scope="query"
 			closable="${canDelComment}" >
 		</s:comment>
 	</c:forEach>
