@@ -74,7 +74,7 @@
 		</c:if>
 		$("#run_btn").attr("disabled", false);
 		if(results){
-			if(!results.startsWith("error")){
+			if(results.indexOf("error") != 0){
 				$("#run_msg").css("color", "green").html("运行成功");
 				var r = eval(results);
 				$(".output").each(function(idx, item){
@@ -228,9 +228,10 @@
 			<div style="font-size: 12px; clear:left;"><a href="${root}/ctrl/tool/list">更多</a></div>
 		</div>
 		<div class="comments">
-			<c:forEach var="c" items="${comments}">
+			<c:forEach var="c" items="${comments}" varStatus="vs">
 				<s:comment comment="${c}" 
-						toolId="${tool.descriptor.pluginID}"
+						subjectId="${tool.descriptor.pluginID}"
+						index="${vs.index + 1}"
 						closable="${canDelComment}" ></s:comment>
 			</c:forEach>
 			<form method="post" action="${root}/ctrl/tool/comment">

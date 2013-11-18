@@ -118,6 +118,11 @@ public class FileServlet extends HttpServlet{
 				for(FileItem fi : items){
 					if(! fi.isFormField()){
 						String filename = fi.getName();
+						filename = filename.replace("\\", "/");
+						int slashIndex = filename.lastIndexOf("/");
+						if(slashIndex > -1){
+							filename = filename.substring(slashIndex + 1);
+						}
 						File f = new File(parent, new Date().getTime() + filename);
 						
 						JsonObject jo = new JsonObject();

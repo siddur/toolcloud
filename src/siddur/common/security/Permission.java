@@ -19,7 +19,8 @@ public enum Permission{
 	ROLE_EDIT("角色", "修改角色权限"),
 	ROLE_VIEW("角色", "查看角色权限"),
 	
-	COMMENT_DEL("评论", "删除评论");
+	COMMENT_DEL("评论", "删除评论"),
+	QUERY_DEL("需求", "删除需求");
 	
 	
 	private String catelog;

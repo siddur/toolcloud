@@ -15,17 +15,17 @@ public class PermissionManager {
 	}
 	
 	public static PermissionGroup admin(){
-		return new PermissionGroup("1 1111 11111 111111");
+		return new PermissionGroup("1 1111 11111 1111111");
 	}
 	
 	//add/delete/editor/update tools
 	public static PermissionGroup editor(){
-		return new PermissionGroup("0 0000 00000 011100");
+		return new PermissionGroup("0 0000 00000 0111000");
 	}
 	
 	//run tools
 	public static PermissionGroup client(){
-		return new PermissionGroup("0 0000 00000 000000");
+		return new PermissionGroup("0 0000 00000 0000000");
 	}
 	
 	public static PermissionGroup createPermissionGroup(Integer value){

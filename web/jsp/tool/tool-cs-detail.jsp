@@ -77,10 +77,12 @@
 			<div style="font-size: 12px; clear:left;"><a href="${root}/ctrl/tool/list">更多</a></div>
 		</div>
 		<div class="comments">
-			<c:forEach var="c" items="${comments}">
+			<c:forEach var="c" items="${comments}" varStatus="vs">
 				<s:comment comment="${c}" 
-					toolId="${tool.descriptor.pluginID}"
-					closable="${canDelComment}" ></s:comment>
+					subjectId="${tool.descriptor.pluginID}"
+					index="${vs.index + 1}"
+					closable="${canDelComment}" >
+				</s:comment>
 			</c:forEach>
 			
 			<form method="post" action="${root}/ctrl/tool/comment">

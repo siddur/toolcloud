@@ -81,7 +81,7 @@ public abstract class DBAction<E> extends Action{
 				.createQuery("from " + getClassName(), getEntityClass());
 			
 		if(index >= 0 && size > 0){
-			int start = (index - 1) * size + 1;
+			int start = (index - 1) * size;
 			int end = index * size;
 			query.setFirstResult(start);
 			query.setMaxResults(end);

@@ -62,21 +62,12 @@
 			${query.plainContent}
 		</div>
 	</div>
-	<c:forEach var="comment" items="${comments.data}">
-		<div class="comment_item">
-			<div class="comment_content">
-				<c:if test="<%RequestUtil.hasPerm(request, Permission.COMMENT_DEL)%>">
-					<span class="close_btn ui-icon ui-icon-closethick" 
-						onclick="location.href='${root}/ctrl/query/delcomment?id=${comment.commentId}&queryId=${query.id}'">
-					</span>
-				</c:if>
-				<pre style="margin:0">${comment.preContent }</pre>
-			</div>
-			<div class='comment_detail'>
-				<font color='#FAA732'>${comment.saidBy }</font> 
-				<font color='#5BB75B'><f:formatDate value="${comment.saidAt}" pattern="yyyy-MM-dd hh:mm"/></font>
-			</div>
-		</div>
+	<c:forEach var="comment" items="${comments.data}" varStatus="vs">
+		<s:comment comment="${comment}" 
+			subjectId="${query.id}"
+			index="${vs.index + 1}"
+			closable="${canDelComment}" >
+		</s:comment>
 	</c:forEach>
 	
 	<s:paging pageIndex="${comments.pageIndex }" pageSize="20" total="${comments.total }"></s:paging>

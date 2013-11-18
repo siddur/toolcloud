@@ -332,6 +332,7 @@ public class ToolAction extends DBAction<Comment>{
 		return Result.ajax(new Gson().toJson(results));
 	}
 	
+	@DoNotAuthenticate
 	public Result comment(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
 		UserInfo u = (UserInfo) req.getSession().getAttribute(Constants.USER);
 		String saidBy = null;
@@ -357,7 +358,7 @@ public class ToolAction extends DBAction<Comment>{
 			int commentId = Integer.parseInt(s);
 			delete(commentId, req);
 		}
-		return Result.redirect("tool/detail?toolId=" + req.getParameter("toolId"));
+		return Result.redirect("tool/detail?toolId=" + req.getParameter("subjectId"));
 	}
 	
 	@Perm(Permission.TOOL_APPROVE)

@@ -167,13 +167,17 @@ java -Djava.security.manager -Djava.security.policy=$${policy_file} -cp $LIB:${j
 		<javac srcdir="${src}" destdir="${classes}" includeantruntime="false" encoding="UTF-8">
 			<classpath refid="classpath"/>
 		</javac>
-		<javac srcdir="${sample}" destdir="${classes}" includeantruntime="false" encoding="UTF-8">
-			<classpath refid="classpath"/>
-		</javac>
+		<!--
+			<javac srcdir="${sample}" destdir="${classes}" includeantruntime="false" encoding="UTF-8">
+				<classpath refid="classpath"/>
+			</javac>
+		-->
 		
 		<copy todir="${classes}">
 			<fileset dir="${src}" excludes="**/*.java"/>
-			<fileset dir="${sample}" excludes="**/*.java"/>
+			<!--
+				<fileset dir="${sample}" excludes="**/*.java"/>
+			-->
 		</copy>
 	</target>
 	

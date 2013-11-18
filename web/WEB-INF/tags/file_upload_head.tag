@@ -99,7 +99,7 @@
 					action += "image";
 				}
 				theForm.attr("action", action).submit();
-				theForm.submit();
+				//theForm.submit();
 				uploading = true;
 			}
 

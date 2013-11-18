@@ -7,6 +7,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import siddur.common.miscellaneous.Constants;
 import siddur.common.security.Permission;
 import siddur.common.security.PermissionManager;
 import siddur.common.security.PermissionManager.PermissionGroup;
@@ -62,6 +63,10 @@ public class RoleAction extends DBAction<RoleInfo>{
 			RoleInfo role = find(Integer.parseInt(roleIdStr), req);
 			role.setPermission(extractPerm(req));
 			update(role, req);
+			
+			//update session
+			PermissionGroup pg = PermissionManager.createPermissionGroup(role.getPermission());
+			req.getSession().setAttribute(Constants.PERMS, pg);
 		}
 		return list(req, resp);
 	}

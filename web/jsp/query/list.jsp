@@ -24,6 +24,15 @@
 		font-size: 11px;
 		color: grey;
 	}
+	.close_btn{
+		float:right;
+		position:relative;
+		top:-3px;
+		right:-3px;
+	}
+	.close_btn:hover{
+		cursor: pointer;
+	}
 </style>
 <s:site>
 <div class="screen">
@@ -34,6 +43,11 @@
 	</script>
 	<c:forEach var="item" items="${queries.data}">
 		<div class="query_item">
+			<c:if test="${canDelQuery == true }">
+				<span class="close_btn ui-icon ui-icon-closethick" 
+					onclick="location.href='${root}/ctrl/query/delquery?id=${item.id}'">
+				</span>
+			</c:if>
 			<div>
 				<a href="${root}/ctrl/query/detail?id=${item.id}">
 					<span class="query_title">${item.title }</span>
@@ -49,6 +63,10 @@
 	</c:forEach>
 	
 	<s:paging pageIndex="${queries.pageIndex }" pageSize="20" total="${queries.total }"></s:paging>
-	<a href="${root}">返回首页</a>
+	<br/>
+	<a href="${root}/ctrl/query/ask">发布需求</a>
+	&nbsp;&nbsp;&nbsp;
+	<a href="${root}/">返回首页</a>
+	
 </div>
 </s:site>
