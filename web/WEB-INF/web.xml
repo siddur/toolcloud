@@ -24,6 +24,15 @@
   	<servlet-class>siddur.tool.cloud.ConsoleServlet</servlet-class>
   </servlet>
   
+  <filter>
+	<filter-name>jettyGzipFilter</filter-name>
+	<filter-class>org.eclipse.jetty.servlets.GzipFilter</filter-class>
+	<init-param>
+	<param-name>mimeTypes</param-name>
+	<param-value>text/javascript,application/x-javascript,text/html,text/css,image/gif,image/png,image/jpeg</param-value>
+	</init-param>
+  </filter>
+  
   <servlet-mapping>
   	<servlet-name>ControlServlet</servlet-name>
   	<url-pattern>ctrl/*</url-pattern>
@@ -38,6 +47,11 @@
   	<servlet-name>ConsoleServlet</servlet-name>
   	<url-pattern>console</url-pattern>
   </servlet-mapping>
+  
+  <filter-mapping>
+	<filter-name>jettyGzipFilter</filter-name>
+	<url-pattern>/*</url-pattern>
+  </filter-mapping>
   
   <welcome-file-list>
   	<welcome-file>index.jsp</welcome-file>

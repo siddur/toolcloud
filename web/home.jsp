@@ -87,7 +87,7 @@
 							<span class="ui-icon ui-icon-document"></span>
 							<span>${item.title}</span>
 							<span style="color:#BBBBBB; float:right;">
-								<f:formatDate value="${item.publishAt}" pattern="yyyy-MM-dd hh:mm"/>
+								<f:formatDate value="${item.publishAt}" pattern="yyyy-MM-dd HH:mm"/>
 							</span>
 						</a>
 					</div>

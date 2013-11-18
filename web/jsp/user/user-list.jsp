@@ -32,7 +32,6 @@
 	}
 
 </style>
-<script type="text/javascript" src="${root}/jquery/js/jquery-1.9.1.js"></script>
 <script>
 	$(document).ready(function(){
 		$(".item").click(function(){

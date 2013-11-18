@@ -8,10 +8,10 @@
 	<meta http-equiv="Content-Language" content="zh-CN" />
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 	<title>Tool Cloud</title>
-	<script type="text/javascript" src="${root}/jquery/js/jquery-1.9.1.js"></script>
+	<script type="text/javascript" src="${root}/jquery/js/jquery-1.9.1.min.js"></script>
 	<script type="text/javascript" src="${root}/js/search.js"></script>
 	<link rel="stylesheet" type="text/css" href="${root}/css/common.css" />
-	<link rel="stylesheet" type="text/css" href="${root}/jqueryui/jquery-ui.css" />
+	<link rel="stylesheet" type="text/css" href="${root}/jqueryui/jquery-ui-1.10.3.custom.min.css" />
 	<link rel="stylesheet" type="text/css" href="${root}/css/tag.css" />
 	<jsp:invoke fragment="headPart"></jsp:invoke>
 </head>

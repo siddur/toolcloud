@@ -39,8 +39,8 @@
 			var children = body.children();
 			if(children.length > 0){
 				var root = children.first();
-				var w = Math.max(root.outerWidth(), 800);
-				var h = Math.max(root.outerHeight(), 400)
+				var w = root.outerWidth();
+				var h = root.outerHeight();
 				me.width(w);
 				me.height(h);
 			}
