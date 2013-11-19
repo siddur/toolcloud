@@ -41,7 +41,6 @@
 	width:180;
 }
 .home_title{
-	font-size:smaller;
 	background-color: #EEEEEE;
 	padding:3px;
 	border: 1px solid #CFCFCF;
