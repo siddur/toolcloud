@@ -3,12 +3,13 @@
 	<head>
 		<title>Date Interval</title>
 		<meta http-equiv="content-type" content="text/html; charset=UTF-8" >
-		<link href="css/ui-lightness/jquery-ui-1.10.3.custom.css" rel="stylesheet">
-		<script src="js/jquery-1.9.1.js"></script>
-		<script src="js/jquery-ui-1.10.3.custom.min.js"></script>
+		<link href="/jqueryui/jquery-ui-1.10.3.custom.min.css" rel="stylesheet">
+		<script src="/jquery/js/jquery-1.9.1.min.js"></script>
+		<script src="/jqueryui/jquery-ui-1.10.3.custom.min.js"></script>
 		<style>
 			.container{
 				width:600px;
+				height:300px;
 				padding:5px;
 				border:inset 1px gray;
 			}
@@ -87,7 +88,7 @@
 			}
 			
 			$(function(){
-				var today = new Date(2013,11,5);
+				var today = new Date();
 				var nextMonth = new Date();
 				nextMonth.setMonth(today.getMonth() + 1);
 				nextMonth.setDate(0);

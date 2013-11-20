@@ -21,6 +21,7 @@
 	}
 	.tool_container{
 		float:left;
+		overflow:hidden;
 		width:100%;
 		height:500px;
 		border: 1px solid #848877;

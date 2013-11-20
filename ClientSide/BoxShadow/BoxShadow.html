@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="zh">
+	<head>
+		<title>Timestamp Converter</title>
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8" >
+		<link href="/jqueryui/jquery-ui-1.10.3.custom.min.css" rel="stylesheet">
+		<script src="/jquery/js/jquery-1.9.1.min.js"></script>
+		<script src="/jqueryui/jquery-ui-1.10.3.custom.min.js"></script>
+		
+		<link href="colorpicker.css" rel="stylesheet">
+		<script src="colorpicker.js"></script>
+		<style>
+			.container{
+				width:700px;
+				height:480px;
+				background-color: #D8E5F8;
+				padding:10px;
+				border:inset 1px blue;
+				font-size:14px;
+			}
+			.demo{
+				background:url("board.png");
+				width:438px;
+				height:130px;
+				margin: 0 auto;
+				padding-top:50px;
+				box-shadow:1px 1px 5px #AAAA00;
+				-webkit-box-shadow:1px 1px 5px #AAAA00;
+				-moz-box-shadow:1px 1px 5px #AAAA00;
+			}
+			.target{
+				margin:0 auto;
+				width:250px;
+				height:40px;
+				padding-top:20px;
+				text-align:center;
+				vertical-align:middle;
+				border-radius: 5px;
+			}
+			#xOffset, #yOffset, #blur, #spread, #alpha{
+				width:40px;
+			}
+			.leftFloat{
+				float:left;
+				height:18px;
+				margin-right:3px;
+			}
+			#box-shadow-code{
+				width:600px;
+				height:50px;
+				font-size:13px;
+				padding:5px;
+				background:#EEEEEE;
+				color:blue;
+				box-shadow:1px 1px 5px #AA0000;
+				-webkit-box-shadow:1px 1px 5px #AA0000;
+				-moz-box-shadow:1px 1px 5px #AA0000;
+				border-radius: 5px;
+			}
+		</style>
+		<script>
+			var color1, color2, cp1, cp2;
+			$(function(){
+				color1 = Color.rgb(0, 255, 192);
+				color2 = Color.rgb(68, 68, 68);
+				var dialog = new ColorPickerDialog(color1);
+				cp1 = new ColorPicker(dialog, {
+					applyTo : "bgcolor",
+					color:color1,
+					pick:setBackground
+				});
+				cp2 = new ColorPicker(dialog, {
+					applyTo : "sdcolor",
+					color:color2,
+					pick:applyTarget
+				});
+				
+				$(".xOffset").slider({
+					max:20,
+					min:-20,
+					step:1,
+					value:5,
+					slide: function(event, ui) {
+						xOffset.value = ui.value;
+						applyTarget()
+					}
+				});
+				$(".yOffset").slider({
+					max:20,
+					min:-20,
+					step:1,
+					value:5,
+					slide: function(event, ui) {
+						yOffset.value = ui.value;
+						applyTarget()
+					}
+				});
+				$(".blur").slider({
+					max:10,
+					min:0,
+					step:1,
+					value:2,
+					slide: function(event, ui) {
+						$("#blur")[0].value = ui.value;
+						applyTarget()
+					}
+				});
+				$(".spread").slider({
+					max:10,
+					min:0,
+					step:1,
+					value:0,
+					slide: function(event, ui) {
+						spread.value = ui.value;
+						applyTarget()
+					}
+				});
+				$(".alpha").slider({
+					max:1,
+					min:0,
+					step:0.05,
+					value:0.5,
+					slide: function(event, ui) {
+						alpha.value = ui.value;
+						applyTarget()
+					}
+				});
+				
+				setBackground();
+				applyTarget();
+			});
+			
+			function setBackground(){
+				$(".target").css("background-color", color1.toRGBString());
+			}
+			
+			function applyTarget(){
+				var sd = cp2.color
+				var css = xOffset.value + "px " 
+					+ yOffset.value + "px " 
+					+ $("#blur")[0].value + "px " 
+					+ (spread.value != "0" ? (spread.value + "px ") : "")
+					+ "rgba("
+						+ sd.r 
+						+ ", " 
+						+ sd.g 
+						+ ", " 
+						+ sd.b 
+						+ ", " 
+						+ alpha.value 
+					+")";
+				console.log(css);
+				$(".target").css("box-shadow", css);
+				
+				/*
+				 * -moz-box-shadow: -5px -5px #888;
+					-webkit-box-shadow: -5px -5px #888;
+					box-shadow: -5px -5px #888;
+				 */
+				var html = "-moz-box-shadow: " + css + ";\n";
+				html += "-webkit-box-shadow: " + css + ";\n";
+				html += "box-shadow: " + css + ";";
+ 				$("#box-shadow-code").html(html);
+			}
+		</script>
+	</head>
+	<body>
+		<div class="container">
+			<div class="demo">
+				<div class="target">Hello World!</div>
+			</div>
+			<div style="padding:30px;">
+				<table >
+					<tr>
+						<td colspan="3" width="100" align="right">
+							<div class="leftFloat" >背景色</div>
+							<div id="bgcolor" class="colorpicker leftFloat"></div>
+							<div class="leftFloat" >阴影色</div>
+							<div id="sdcolor" class="colorpicker leftFloat"></div>
+						</td>
+					</tr>
+					<tr>
+						<td align="right">水平偏移</td>
+						<td width="70">
+							<input id="xOffset" value="5" readonly="readonly">
+						</td>
+						<td width="450">
+							<div class="xOffset slider"></div>
+						</td>
+					</tr>
+					<tr>
+						<td align="right">垂直偏移</td>
+						<td>
+							<input id="yOffset" value="5" readonly="readonly">
+						</td>
+						<td>
+							<div class="yOffset slider"></div>
+						</td>
+					</tr>
+					<tr>
+						<td align="right">模糊值</td>
+						<td>
+							<input id="blur" value="2" readonly="readonly">
+						</td>
+						<td>
+							<div class="blur slider"></div>
+						</td>
+					</tr>
+					<tr>
+						<td align="right">延伸值</td>
+						<td>
+							<input id="spread" value="0" readonly="readonly">
+						</td>
+						<td>
+							<div class="spread slider"></div>
+						</td>
+					</tr>
+					<tr>
+						<td align="right">不透明度</td>
+						<td>
+							<input id="alpha" value="0.5" readonly="readonly">
+						</td>
+						<td>
+							<div class="alpha slider"></div>
+						</td>
+					</tr>
+				</table>
+				<pre id="box-shadow-code">
+					
+				</pre>
+			</div>
+		</div>
+		
+		
+		<!--dialog-->
+		<div id="colorpicker_dialog" style="width:405px; height:420px; border:inset 1px gray; padding:2px;">
+			<img src="colors.png" style="float:left" id="color_container" width="360px" height="250px" ondragstart="return false;">
+			<div id="arrow" class="ui-icon ui-icon-play" onclick="slide()">
+			</div>
+			<div style="float:left;" class="HSL_L">
+			</div>
+			<div class="colors">
+			</div>
+			<div class="current_color_container">
+				<div class="current_color">
+				</div>
+				<div class="input">
+					<div class="RGB">
+						<div>R:<input id="R"></div>
+						<div>G:<input id="G"></div>
+						<div>B:<input id="B"></div>
+					</div>
+					<div class="HSL">
+						<div>H:<input id="H"></div>
+						<div>S:<input id="S"></div>
+						<div>L:<input id="L"></div>
+					</div>
+				</div>
+				<div class="output">
+					<input type="button" value="取消" id="pcd_cancel">
+					<input type="button" value="确定" id="pcd_confirm">
+				</div>
+			</div>
+		</div>
+	</body>
+	
+</html>
