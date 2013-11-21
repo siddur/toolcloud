@@ -30,7 +30,7 @@
 	}
 	.viewer{
 		height: 100%;
-		background-color: white;
+		background: white;
 		float: left;
 		width: 720px;
 	}
@@ -57,6 +57,7 @@
 		overflow: hidden;
 		padding: 0.5em 0 0.5em 0.8em;
 		width: 80px;
+		word-wrap:normal;
 	}
 	.ui-icon-close { 
 		float: left; 
