@@ -57,7 +57,7 @@ public abstract class CommandTool extends ConsoleTool{
 				//must be file
 				String v = dt.getDefaultValue();
 				if(!v.equals("")){
-					outputs.add(findFile(v, wp.getName()));
+					outputs.add(TempFileUtil.getRelativePath(findFile(v, wp.getName())));
 				}
 			}
 		}
