@@ -64,6 +64,7 @@ public class UtilAction extends Action{
 		return Result.ok();
 	}
 	
+	@DoNotAuthenticate
 	public Result checkCode(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
 		String input = req.getParameter(AUTHENTICODE);
 		String origin = (String)req.getSession().getAttribute(AUTHENTICODE);
@@ -75,6 +76,7 @@ public class UtilAction extends Action{
 		}
 	}
 	
+	@DoNotAuthenticate
 	public Result authenticode(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
 		String authenticode = randomString();
 		req.getSession().setAttribute(AUTHENTICODE, authenticode);

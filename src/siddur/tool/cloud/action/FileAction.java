@@ -18,18 +18,20 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 
 import siddur.common.miscellaneous.FileSystemUtil;
+import siddur.common.security.DoNotAuthenticate;
 import siddur.common.web.Action;
 import siddur.common.web.ActionMapper.Result;
 
 public class FileAction extends Action{
 
+	@DoNotAuthenticate
 	public Result dir(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
 		String relativePath = req.getParameter("path");
 		String result = getFileModel(relativePath);
 		return Result.ajax(result);
 	}
 	
-	
+	@DoNotAuthenticate
 	public Result file(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
 		String relativePath = req.getParameter("path");
 		File file = new File(FileSystemUtil.getTempDir(), relativePath);
@@ -138,7 +140,7 @@ public class FileAction extends Action{
 		return singleFolder;
 	}
 	
-	public void toJavaPackageFileModel(FileModel targetParent, FileModel source, String prefix){
+	private void toJavaPackageFileModel(FileModel targetParent, FileModel source, String prefix){
 		if(singleFolder(source)){
 			FileModel f = source.children.get(0);
 			prefix +=  source.name + "/";
