@@ -21,6 +21,7 @@ import freemarker.template.DefaultObjectWrapper;
 import freemarker.template.Template;
 
 import siddur.tool.core.IToolWrapper;
+import siddur.tool.core.ScriptUtil;
 import siddur.tool.core.TempFileUtil;
 
 public class ToolUtil {
@@ -73,14 +74,28 @@ public class ToolUtil {
 	public static File buildWorkspace(IToolWrapper toolWrapper) throws IOException{
 		File src = new File(toolWrapper.getToolfile());
 		File parent = src.getParentFile();
-		File workspace = TempFileUtil.createEmptyDir();
+		File workspace = TempFileUtil.createEmptyFile();
 		if(workspace.isDirectory()){
 			FileUtils.deleteDirectory(workspace);
 		}else if(workspace.isFile()){
 			workspace.delete();
 		}
-		workspace.mkdir();
-		FileUtils.copyDirectory(parent, workspace);
+		
+		
+		//if there are more than one script files 
+		//and if the main script is not exe
+		//then copy it into workspace
+		if(parent.list().length > 2 && !src.getName().endsWith(".exe")){
+			Process process = Runtime.getRuntime()
+					.exec("cp -R " + parent.getCanonicalPath() + " " + workspace.getCanonicalPath());
+			try {
+				process.waitFor();
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}else{
+			workspace.mkdir();
+		}
 		return workspace;
 	}
 	
@@ -92,6 +107,21 @@ public class ToolUtil {
 		cfg.setObjectWrapper(new DefaultObjectWrapper());
 		Template temp = cfg.getTemplate(templateFile);
 		temp.process(dataModel, out);
+	}
+	
+	public static void copyCmdWorkspace(File src, File dest, boolean preservePermission) throws IOException{
+		if(ScriptUtil.isWindows || !preservePermission){
+			dest.mkdir();
+			FileUtils.copyDirectory(src, dest);
+		}else{
+			Process process = Runtime.getRuntime()
+					.exec("cp -R " + src.getCanonicalPath() + " " + dest.getCanonicalPath());
+			try {
+				process.waitFor();
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 	
 	public static String[] getEncodings(Map<String, Object> context){

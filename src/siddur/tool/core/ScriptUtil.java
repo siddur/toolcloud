@@ -17,8 +17,8 @@ import siddur.tool.core.data.DataTemplate;
 public class ScriptUtil {
 
 	private static Properties p;
-	private static boolean isWindows = OS.isFamilyWindows();
 	private static final Pattern pattern = Pattern.compile("\\{(\\d+?)\\}");
+	public static boolean isWindows = OS.isFamilyWindows();
 	
 	private static void loadPropertes(){
 		if(p == null){
@@ -109,13 +109,12 @@ public class ScriptUtil {
 		StringBuilder sb = new StringBuilder();
 		if(isWindows){
 			sb.append("cmd /c ");
-		}else{
+		}
+		else{
 			if(orderName.endsWith(".exe")){
 				sb.append("wine ");
 			}
-			else{
-				sb.append("bash -c ");
-			}
+			
 		}
 		sb.append(orderName);
 		sb.append(" ");

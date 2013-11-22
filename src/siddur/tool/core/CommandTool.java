@@ -29,7 +29,7 @@ public abstract class CommandTool extends ConsoleTool{
 		ToolDescriptor td = toolWrapper.getDescriptor();
 		//copy script file from tool dir to temp dir.
 		File wp = ToolUtil.buildWorkspace(toolWrapper);
-		File exeFile = new File(wp, toolWrapper.getToolfile());
+		File exeFile = new File(toolWrapper.getToolfile());
 		String s = getCommand(td, exeFile, inputs);
 		log4j.info(s);
 		CommandLine cl = CommandLine.parse(s);
