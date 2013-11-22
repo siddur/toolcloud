@@ -2,6 +2,7 @@ package siddur.tool.core;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map.Entry;
 import java.util.StringTokenizer;
@@ -56,7 +57,15 @@ public class MemoryVisitor extends MapVisitor<String, IToolWrapper>{
 			if(tw.getStatus() == 1)
 				list.add(tw);
 		}
-		Collections.sort(list);
+		Collections.sort(list, new Comparator<IToolWrapper>(){
+
+			@Override
+			public int compare(IToolWrapper o1, IToolWrapper o2) {
+				return o2.getDescriptor().getPublishAt()
+					.compareTo(o1.getDescriptor().getPublishAt());
+			}
+			
+		});
 		int size = list.size();
 		return list.subList(0, num > size ? size : num);
 	}
