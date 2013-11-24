@@ -44,8 +44,7 @@ public abstract class CommandTool extends ConsoleTool{
 		
 		//work dir
 		de.setWorkingDirectory(wp);
-		int result = de.execute(cl);
-		System.out.println(result);
+		de.execute(cl);
 		
 		//do close()
 		os.close();
@@ -58,6 +57,7 @@ public abstract class CommandTool extends ConsoleTool{
 				//must be file
 				String v = dt.getDefaultValue();
 				if(!v.equals("")){
+					v = ToolUtil.overrideParam(v, inputs);
 					outputs.add(TempFileUtil.getRelativePath(findFile(v, wp.getName())));
 				}
 			}
