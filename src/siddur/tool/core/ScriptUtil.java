@@ -11,13 +11,13 @@ import java.util.regex.Pattern;
 import org.apache.commons.exec.OS;
 import org.apache.commons.lang3.StringUtils;
 
+import siddur.common.miscellaneous.ToolUtil;
 import siddur.tool.core.data.DataTemplate;
 
 
 public class ScriptUtil {
 
 	private static Properties p;
-	private static final Pattern pattern = Pattern.compile("\\{(\\d+?)\\}");
 	public static boolean isWindows = OS.isFamilyWindows();
 	
 	private static void loadPropertes(){
@@ -88,18 +88,7 @@ public class ScriptUtil {
 		if(StringUtils.isEmpty(template)){
 			return concatParams(params, tooldatas);
 		}else{
-			Matcher m = pattern.matcher(template);
-			StringBuffer sb = new StringBuffer();
-			while(m.find()){
-				int i = Integer.parseInt(m.group(1));
-				String param = params[i];
-				if(tooldatas[i].isFile()){
-					param = param.replace("\\", "\\\\\\");
-				}
-				m.appendReplacement(sb, tooldatas[i].getTag() + " " + param);
-			}
-			m.appendTail(sb);
-			return sb.toString();
+			return ToolUtil.overrideParam(template, params);
 		}
 	}
 	

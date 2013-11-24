@@ -44,7 +44,8 @@ public abstract class CommandTool extends ConsoleTool{
 		
 		//work dir
 		de.setWorkingDirectory(wp);
-		de.execute(cl);
+		int result = de.execute(cl);
+		System.out.println(result);
 		
 		//do close()
 		os.close();

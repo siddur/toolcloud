@@ -13,8 +13,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.ArrayUtils;
 
 import freemarker.template.Configuration;
 import freemarker.template.DefaultObjectWrapper;
@@ -26,6 +29,7 @@ import siddur.tool.core.TempFileUtil;
 
 public class ToolUtil {
 
+	
 	/**
 	 * convert digit to byte;
 	 */
@@ -124,8 +128,56 @@ public class ToolUtil {
 		}
 	}
 	
+	
+	/*
+	 * {n} represents the nth param. The first param is {0}
+	 * {n.fp} represents prefix of file name. "/home/a.txt" ==> "a"
+	 * {n.fs} represents suffix of file name. "/home/a.txt" ==> "txt"
+	 * {n.fn} represents file name. "/home/a.txt" ==> "a.txt"
+	 */
+	private static final Pattern pattern = Pattern.compile("\\{(\\d+)(?:\\:([^\\s\\}]+))?\\}");
+	private static final String[] fileOrder = new String[]{"fn", "fp", "fs"};
+	public static String overrideParam(String template, String[] params){
+		Matcher m = pattern.matcher(template);
+		StringBuffer sb = new StringBuffer();
+		while(m.find()){
+			int i = Integer.parseInt(m.group(1));
+			String param = params[i];
+			if(m.groupCount() == 2){
+				String order = m.group(2);
+				if(ArrayUtils.contains(fileOrder, order)){
+					param = param.replace("\\", "/");
+					int slash = param.lastIndexOf("/");
+					if(slash != -1){
+						param = param.substring(slash + 1);
+					}
+					
+					if(!order.equals("fn")){
+						boolean isPrefix = order.equals("fp");
+						int dot = param.lastIndexOf(".");
+						if(dot != -1){
+							param = isPrefix ? param.substring(0, dot)
+									: param.substring(dot + 1);
+						}else{
+							param = isPrefix ? param : "";
+						}
+					}
+				}
+			}
+			m.appendReplacement(sb, param.replace("\\", "\\\\\\"));
+		}
+		m.appendTail(sb);
+		return sb.toString();
+	}
+	
 	public static String[] getEncodings(Map<String, Object> context){
 		return (String[])context.get(Constants.FILE_ENCODING);
 	}
 
+	
+	public static void main(String[] args) {
+		String[] params = {"/temp/a.txt", "c:\\temp\\b.txt"};
+		String template = "{0}{1}First param's prefix: '{0:fp }'. And second param's suffix: '{1:fs}'";
+		System.out.println(overrideParam(template, params));
+	}
 }

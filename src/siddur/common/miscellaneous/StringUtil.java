@@ -1,6 +1,7 @@
 package siddur.common.miscellaneous;
 
 public class StringUtil {
+	
 
 	public static String convert(String src){
 		if(src == null) return null;
@@ -21,6 +22,7 @@ public class StringUtil {
 		if(src == null) return null;
 		return src.replaceAll("</?.+?>","").replaceAll("\\s", "&nbsp;");
 	}
+	
 	
 	
 	public static void main(String[] args) {
