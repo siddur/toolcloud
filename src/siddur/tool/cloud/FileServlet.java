@@ -34,7 +34,7 @@ public class FileServlet extends HttpServlet{
 	private ServletFileUpload uploader;
 	private static final int THRESHOLD = 10 * 1024;
 	private static final long IMAGE_SIZE_MAX = 10 * 1024;
-	private static final long TEMP_SIZE_MAX = 10 * 1024 * 1024;
+	private static final long TEMP_SIZE_MAX = 5 * 1024 * 1024;
 	
 	@Override
 	public void init() throws ServletException {

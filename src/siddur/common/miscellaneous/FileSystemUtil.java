@@ -115,37 +115,17 @@ public class FileSystemUtil {
 		return null;
 	}
 	
-//	public static String copy2Server(File dir) throws IOException{
-//		if(dir.isDirectory()){
-//			String dirname = dir.getName();
-//			FileUtils.copyDirectory(dir, new File(FileSystemUtil.getOutputDir(), dirname));
-//			return dirname;
-//		}
-//		return null;
-//	}
-//	
-//	public static String copy2Server(File f, String namespace) throws IOException{
-//		if(f.exists()){
-//			File downloadableDir = new File(FileSystemUtil.getOutputDir(), namespace);
-//			if(!downloadableDir.isDirectory()){
-//				downloadableDir.mkdir();
-//			}
-//			File dest = new File(downloadableDir, f.getName());
-//			if(f.isFile())
-//				FileUtils.copyFile(f, dest);
-//			else
-//				FileUtils.copyDirectory(f, dest);
-//			return FileSystemUtil.getRelativePath(dest.getCanonicalPath(), 
-//					FileSystemUtil.getOutputDir().getCanonicalPath());
-//		}
-//		return null;
-//	}
-//	
-//	public static boolean containedInOutputDir(File f) throws IOException{
-//		String p = f.getCanonicalFile().getPath();
-//		String output = getOutputDir().getCanonicalFile().getPath() + File.separator;
-//		return p.length() > output.length() && p.startsWith(output);
-//	}
+	
+	public static String getParentPath(String path){
+		int slash = path.lastIndexOf("/");
+		if(slash == -1){
+			slash = path.lastIndexOf("\\");
+		}
+		if(slash != -1){
+			path = path.substring(0, slash);
+		}
+		return path;
+	}
 	
 	public static boolean isRelative(String s) throws IOException{
 		return !((s.startsWith("/") 

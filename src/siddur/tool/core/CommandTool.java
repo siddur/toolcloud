@@ -1,7 +1,6 @@
 package siddur.tool.core;
 
 import java.io.File;
-import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +12,6 @@ import org.apache.commons.exec.ExecuteWatchdog;
 import org.apache.commons.exec.PumpStreamHandler;
 import org.apache.log4j.Logger;
 
-import siddur.common.miscellaneous.FileSystemUtil;
 import siddur.common.miscellaneous.ToolUtil;
 import siddur.tool.core.data.DataTemplate;
 import siddur.tool.core.data.ToolDescriptor;
@@ -35,7 +33,7 @@ public abstract class CommandTool extends ConsoleTool{
 		CommandLine cl = CommandLine.parse(s);
 		
 		// executing time < 10min
-		ExecuteWatchdog watchdog = new ExecuteWatchdog(10 * 1000);
+		ExecuteWatchdog watchdog = new ExecuteWatchdog(30 * 1000);
 		DefaultExecutor de = new DefaultExecutor();
 		de.setWatchdog(watchdog);
 		OutputStream os = getOutputStream();
@@ -58,7 +56,12 @@ public abstract class CommandTool extends ConsoleTool{
 				String v = dt.getDefaultValue();
 				if(!v.equals("")){
 					v = ToolUtil.overrideParam(v, inputs);
-					outputs.add(TempFileUtil.getRelativePath(findFile(v, wp.getName())));
+					if(v.contains("*")){
+						outputs.add(ToolUtil.gatherFuzzyFiles(v, wp).getCanonicalPath());
+					}else{
+						outputs.add(ToolUtil.findFile(v, wp).getCanonicalPath());
+					}
+					
 				}
 			}
 		}
@@ -66,11 +69,6 @@ public abstract class CommandTool extends ConsoleTool{
 		return outputs.toArray(new String[outputs.size()]);
 	}
 	
-	private String findFile(String path, String namespace) throws IOException{
-		File outputFile = FileSystemUtil.getOutputFileInTempDir(path, namespace);
-		return outputFile.getCanonicalPath();
-	}
-
 	
 
 	@Override

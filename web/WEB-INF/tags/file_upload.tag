@@ -5,8 +5,12 @@
 <%@ attribute name="file" required="false" %>
 <%@ attribute name="isImage" required="false"%>
 <%@ attribute name="displayname" required="false"%>
+
+<c:set var="fileSize" value="10K"></c:set>
+
 <c:if test="${isImage == null }">
 	<c:set var="isImage" value="false"></c:set>
+	<c:set var="fileSize" value="5M"></c:set>
 </c:if>
 <c:if test="${displayname == null }">
 	<c:set var="displayname" value="Attach Files.."></c:set>
@@ -15,7 +19,7 @@
 	<div class="btn-container">
 		<div class="upload_btn">
 			<span class="ui-icon ui-icon-folder-open" style="float:left; position: relative; top:-2px;"></span>
-			<span style="font-size:12px; color:blue;float:left ;width: 90px; ">${displayname}</span>
+			<span style="font-size:12px; color:blue;float:left ;width: 90px; "><font color='red'>[&lt;${fileSize}]</font>${displayname}</span>
 		</div>
 		
 		<input type="file" class="file_input" id='${fieldname}' name="file" onchange="selectFile(this, ${isImage})">

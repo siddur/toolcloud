@@ -2,6 +2,7 @@ package siddur.common.miscellaneous;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileFilter;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.Writer;
@@ -134,6 +135,7 @@ public class ToolUtil {
 	 * {n.fp} represents prefix of file name. "/home/a.txt" ==> "a"
 	 * {n.fs} represents suffix of file name. "/home/a.txt" ==> "txt"
 	 * {n.fn} represents file name. "/home/a.txt" ==> "a.txt"
+	 * {n.pp} represents parent full path. "/home/a.txt" ==> "/home"
 	 */
 	private static final Pattern pattern = Pattern.compile("\\{(\\d+)(?:\\:([^\\s\\}]+))?\\}");
 	private static final String[] fileOrder = new String[]{"fn", "fp", "fs"};
@@ -145,6 +147,7 @@ public class ToolUtil {
 			String param = params[i];
 			if(m.groupCount() == 2){
 				String order = m.group(2);
+				//fp/fs/fn
 				if(ArrayUtils.contains(fileOrder, order)){
 					param = param.replace("\\", "/");
 					int slash = param.lastIndexOf("/");
@@ -162,6 +165,8 @@ public class ToolUtil {
 							param = isPrefix ? param : "";
 						}
 					}
+				}else if("pp".equals(order)){ //pp
+					param = FileSystemUtil.getParentPath(param);
 				}
 			}
 			m.appendReplacement(sb, param.replace("\\", "\\\\\\"));
@@ -170,14 +175,48 @@ public class ToolUtil {
 		return sb.toString();
 	}
 	
+	public static File gatherFuzzyFiles(String path, File env) throws IOException{
+		String parent = FileSystemUtil.getParentPath(path);
+		String name = path.substring(parent.length() + 1);
+		final Pattern p = Pattern.compile(name
+				.replace("\\", "\\\\")
+				.replace(".", "\\.")
+				.replace("*", ".+"));
+		File parentFile = findFile(parent, env);
+		
+		File tempDir = TempFileUtil.createEmptyDir();
+		FileUtils.copyDirectory(parentFile, tempDir, new FileFilter() {
+			
+			@Override
+			public boolean accept(File f) {
+				return p.matcher(f.getName()).matches();
+			}
+		});
+		
+		return tempDir;
+	}
+	
+	public static File findFile(String path, File parent) throws IOException{
+		if(FileSystemUtil.isRelative(path)){
+			return new File(parent, path);
+		}else{
+			return new File(path);
+		}
+	}
+	
 	public static String[] getEncodings(Map<String, Object> context){
 		return (String[])context.get(Constants.FILE_ENCODING);
 	}
 
 	
-	public static void main(String[] args) {
-		String[] params = {"/temp/a.txt", "c:\\temp\\b.txt"};
-		String template = "{0}{1}First param's prefix: '{0:fp }'. And second param's suffix: '{1:fs}'";
-		System.out.println(overrideParam(template, params));
+	public static void main(String[] args) throws IOException {
+//		String[] params = {"/temp/a.txt", "c:\\temp\\b.txt"};
+//		String template = "{0}{1}First param's prefix: '{0:fp }'. And second param's suffix: '{1:fs}'. And parent path '{0:pp}', '{1:pp}'";
+//		System.out.println(overrideParam(template, params));
+		
+		String[] params = {"D:\\SIDDUR\\indigo\\D\\toolcloud\\logs\\request-2013_08.log"};
+		String template = "{0:pp}/{0:fp}*.{0:fs}";
+		System.out.println(gatherFuzzyFiles(overrideParam(template, params), null));
+		
 	}
 }
