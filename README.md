@@ -8,3 +8,23 @@ ToolCloud不同于AppStore，它不是用来运行应用（App）的容器。应
 这时您真的需要一个服务器，安装所有工具运行的环境，提供web接口，让您的同事通过浏览器访问。ToolCloud应运而生了，它提供统一的参数输入界面、运行按钮以及统一的结果输出界面，用户不必关心工具是由什么语言开发。
 
 您的同事中有人擅长您不熟悉语言，他开发的工具也可以注册到ToolCloud上，供您和其他同事使用。ToolCloud的工具越来越多，它们被有效的分类管理。
+工具示例：
+<a href="http://www.toolcloud.cn/ctrl/tool/detail?toolId=1380202589032">Box Shadow</a>
+
+CSS的box-shadow，它由水平偏移、垂直偏移、模糊值、延伸值、不透明度组成。Chrome、Firefox和IE的代码稍有不同。
+
+<a href="http://www.toolcloud.cn/ctrl/tool/detail?toolId=1378733597907">取色器</a>
+
+取色器，包含RGB和HSL颜色格式。
+
+<a href="http://www.toolcloud.cn/ctrl/tool/detail?toolId=1384515572425">JD</a>
+
+Java反编译工具。将上传的jar文件或者单个的class文件反编译成java文件
+
+<a href="http://www.toolcloud.cn/ctrl/tool/detail?toolId=1381588830545">文件比较</a>
+
+比较两个文本文件的差异性。如果文本中含有中文，请先使用文本编辑器转换成UTF-8编码。
+
+<a href="http://www.toolcloud.cn/ctrl/tool/detail?toolId=1377917750921">文件编码识别</a>
+
+判断文件的编码格式。此工具不一定能判断准确，因为文件编码本身没有必然的途径判断。
