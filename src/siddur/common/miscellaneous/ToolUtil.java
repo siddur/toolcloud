@@ -11,6 +11,7 @@ import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
 import java.nio.channels.WritableByteChannel;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
@@ -214,9 +215,13 @@ public class ToolUtil {
 //		String template = "{0}{1}First param's prefix: '{0:fp }'. And second param's suffix: '{1:fs}'. And parent path '{0:pp}', '{1:pp}'";
 //		System.out.println(overrideParam(template, params));
 		
-		String[] params = {"D:\\SIDDUR\\indigo\\D\\toolcloud\\logs\\request-2013_08.log"};
-		String template = "{0:pp}/{0:fp}*.{0:fs}";
-		System.out.println(gatherFuzzyFiles(overrideParam(template, params), null));
+//		String[] params = {"D:\\SIDDUR\\indigo\\D\\toolcloud\\logs\\request-2013_08.log"};
+//		String template = "{0:pp}/{0:fp}*.{0:fs}";
+//		System.out.println(gatherFuzzyFiles(overrideParam(template, params), null));
 		
+		
+		String template = "--color --language=html -E{0} --toc {1}/*  -o output.html";
+		String[] params = {"java", "java"};
+		System.out.println(overrideParam(template, params));
 	}
 }
