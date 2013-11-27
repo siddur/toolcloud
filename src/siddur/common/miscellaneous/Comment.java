@@ -21,7 +21,7 @@ public class Comment {
 	@Column
 	private String saidBy;
 	
-	@Column
+	@Column(length=1024 * 5)
 	private String content;
 	
 	@Column

@@ -7,9 +7,7 @@
 <%@ taglib prefix="f" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <style>
 	.query_item{
-		padding: 10px;
-		border-bottom: solid 1px blue;
-		margin-bottom: 20px;
+		margin-bottom: 5px;
 	}
 	
 	.query_title{
@@ -58,9 +56,7 @@
 				<f:formatDate value="${query.publishAt}" pattern="yyyy-MM-dd hh:mm"/>
 			</span>
 		</div>
-		<div class="query_content">
-			${query.plainContent}
-		</div>
+		<pre class="source">${query.content}</pre>
 	</div>
 	<c:forEach var="comment" items="${comments.data}" varStatus="vs">
 		<s:comment comment="${comment}" 
@@ -76,9 +72,9 @@
 	
 	<div style="clear:left; padding-top:50px;">
 		<form method="post" action="${root}/ctrl/query/comment">
-			<textarea name="comment" id="comment" rows="6" cols="35"></textarea>
+			<input type="submit" class="btn" value="评论(字数&lt;5K)"><br/>
+			<textarea name="comment" id="comment" rows="6" cols="80"></textarea>
 			<input type="hidden" name="queryId" value="${query.id}">
-			<input type="submit" class="btn" value="评论">
 		</form>
 	</div>
 </div>

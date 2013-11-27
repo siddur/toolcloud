@@ -236,9 +236,9 @@
 						closable="${canDelComment}" ></s:comment>
 			</c:forEach>
 			<form method="post" action="${root}/ctrl/tool/comment">
+				<input type="submit" class="btn" value="评论(字数&lt;5K)"><br/>
 				<textarea name="comment" id="comment" rows="6" cols="60"></textarea>
 				<input type="hidden" name="toolId" value="${tool.descriptor.pluginID}">
-				<input type="submit" class="btn" value="评论">
 			</form>
 		</div>
 	</div>

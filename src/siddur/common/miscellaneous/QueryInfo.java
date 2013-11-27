@@ -17,7 +17,9 @@ public class QueryInfo {
 	@Column private Date publishAt = new Date();
 	@Column private String saidBy;
 	@Column private String title;
-	@Column private String content;
+	
+	@Column(length=1024 * 20)
+	private String content;
 	public Integer getId() {
 		return id;
 	}
@@ -47,7 +49,7 @@ public class QueryInfo {
 	}
 	
 	public String getPlainContent(){
-		return StringUtil.clearTag(this.content);
+		return StringUtil.escape(this.content);
 	}
 	
 	public void setContent(String content) {

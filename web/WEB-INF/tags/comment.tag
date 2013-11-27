@@ -43,7 +43,7 @@
 				onclick="location.href='${root}/ctrl/${scope}/delcomment?id=${comment.commentId}&subjectId=${subjectId}'">
 			</span>
 		</c:if>
-		<pre style="margin:0"><font size="2" color="#777722">[${index}楼]</font> ${comment.preContent }</pre>
+		<pre class="source" style="margin:0"><font size="2" color="#777722">[${index}楼]</font> ${comment.preContent }</pre>
 	</div>
 	<div class='comment_detail'>
 		<font color='#FAA732'>${comment.saidBy }</font> 

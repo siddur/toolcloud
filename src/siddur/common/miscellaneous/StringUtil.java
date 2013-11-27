@@ -20,7 +20,7 @@ public class StringUtil {
 	
 	public static String clearTag(String src){
 		if(src == null) return null;
-		return src.replaceAll("</?.+?>","").replaceAll("\\s", "&nbsp;");
+		return src.replaceAll("</?.+?>","");
 	}
 	
 	

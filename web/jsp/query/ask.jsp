@@ -11,7 +11,7 @@
 		</div>
 		<br>
 		
-		<span>内容</span>
+		<span>内容(字数&lt;20K)</span>
 		<div>
 			<textarea  name="content" id="content" rows="10" cols="70"></textarea>
 		</div>

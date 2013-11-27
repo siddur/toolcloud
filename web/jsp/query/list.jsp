@@ -14,6 +14,9 @@
 	
 	.query_content{
 		font-size: 13px;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		max-height: 30px;
 	}
 	
 	.query_item a{
@@ -61,7 +64,7 @@
 				</a>
 			</div>
 			<div class="query_content">
-				${item.plainContent}
+				${item.content}
 			</div>
 		</div>
 	</c:forEach>
