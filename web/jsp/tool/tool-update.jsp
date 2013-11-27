@@ -92,7 +92,7 @@
 				<input name="catelog" value="${td.catalog}">
 			</div>
 			<br/>
-			<s:file_upload fieldname="icon" displayname="上传图标.." isImage="true" file="${td.icon}"/>
+			<s:file_upload fieldname="icon" displayname="上传图标" isImage="true" file="${td.icon}"/>
 			<div>
 				<span class="label">描述:</span>
 				<br>

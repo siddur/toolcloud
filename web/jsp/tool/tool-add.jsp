@@ -96,10 +96,10 @@
 					<option value="client-side">javascript</option>
 				</select>
 			</div>
-			<s:file_upload fieldname="toolfile" displayname="上传工具文件.."/>
+			<s:file_upload fieldname="toolfile" displayname="上传工具"/>
 			<div><span class="label">名称:</span><input name="name"></div>
 			<div><span class="label">类别:</span><input name="catelog"></div>
-			<s:file_upload fieldname="icon" displayname="上传图标.." isImage="true"/>
+			<s:file_upload fieldname="icon" displayname="上传图标" isImage="true"/>
 			<div>
 				<span class="label">描述:</span>
 				<br>
