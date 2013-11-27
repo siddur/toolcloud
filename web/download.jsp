@@ -14,6 +14,9 @@
 				https://github.com/siddur/toolcloud
 			</a>
 		</p>
+		<p>
+			您也可以写邮件给我:htm1840324@163.com
+		</p>
 	</div>
 <div></div>
 </s:site>

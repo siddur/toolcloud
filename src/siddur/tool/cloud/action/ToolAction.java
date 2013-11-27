@@ -103,7 +103,8 @@ public class ToolAction extends DBAction<Comment>{
 	
 	@DoNotAuthenticate
 	public Result detail(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
-		String id = req.getParameter("toolId");
+		String id = RequestUtil.getId(req, "toolId");
+		
 		List<Comment> comments = getEntityManager(req)
 				.createQuery("from Comment c where c.subject='"+ id +"'", Comment.class).getResultList();
 		req.setAttribute("comments", comments);

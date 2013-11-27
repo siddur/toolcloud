@@ -52,7 +52,10 @@ public class QueryAction extends DBAction<QueryInfo>{
 	
 	@DoNotAuthenticate
 	public Result list(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
-		Paging<QueryInfo> list = getPageData(req);
+		EntityManager em = getEntityManager(req);
+		TypedQuery<QueryInfo> q = em.createQuery("from QueryInfo q order by q.publishAt desc", QueryInfo.class);
+		TypedQuery<Long> totalQuery = em.createQuery("select count(q) from QueryInfo q", Long.class);
+		Paging<QueryInfo> list = JPAUtil.getPageData(req, q, totalQuery);
 		req.setAttribute("queries", list);
 		req.setAttribute("canDelQuery", RequestUtil.hasPerm(req, Permission.QUERY_DEL));
 		return Result.forward("/jsp/query/list.jsp");
@@ -60,10 +63,11 @@ public class QueryAction extends DBAction<QueryInfo>{
 	
 	@DoNotAuthenticate
 	public Result detail(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
-		Integer id = Integer.parseInt(req.getParameter("id"));
+		String idStr = RequestUtil.getId(req, "id");
+		Integer id = Integer.parseInt(idStr);
 		EntityManager em = getEntityManager(req);
 		TypedQuery<Comment> q = em.createQuery("from Comment c where c.subject = 'q" 
-				+ id + "'", 
+				+ id + "' order by c.saidAt desc", 
 					Comment.class);
 		
 		TypedQuery<Long> totalQuery = em.createQuery("select count(c) from Comment c where c.subject = 'q" 

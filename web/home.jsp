@@ -82,7 +82,7 @@
 				</div>
 				<c:forEach items="${queries}" var="item">
 					<div class="query_item">
-						<a href="${root}/ctrl/query/detail?id=${item.id}">
+						<a href="${root}/query/${item.id}.html">
 							<span class="ui-icon ui-icon-document"></span>
 							<span>${item.title}</span>
 							<span style="color:#BBBBBB; float:right;">
@@ -104,7 +104,7 @@
 				<div style="clear:right;"></div>
 				<c:forEach items="${favorite}" var="item">
 					<div class="favorite_item">
-						<a href="${root}/ctrl/tool/detail?toolId=${item.descriptor.pluginID }">
+						<a href="${root}/${item.descriptor.pluginID }.html">
 							<span class="ui-icon ui-icon-gear"></span>
 							${item.descriptor.pluginName }
 						</a>

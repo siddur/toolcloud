@@ -70,7 +70,7 @@
 	</div>
 	<c:forEach var="t" items="${paging.data}">
 		<c:if test="${t.status == 0}"></c:if>
-		<div class="list <c:if test="${t.status == 0}">notApproved</c:if> left_float" onclick="location.href='${root}/ctrl/tool/detail?toolId=${t.descriptor.pluginID}';">
+		<div class="list <c:if test="${t.status == 0}">notApproved</c:if> left_float" onclick="location.href='${root}/${t.descriptor.pluginID}.html';">
 			<s:tool_detail updatable="${editable}" toolDescriptor="${t.descriptor}"></s:tool_detail>
 		</div>
 	</c:forEach>

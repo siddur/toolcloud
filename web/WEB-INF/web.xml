@@ -35,7 +35,7 @@
   
   <servlet-mapping>
   	<servlet-name>ControlServlet</servlet-name>
-  	<url-pattern>ctrl/*</url-pattern>
+  	<url-pattern>ctrl/*,*.html</url-pattern>
   </servlet-mapping>
   
   <servlet-mapping>

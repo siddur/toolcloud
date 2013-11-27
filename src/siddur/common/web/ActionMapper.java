@@ -132,12 +132,24 @@ public class ActionMapper{
 		/*
 		 *  path = "/path/methodName"
 		 */
-		String path = RequestUtil.getActionPath(req.getPathInfo());
+		String pathInfo = req.getPathInfo();
+		String actionPath = null;
+		if(pathInfo != null){
+			actionPath = RequestUtil.getActionPath(req.getPathInfo());
+		}else{
+			///tool/detail/1380203034265.html
+			String url = req.getRequestURI();
+			if(url.startsWith("/query")){
+				actionPath = "/query/detail";
+			}else{
+				actionPath = "/tool/detail";
+			}
+		}
 		
-		Permission perm = permMap.get(path);
+		Permission perm = permMap.get(actionPath);
 		checkCookie(req);
 		
-		if(!excludeAuth.contains(path)){
+		if(!excludeAuth.contains(actionPath)){
 			boolean hasUser = authenticate(req, resp);
 			if(!hasUser){
 				req.getRequestDispatcher("/jsp/user/login.jsp").forward(req, resp);
@@ -153,11 +165,11 @@ public class ActionMapper{
 		
 		Result r;
 		try {
-			r = exec(path, req, resp);
+			r = exec(actionPath, req, resp);
 			emWrapper.commit(req);
 		} catch (Exception e) {
 			emWrapper.rollback(req);
-			log4j.error("An error occurs when invoking the action: " + path, e);
+			log4j.error("An error occurs when invoking the action: " + actionPath, e);
 			r = Result.error(e.getMessage());
 		} finally{
 			emWrapper.closeEntityManager(req);

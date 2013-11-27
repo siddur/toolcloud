@@ -56,7 +56,7 @@
 				</span>
 			</c:if>
 			<div>
-				<a href="${root}/ctrl/query/detail?id=${item.id}">
+				<a href="${root}/query/${item.id}.html">
 					<span class="query_title">${item.title }</span>
 					<span class="query_date">
 						<f:formatDate value="${item.publishAt}" pattern="yyyy-MM-dd hh:mm"/>

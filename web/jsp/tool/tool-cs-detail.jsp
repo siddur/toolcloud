@@ -4,7 +4,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <s:site>
 <jsp:attribute name="headPart">
-<meta name="keywords" content="${tool.descriptor.keywords}"/>
+<meta name="keywords" content="在线, ${tool.descriptor.keywords}"/>
 <meta name="description" content="${tool.descriptor.description}"/>
 <style>
 	.detail_head:AFTER{
@@ -63,7 +63,7 @@
 		<div style="clear:left; padding-top:20px;">
 			<c:forEach var="t" items="${similars}">
 			<div class="left_float" style="padding-right:20px; padding-bottom:5px;">
-				<a id="${t.descriptor.pluginID}" href="${root}/ctrl/tool/detail?toolId=${t.descriptor.pluginID}">
+				<a id="${t.descriptor.pluginID}" href="${root}/${t.descriptor.pluginID}.html">
 					<c:choose>
 						<c:when test="${empty t.descriptor.icon}">
 							<div class="tool_logo"><span>${t.descriptor.pluginName}</span></div>

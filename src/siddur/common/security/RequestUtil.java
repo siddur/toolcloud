@@ -32,6 +32,28 @@ public class RequestUtil {
 		return false;
 	}
 	
+	public static String getId(HttpServletRequest req, String idKey){
+		String id = req.getParameter(idKey);
+		if(id == null){
+			id = getId(req.getPathInfo());
+		}
+		if(id == null){
+			//".html".length = 5;
+			// /1380203034265.html = 13 + 5
+			String url = req.getRequestURI();
+			int html = url.indexOf(".html");
+			int slash = url.lastIndexOf("/", html);
+			id = url.substring(slash + 1, html);
+		}
+		return id;
+	}
+	
+	public static String getId(String path){
+		if(path == null) return null;
+		int slash = path.lastIndexOf("/");
+		return path.substring(slash + 1);
+	}
+	
 	public static String getActionPath(String path){
 		int slash = path.indexOf("/", 1);
 		slash = path.indexOf("/", slash + 1);

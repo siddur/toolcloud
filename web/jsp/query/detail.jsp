@@ -46,7 +46,7 @@
 <div class="screen">
 	<script>
 		function changePage(){
-			location.href = "${root}/ctrl/query/detail?id=${query.id}&pageIndex=" + pageIndex + "&pageSize=" + pageSize;
+			location.href = "${root}/query/${query.id}.html&pageIndex=" + pageIndex + "&pageSize=" + pageSize;
 		}
 	</script>
 	<div class="query_item">
