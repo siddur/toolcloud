@@ -1,11 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib tagdir="/WEB-INF/tags" prefix="s" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<s:site>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%><%@ taglib tagdir="/WEB-INF/tags" prefix="s" %><%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %><c:set var="title" value="1" scope="request"></c:set><s:site><jsp:attribute name="titlePart"><title>${tool.descriptor.pluginName}</title>
+	<meta name="keywords" content="在线, ${tool.descriptor.keywords}"/>
+	<meta name="description" content="${tool.descriptor.description}"/></jsp:attribute>
 <jsp:attribute name="headPart">
-<meta name="keywords" content="在线, ${tool.descriptor.keywords}"/>
-<meta name="description" content="${tool.descriptor.description}"/>
 <script>
 	var runUrl = "${root}/ctrl/tool/exec";
 	<c:if test="${needConsole}">
@@ -242,5 +238,4 @@
 			</form>
 		</div>
 	</div>
-</jsp:body>
-</s:site>
+</jsp:body></s:site>

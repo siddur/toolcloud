@@ -1,10 +1,6 @@
-<%@page import="siddur.common.security.Permission"%>
-<%@page import="siddur.common.security.RequestUtil"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@taglib prefix="s" tagdir="/WEB-INF/tags"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="f" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@page import="siddur.common.security.Permission"%><%@page import="siddur.common.security.RequestUtil"%><%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%><%@taglib prefix="s" tagdir="/WEB-INF/tags"%><%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %><%@ taglib prefix="f" uri="http://java.sun.com/jsp/jstl/fmt" %><c:set var="title" value="1" scope="request"></c:set><s:site><jsp:attribute name="titlePart"><title>query</title>
+	<meta name="description" content="${query.title}"/></jsp:attribute>
+<jsp:attribute name="headPart">
 <style>
 	.query_item{
 		margin-bottom: 5px;
@@ -42,13 +38,14 @@
 		cursor: pointer;
 	}
 </style>
-<s:site>
+<script>
+	function changePage(){
+		location.href = "${root}/query/${query.id}.html?pageIndex=" + pageIndex + "&pageSize=" + pageSize;
+	}
+</script>
+</jsp:attribute>
+<jsp:body>
 <div class="screen">
-	<script>
-		function changePage(){
-			location.href = "${root}/query/${query.id}.html&pageIndex=" + pageIndex + "&pageSize=" + pageSize;
-		}
-	</script>
 	<div class="query_item">
 		<div>
 			<span class="query_title">${query.title }</span>
@@ -78,4 +75,5 @@
 		</form>
 	</div>
 </div>
+</jsp:body>
 </s:site>

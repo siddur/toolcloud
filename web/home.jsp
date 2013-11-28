@@ -1,10 +1,4 @@
-<%@ taglib prefix="s" tagdir="/WEB-INF/tags" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="f" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<s:site>
-<jsp:attribute name="headPart">
+<%@ taglib prefix="s" tagdir="/WEB-INF/tags" %><%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %><%@ taglib prefix="f" uri="http://java.sun.com/jsp/jstl/fmt" %><%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%><s:site><jsp:attribute name="headPart">
 <meta name="keywords" content="toolcloud， 在线工具， 工具云， 工具集合， online tools"/>
 <meta name="description" content="toolcloud是一个上传、管理和运行工具以及以多种方式显示运行结果的服务平台"/>
 <style>
