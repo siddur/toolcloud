@@ -87,8 +87,23 @@
 			</c:forEach>
 			
 			<form method="post" action="${root}/ctrl/tool/comment">
-				<input type="submit" class="btn" value="评论(字数&lt;5K)"><br/>
+				<script>
+					function doSubmit(){
+						var comment = $("#comment").val();
+						comment = $.trim(comment);
+						if(comment.length < 3){
+							alert("字数不能少于3");
+							return false;
+						}
+						if(comment.length > 5000){
+							alert("字数太多");
+							return false;
+						}
+						return true;
+					}
+				</script>
 				<textarea name="comment" id="comment" rows="6" cols="60"></textarea>
+				<input type="submit" class="btn" value="评论(字数&lt;5K)" onclick="return doSubmit();"><br/>
 				<input type="hidden" name="toolId" value="${tool.descriptor.pluginID}">
 			</form>
 		</div>

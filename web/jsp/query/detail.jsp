@@ -69,8 +69,23 @@
 	
 	<div style="clear:left; padding-top:50px;">
 		<form method="post" action="${root}/ctrl/query/comment">
-			<input type="submit" class="btn" value="评论(字数&lt;5K)"><br/>
+			<script>
+				function doSubmit(){
+					var comment = $("#comment").val();
+					comment = $.trim(comment);
+					if(comment.length < 3){
+						alert("字数不能少于3");
+						return false;
+					}
+					if(comment.length > 5000){
+						alert("字数太多");
+						return false;
+					}
+					return true;
+				}
+			</script>
 			<textarea name="comment" id="comment" rows="6" cols="80"></textarea>
+			<input type="submit" class="btn" value="评论(字数&lt;5K)" onclick="return doSubmit();"><br/>
 			<input type="hidden" name="queryId" value="${query.id}">
 		</form>
 	</div>

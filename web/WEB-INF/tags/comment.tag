@@ -27,8 +27,8 @@
 		.close_btn{
 			float:right;
 			position:relative;
-			top:-3px;
-			right:-3px;
+			top:1px;
+			right:1px;
 		}
 		.close_btn:hover{
 			cursor: pointer;
