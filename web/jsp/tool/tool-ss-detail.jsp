@@ -9,7 +9,7 @@
 	var _console;
 	</c:if>
 
-	function doSubmit(){
+	function doRun(){
 		$(".duplication").remove();
 		
 		$(".tableHidden").each(function(idx, item){
@@ -176,7 +176,7 @@
 	<div class="screen">
 		<div class="detail_head">
 			<div class="run_div">
-				<input type="button" id="run_btn" value="运行" onclick="doSubmit()">
+				<input type="button" id="run_btn" value="运行" onclick="doRun()">
 				<span id="run_msg"></span>
 			</div>
 			<s:tool_detail toolDescriptor="${tool.descriptor}"/>
