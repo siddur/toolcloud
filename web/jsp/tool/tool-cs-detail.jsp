@@ -15,6 +15,9 @@
 		float:left;
 		margin-top: 10px;
 	}
+	.tool_container::-webkit-scrollbar {
+		display:none
+	}
 	.tool_container{
 		float:left;
 		overflow:hidden;

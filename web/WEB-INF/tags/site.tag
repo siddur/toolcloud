@@ -35,9 +35,11 @@
 				<li>
 					<a href="${root}/"><span class="ui-icon ui-icon-home"></span>首页</a>
 				</li>
+				<c:if test="${not empty user}">
 				<li>
 					<a href="${root}/ctrl/tool/blocks"><span class="ui-icon ui-icon-gear"></span>管理</a>
 				</li>
+				</c:if>
 				<li>
 					<a href="${root}/doc.jsp"><span class="ui-icon ui-icon-help"></span>文档</a>
 				</li>

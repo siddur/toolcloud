@@ -1,4 +1,4 @@
-<%@page import="siddur.common.security.Permission"%><%@page import="siddur.common.security.RequestUtil"%><%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%><%@taglib prefix="s" tagdir="/WEB-INF/tags"%><%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %><%@ taglib prefix="f" uri="http://java.sun.com/jsp/jstl/fmt" %><c:set var="title" value="1" scope="request"></c:set><s:site><jsp:attribute name="titlePart"><title>query</title>
+<%@page import="siddur.common.security.Permission"%><%@page import="siddur.common.security.RequestUtil"%><%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%><%@taglib prefix="s" tagdir="/WEB-INF/tags"%><%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %><%@ taglib prefix="f" uri="http://java.sun.com/jsp/jstl/fmt" %><c:set var="title" value="1" scope="request"></c:set><s:site><jsp:attribute name="titlePart"><title>${query.title }</title>
 	<meta name="description" content="${query.title}"/></jsp:attribute>
 <jsp:attribute name="headPart">
 <style>

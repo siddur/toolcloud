@@ -53,6 +53,9 @@
 .query_item a{
 	text-decoration: none;
 }
+.screen a span{
+	color: #002244;
+}
 </style>
 </jsp:attribute>
 <jsp:body>
@@ -69,7 +72,7 @@
 			<div class="comment_list" style="clear:left;">
 				<div class="home_title">
 					<b>需求讨论</b>
-					<a href="${root}/ctrl/query/ask">我来发布需求</a>
+					<a href="${root}/ctrl/query/ask">我来发布</a>
 					<div style="float:right;">
 						<a href="${root}/ctrl/query/list">更多</a>
 					</div>
