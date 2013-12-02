@@ -19,7 +19,6 @@
 	    background-color: #D6E9C6;
 	    margin: 3px;
 	    padding: 7px;
-	    clear:left;
 	}
 	.comment_content {
 	    font-size: 16px;
@@ -73,18 +72,19 @@
 document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?cdnversion=" + Math.ceil(new Date()/3600000)
 </script>
 <!-- Baidu Button END -->
-
-	<c:forEach var="comment" items="${comments.data}" varStatus="vs">
-		<s:comment comment="${comment}" 
-			subjectId="${query.id}"
-			index="${vs.index + 1}"
-			scope="query"
-			closable="${canDelComment}" >
-		</s:comment>
-	</c:forEach>
-	
-	<s:paging pageIndex="${comments.pageIndex }" pageSize="20" total="${comments.total }"></s:paging>
-	<a href="javascript:history.back()">返回</a>
+	<div style="clear:left;">
+		<c:forEach var="comment" items="${comments.data}" varStatus="vs">
+			<s:comment comment="${comment}" 
+				subjectId="${query.id}"
+				index="${vs.index + 1}"
+				scope="query"
+				closable="${canDelComment}" >
+			</s:comment>
+		</c:forEach>
+		
+		<s:paging pageIndex="${comments.pageIndex }" pageSize="20" total="${comments.total }"></s:paging>
+		<a href="javascript:history.back()">返回</a>
+	</div>
 	<div style="clear:left; padding-top:50px;">
 		<form method="post" action="${root}/ctrl/query/comment">
 			<script>
