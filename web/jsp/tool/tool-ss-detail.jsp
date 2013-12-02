@@ -176,7 +176,7 @@
 	<div class="screen">
 		<div class="detail_head">
 			<div class="run_div">
-				<input type="button" id="run_btn" value="运行" onclick="doRun()">
+				<input class="btn" type="button" id="run_btn" value="运行" onclick="doRun()">
 				<span id="run_msg"></span>
 			</div>
 			<s:tool_detail toolDescriptor="${tool.descriptor}"/>
