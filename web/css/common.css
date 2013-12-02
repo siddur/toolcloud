@@ -51,12 +51,12 @@ body{
 }
 .toolbar li:hover {
    	background: none repeat scroll 0 0 #B83A10
-   }
+}
 
 .screen{
 	margin: 10px auto;
 	width: 960px;
-	font-size:12px;
+	font-size:14px;
 }
 
 .body{
