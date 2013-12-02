@@ -10,6 +10,7 @@
 	</c:if>
 
 	function doRun(){
+		$("#run_msg").css("color", "blue").html("运行中");
 		$(".duplication").remove();
 		
 		$(".tableHidden").each(function(idx, item){
@@ -77,7 +78,7 @@
 					_showEachResult(r[idx], item);
 				});
 			}else{
-				$("#run_msg").css("color", "red").html("运行失败:" + results.substring(5, results.length));
+				$("#run_msg").css("color", "red").html("运行失败");
 			}
 		}
 	}
