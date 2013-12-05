@@ -40,6 +40,8 @@
 			</mapper>
 			<path refid="classpath" />
 		</pathconvert>
+		
+		<!--start start.bat-->
 		<touch file="${standalone}/start.bat"/>
 		<echo file="${standalone}/start.bat">set server_lib_dir=file:%cd:\=/%/lib/-
 set server_web_dir=file:%cd:\=/%/web/-
@@ -70,6 +72,7 @@ echo }; >>%policy_file%
 			
 set LIB=${win.mf.classpath}
 java -Djava.security.manager -Djava.security.policy=%policy_file% -cp %LIB%;${jarfile} siddur.tool.jetty.JettyStart %1 %2</echo>
+		<!--end start.bat-->
 		
 		<pathconvert property="linux.mf.classpath" pathsep=":">
 			<mapper>
@@ -80,6 +83,8 @@ java -Djava.security.manager -Djava.security.policy=%policy_file% -cp %LIB%;${ja
 			</mapper>
 			<path refid="classpath" />
 		</pathconvert>
+		
+		<!--start start.sh-->
 		<touch file="${standalone}/start.sh"/>
 		<echo file="${standalone}/start.sh">server_lib_dir=file:${PWD}/lib/-
 server_web_dir=file:${PWD}/web/-
@@ -114,7 +119,87 @@ echo "};" >>${policy_file}
 			
 LIB="${linux.mf.classpath}"
 java -Djava.security.manager -Djava.security.policy=$${policy_file} -cp $LIB:${jarfile} siddur.tool.jetty.JettyStart $*</echo>
+		<!--end start.sh-->
 		
+		<!--start debug.bat-->
+		<touch file="${standalone}/debug.bat"/>
+		<echo file="${standalone}/debug.bat">set server_lib_dir=file:%cd:\=/%/lib/-
+set server_web_dir=file:%cd:\=/%/web/-
+set server_ext_dir=file:%cd:\=/%/ext/-
+set toolcloud_jarfile=file:%cd:\=/%/toolcloud.jar
+set client_code_dir=file:%cd:\=/%/tools/-
+set policy_file=my.policy
+
+echo grant codeBase "%server_lib_dir%" { > %policy_file%
+echo ^    permission java.security.AllPermission; >> %policy_file%
+echo }; >>%policy_file%
+			
+echo grant codeBase "%server_web_dir%" { >> %policy_file%
+echo ^    permission java.security.AllPermission; >> %policy_file%
+echo }; >>%policy_file%
+			
+echo grant codeBase "%server_ext_dir%" { >> %policy_file%
+echo ^    permission java.security.AllPermission; >> %policy_file%
+echo }; >>%policy_file%
+
+echo grant codeBase "%toolcloud_jarfile%" { >>%policy_file%
+echo ^    permission java.security.AllPermission; >> %policy_file%
+echo }; >>%policy_file%
+
+echo grant codeBase "%client_code_dir%" { >>%policy_file%
+echo ^    permission java.io.FilePermission "%cd:\=/%/temp/*", "read,write"; >> %policy_file%
+echo }; >>%policy_file%
+			
+set LIB=${win.mf.classpath}
+java -agentlib:jdwp=transport=dt_socket,address=8912,server=y,suspend=y -Djava.security.manager -Djava.security.policy=%policy_file% -cp %LIB%;${jarfile} siddur.tool.jetty.JettyStart %1 %2</echo>
+		<!--end debug.bat-->
+		
+		<pathconvert property="linux.mf.classpath" pathsep=":">
+			<mapper>
+				<chainedmapper>
+	                <flattenmapper/>
+	                <globmapper from="*" to="lib/*"/>
+            	</chainedmapper>
+			</mapper>
+			<path refid="classpath" />
+		</pathconvert>
+		
+		<!--start debug.sh-->
+		<touch file="${standalone}/debug.sh"/>
+		<echo file="${standalone}/debug.sh">server_lib_dir=file:${PWD}/lib/-
+server_web_dir=file:${PWD}/web/-
+server_ext_dir=file:${PWD}/ext/-
+toolcloud_jarfile=file:${PWD}/toolcloud.jar
+client_code_dir=file:${PWD}/tools/-
+policy_file=my.policy
+
+echo 'grant codeBase "file:$${java.ext.dirs}/*" {' > ${policy_file}
+echo '	  permission java.security.AllPermission;' >> ${policy_file}
+echo '};' >>${policy_file}
+			
+echo "grant codeBase \"${server_lib_dir}\" {" >> ${policy_file}
+echo "    permission java.security.AllPermission;" >> ${policy_file}
+echo "};" >>${policy_file}
+			
+echo "grant codeBase \"${server_web_dir}\" {" >> ${policy_file}
+echo "    permission java.security.AllPermission;" >> ${policy_file}
+echo "};" >>${policy_file}
+			
+echo "grant codeBase \"${server_ext_dir}\" {" >> ${policy_file}
+echo "    permission java.security.AllPermission;" >> ${policy_file}
+echo "};" >>${policy_file}
+
+echo "grant codeBase \"${toolcloud_jarfile}\" {" >>${policy_file}
+echo "    permission java.security.AllPermission;" >> ${policy_file}
+echo "};" >>${policy_file}
+
+echo "grant codeBase \"${client_code_dir}\" {" >>${policy_file}
+echo "    permission java.io.FilePermission \"${PWD}/temp/*\", \"read,write\";" >> ${policy_file}
+echo "};" >>${policy_file}
+			
+LIB="${linux.mf.classpath}"
+java -agentlib:jdwp=transport=dt_socket,address=8912,server=y,suspend=y -Djava.security.manager -Djava.security.policy=$${policy_file} -cp $LIB:${jarfile} siddur.tool.jetty.JettyStart $*</echo>
+		<!--end debug.sh-->
 		
 		<copy todir="${standalone}/lib">
 			<fileset dir="${srclib}" includes="*.jar"/>
