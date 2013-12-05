@@ -31,15 +31,16 @@
 <jsp:body>
 <div class="screen">
 	<form method="post" action="${root}/ctrl/query/doask">
+		<input type="hidden" name="id" value="${query.id}">
 		<div>
 			<span>标题</span>
-			<input style="width:600px;" name="title" id="title">
+			<input style="width:600px;" name="title" id="title" value="${query.title}">
 		</div>
 		<br>
 		
 		<span>内容(字数&lt;20K)</span>
 		<div>
-			<textarea  name="content" id="content" rows="10" cols="100"></textarea>
+			<textarea  name="content" id="content" rows="10" cols="100">${query.content}</textarea>
 		</div>
 		<br>
 		<input type="submit" value="发表" class="btn" onclick="return doSubmit();">

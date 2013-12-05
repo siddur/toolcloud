@@ -50,6 +50,11 @@
 	</script>
 	<c:forEach var="item" items="${queries.data}">
 		<div class="query_item">
+			<c:if test="${user.username == item.saidBy}">
+				<span class="close_btn ui-icon ui-icon-pencil" 
+					onclick="location.href='${root}/ctrl/query/editquery?id=${item.id}'">
+				</span>
+			</c:if>
 			<c:if test="${canDelQuery == true }">
 				<span class="close_btn ui-icon ui-icon-closethick" 
 					onclick="location.href='${root}/ctrl/query/delquery?id=${item.id}'">

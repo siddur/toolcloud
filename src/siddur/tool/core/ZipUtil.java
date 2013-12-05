@@ -69,7 +69,9 @@ public class ZipUtil {
 		File[] files = dir.listFiles();
 		if(files.length == 1){
 			File f = files[0];
-			if(f.isDirectory() && f.getName().equals(dir.getName())){
+			if(f.isDirectory() 
+					&& (f.getName().equals(dir.getName()) 
+					|| dir.getName().endsWith(f.getName()))){
 				FileUtils.copyDirectory(f, dir);
 				FileUtils.deleteDirectory(f);
 			}

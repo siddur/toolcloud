@@ -80,13 +80,16 @@ public class ToolLoader {
 						if(classname.endsWith(".class")){
 							classname = classname.substring(0, classname.length() - 6);
 							classname = classname.replace("/", ".").replace("\\", ".");
-							Class<?> claz = rcl.loadClass(classname);
-							
-							if(ITool.class.isAssignableFrom(claz)){
-								jtw.setClassname(claz.getName());
-								jtw.setToolfile(j.getCanonicalPath());
-								jtw.setDescriptor(td);
-								return jtw;
+							try {
+								Class<?> claz = rcl.loadClass(classname);
+								
+								if(ITool.class.isAssignableFrom(claz)){
+									jtw.setClassname(claz.getName());
+									jtw.setToolfile(j.getCanonicalPath());
+									jtw.setDescriptor(td);
+									return jtw;
+								}
+							} catch (Throwable e) {
 							}
 						}
 					}

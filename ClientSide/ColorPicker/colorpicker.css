@@ -78,5 +78,8 @@
 }
 .input input{
 	height:15px;
-	width:32px;
+	width:30px;
+}
+.input{
+	font-size: 10px;
 }

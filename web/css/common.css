@@ -204,4 +204,5 @@ pre.source{
 	background-color:white;
 	padding:15px;
 	border: grey solid 1px;
+	white-space: pre-wrap;
 }
