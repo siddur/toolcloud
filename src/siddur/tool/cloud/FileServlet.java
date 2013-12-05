@@ -68,8 +68,11 @@ public class FileServlet extends HttpServlet{
 				
 				String filename = f.getName();
 				resp.addHeader("Content-Disposition", "attachment;filename=" + new String(filename.getBytes("utf-8"),"ISO-8859-1"));
-				resp.addHeader("Content-Length", "" + f.length());
+			}else{
+				String mimeType = getServletContext().getMimeType(f.getName());
+				resp.setContentType(mimeType);
 			}
+			resp.addHeader("Content-Length", "" + f.length());
 			ReadableByteChannel r = new FileInputStream(f).getChannel();
 			WritableByteChannel w = Channels.newChannel(resp.getOutputStream());
 			ByteBuffer bb = ByteBuffer.allocate(8192);
