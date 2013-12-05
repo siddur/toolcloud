@@ -7,6 +7,7 @@
 	width:100%;
 	padding-top:5px;
 	border-bottom:dashed 1px grey;
+	line-height: 20px;
 }
 .screen .ui-icon{
 	float:left;
@@ -18,8 +19,14 @@
 	white-space: nowrap;
     width: 95%;
 }
+.tool_item:nth-child(odd){
+	background-color: #FEFAFA;
+}
+.tool_item:nth-child(even){
+	background-color: #FFFFFF;
+}
 .tool_list, .favorite, .comment_list{
-	border: 1px solid #CFCFCF;
+	border: 1px solid #d1e3e8;
 	margin-bottom: 20px;
 }
 .latest_list{
@@ -35,9 +42,10 @@
 	width:180;
 }
 .home_title{
-	background-color: #EEEEEE;
+	background-color: #d1e3e8;
 	padding:3px;
-	border: 1px solid #CFCFCF;
+	border: 1px solid #d1e3e8;
+	font-size:12px;
 }
 .favorite_item{
 	padding:3px;
@@ -49,9 +57,13 @@
 .query_item{
 	padding:3px;
 	border-bottom: dashed 1px grey;
+	line-height: 20px;
 }
 .query_item a{
 	text-decoration: none;
+}
+.screen a span{
+	color: #002244;
 }
 </style>
 </jsp:attribute>
@@ -69,7 +81,7 @@
 			<div class="comment_list" style="clear:left;">
 				<div class="home_title">
 					<b>需求讨论</b>
-					<a href="${root}/ctrl/query/ask">我来发布需求</a>
+					<a href="${root}/ctrl/query/ask">我来发布</a>
 					<div style="float:right;">
 						<a href="${root}/ctrl/query/list">更多</a>
 					</div>

@@ -9,7 +9,8 @@
 	var _console;
 	</c:if>
 
-	function doSubmit(){
+	function doRun(){
+		$("#run_msg").css("color", "blue").html("运行中");
 		$(".duplication").remove();
 		
 		$(".tableHidden").each(function(idx, item){
@@ -77,7 +78,7 @@
 					_showEachResult(r[idx], item);
 				});
 			}else{
-				$("#run_msg").css("color", "red").html("运行失败:" + results.substring(5, results.length));
+				$("#run_msg").css("color", "red").html("运行失败");
 			}
 		}
 	}
@@ -176,7 +177,7 @@
 	<div class="screen">
 		<div class="detail_head">
 			<div class="run_div">
-				<input type="button" id="run_btn" value="运行" onclick="doSubmit()">
+				<input class="btn" type="button" id="run_btn" value="运行" onclick="doRun()">
 				<span id="run_msg"></span>
 			</div>
 			<s:tool_detail toolDescriptor="${tool.descriptor}"/>
@@ -223,6 +224,23 @@
 			</c:forEach>
 			<div style="font-size: 12px; clear:left;"><a href="${root}/ctrl/tool/list">更多</a></div>
 		</div>
+		
+<!-- Baidu Button BEGIN -->
+<div id="bdshare" class="bdshare_t bds_tools get-codes-bdshare">
+<span class="bds_more">分享到：</span>
+<a class="bds_qzone"></a>
+<a class="bds_tsina"></a>
+<a class="bds_tqq"></a>
+<a class="bds_renren"></a>
+<a class="bds_t163"></a>
+<a class="shareCount"></a>
+</div>
+<script type="text/javascript" id="bdshare_js" data="type=tools&amp;uid=5954609" ></script>
+<script type="text/javascript" id="bdshell_js"></script>
+<script type="text/javascript">
+document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?cdnversion=" + Math.ceil(new Date()/3600000)
+</script>
+<!-- Baidu Button END -->
 		<div class="comments">
 			<c:forEach var="c" items="${comments}" varStatus="vs">
 				<s:comment comment="${c}" 
@@ -232,8 +250,23 @@
 						closable="${canDelComment}" ></s:comment>
 			</c:forEach>
 			<form method="post" action="${root}/ctrl/tool/comment">
-				<input type="submit" class="btn" value="评论(字数&lt;5K)"><br/>
+				<script>
+					function doSubmit(){
+						var comment = $("#comment").val();
+						comment = $.trim(comment);
+						if(comment.length < 3){
+							alert("字数不能少于3");
+							return false;
+						}
+						if(comment.length > 5000){
+							alert("字数太多");
+							return false;
+						}
+						return true;
+					}
+				</script>
 				<textarea name="comment" id="comment" rows="6" cols="60"></textarea>
+				<input type="submit" class="btn" value="评论(字数&lt;5K)" onclick="return doSubmit();"><br/>
 				<input type="hidden" name="toolId" value="${tool.descriptor.pluginID}">
 			</form>
 		</div>

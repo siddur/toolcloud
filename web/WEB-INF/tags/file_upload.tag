@@ -26,7 +26,7 @@
 	</div>
 	<c:forEach var="f" items="${files}">
 		<div class="file_item">
-			<input type='hidden' name='file' value="${f}">
+			<input type='hidden' name='${fieldname}' value="${f}">
 			<c:choose>
 				<c:when test="${isImage}">
 					<img src="${root}/file/${f}">
@@ -38,9 +38,9 @@
 			<span class="ui-icon ui-icon-close" onclick="close(this)"></span>
 		</div>
 	</c:forEach>
-	<c:if test="${file != null && file != ''}">
+	<c:if test="${not empty file}">
 		<div class="file_item">
-			<input type='hidden' name='file' value="${file}">
+			<input type='hidden' name='${fieldname}' value="${file}">
 			<c:choose>
 				<c:when test="${isImage}">
 					<img src="${root}/file/${file}">

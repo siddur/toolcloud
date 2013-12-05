@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh">
 	<head>
 		<title>Timestamp Converter</title>
@@ -19,7 +19,7 @@
 				font-size:14px;
 			}
 			.demo{
-				background:url("board.png");
+				background-color:rgb(255, 255, 255);
 				width:438px;
 				height:130px;
 				margin: 0 auto;
@@ -56,6 +56,9 @@
 				-webkit-box-shadow:1px 1px 5px #AA0000;
 				-moz-box-shadow:1px 1px 5px #AA0000;
 				border-radius: 5px;
+			}
+			#colorpicker_dialog::-webkit-scrollbar {
+				display:none
 			}
 		</style>
 		<script>
@@ -149,7 +152,6 @@
 						+ ", " 
 						+ alpha.value 
 					+")";
-				console.log(css);
 				$(".target").css("box-shadow", css);
 				
 				/*
@@ -233,7 +235,7 @@
 		
 		
 		<!--dialog-->
-		<div id="colorpicker_dialog" style="width:405px; height:420px; border:inset 1px gray; padding:2px;">
+		<div id="colorpicker_dialog">
 			<img src="colors.png" style="float:left" id="color_container" width="360px" height="250px" ondragstart="return false;">
 			<div id="arrow" class="ui-icon ui-icon-play" onclick="slide()">
 			</div>

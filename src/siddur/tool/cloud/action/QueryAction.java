@@ -8,6 +8,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.StringUtils;
+
 import siddur.common.jpa.JPAUtil;
 import siddur.common.miscellaneous.Comment;
 import siddur.common.miscellaneous.Constants;
@@ -35,15 +37,22 @@ public class QueryAction extends DBAction<QueryInfo>{
 	
 	@DoNotAuthenticate
 	public Result doAsk(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
-		String who = null;
-		UserInfo u = (UserInfo)req.getSession().getAttribute("user");
-		if(u != null){
-			who = u.getUsername();
+		String id = req.getParameter("id");
+		QueryInfo q;
+		if(!StringUtils.isEmpty(id)){
+			Integer i = Integer.parseInt(id);
+			q = find(i, req);
 		}else{
-			who = req.getRemoteAddr();
+			q = new QueryInfo();
+			String who = null;
+			UserInfo u = (UserInfo)req.getSession().getAttribute("user");
+			if(u != null){
+				who = u.getUsername();
+			}else{
+				who = req.getRemoteAddr();
+			}
+			q.setSaidBy(who);
 		}
-		QueryInfo q = new QueryInfo();
-		q.setSaidBy(who);
 		q.setContent(req.getParameter("content"));
 		q.setTitle(req.getParameter("title"));
 		add(q, req);
@@ -59,6 +68,13 @@ public class QueryAction extends DBAction<QueryInfo>{
 		req.setAttribute("queries", list);
 		req.setAttribute("canDelQuery", RequestUtil.hasPerm(req, Permission.QUERY_DEL));
 		return Result.forward("/jsp/query/list.jsp");
+	}
+	
+	
+	public Result editQuery(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
+		Integer id = Integer.parseInt(req.getParameter("id"));
+		req.setAttribute("query", find(id, req));
+		return Result.forward("/jsp/query/ask.jsp");
 	}
 	
 	@DoNotAuthenticate

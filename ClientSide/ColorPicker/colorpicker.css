@@ -1,7 +1,11 @@
-body{
+#colorpicker_dialog{
 	-moz-user-select: none;
 	-webkit-user-select: none;
 	user-select: none;
+	width:405px; 
+	height:420px; 
+	border:inset 1px gray; 
+	padding:2px; 
 }
 
 #arrow{
@@ -71,4 +75,11 @@ body{
 .ui-dialog{
 	font-size: 62.5%;
 	font-family: "Trebuchet MS", "Arial", "Helvetica", "Verdana", "sans-serif";
+}
+.input input{
+	height:15px;
+	width:30px;
+}
+.input{
+	font-size: 10px;
 }

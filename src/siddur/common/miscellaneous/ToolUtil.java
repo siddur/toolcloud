@@ -11,7 +11,6 @@ import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
 import java.nio.channels.WritableByteChannel;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
@@ -170,7 +169,7 @@ public class ToolUtil {
 					param = FileSystemUtil.getParentPath(param);
 				}
 			}
-			m.appendReplacement(sb, param.replace("\\", "\\\\\\"));
+			m.appendReplacement(sb, param.replace("\\", "\\\\\\").replace("$", "\\$"));
 		}
 		m.appendTail(sb);
 		return sb.toString();
@@ -220,8 +219,12 @@ public class ToolUtil {
 //		System.out.println(gatherFuzzyFiles(overrideParam(template, params), null));
 		
 		
-		String template = "--color --language=html -E{0} --toc {1}/*  -o output.html";
-		String[] params = {"java", "java"};
+//		String template = "--color --language=html -E{0} --toc {1}/*  -o output.html";
+//		String[] params = {"java", "java"};
+//		System.out.println(overrideParam(template, params));
+		
+		String template = "'{print {0}}' {1}";
+		String[] params = {"$1", "\\c\\java"};
 		System.out.println(overrideParam(template, params));
 	}
 }

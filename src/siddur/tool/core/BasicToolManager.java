@@ -262,7 +262,7 @@ public class BasicToolManager implements IToolManager{
 	protected void preProcess(String[] input, DataTemplate[] inputModel) throws IOException{
 		if(inputModel != null){
 			for (int i = 0; i < inputModel.length; i++) {
-				if(inputModel[i].isFile()){
+				if(inputModel[i].isFile() && !StringUtils.isEmpty(input[i])){
 					File file = TempFileUtil.findFile(input[i]);
 					if(inputModel[i].isZip()){
 						try {
