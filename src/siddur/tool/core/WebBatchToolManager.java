@@ -35,7 +35,7 @@ public class WebBatchToolManager extends BasicToolManager{
 		Map<Integer, String> splitMap = (Map<Integer, String>)context.get(Constants.SPLIT_MAP);
 		try {
 			if (splitMap != null && !splitMap.isEmpty()) {
-				output = exec(tw, params, splitMap, context);
+				output = exec(tw, tool, params, splitMap, context);
 			} else {
 				output = tool.execute(params, tw, context);
 			}
@@ -49,7 +49,7 @@ public class WebBatchToolManager extends BasicToolManager{
 	}
 
 	
-	private String[] exec(IToolWrapper tw, String[] inputs, Map<Integer, 
+	private String[] exec(IToolWrapper tw, ITool tool, String[] inputs, Map<Integer, 
 			String> splitMap, Map<String, Object> context) throws Exception{
 		Set<Integer> keys = splitMap.keySet();
 		Map<Integer, String[]> splittedMap = new HashMap<Integer, String[]>(keys.size());
@@ -73,7 +73,7 @@ public class WebBatchToolManager extends BasicToolManager{
 					itemParams[i] = inputs[i];
 				}
 			}
-			String[] result = tw.getTool().execute(itemParams, tw, context);
+			String[] result = tool.execute(itemParams, tw, context);
 			results[x] = result;
 		}
 		

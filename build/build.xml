@@ -67,11 +67,15 @@ echo ^    permission java.security.AllPermission; >> %policy_file%
 echo }; >>%policy_file%
 
 echo grant codeBase "%client_code_dir%" { >>%policy_file%
-echo ^    permission java.io.FilePermission "%cd:\=/%/temp/*", "read,write"; >> %policy_file%
+echo ^    permission java.io.FilePermission "%cd:\=/%/temp/-", "read,write"; >> %policy_file%
+echo ^    permission java.io.FilePermission "%cd:\=/%/temp", "read"; >> %policy_file%
+echo ^    permission java.util.PropertyPermission "*", "read,write"; >> %policy_file%
+echo ^    permission java.lang.RuntimePermission "createClassLoader"; >> %policy_file%
+echo ^    permission java.lang.RuntimePermission "getClassLoader"; >> %policy_file%
 echo }; >>%policy_file%
 			
 set LIB=${win.mf.classpath}
-java -Djava.security.manager -Djava.security.policy=%policy_file% -cp %LIB%;${jarfile} siddur.tool.jetty.JettyStart %1 %2</echo>
+java -Dfile.encoding=UTF-8 -Djava.security.manager -Djava.security.policy=%policy_file% -cp %LIB%;${jarfile} siddur.tool.jetty.JettyStart %1 %2</echo>
 		<!--end start.bat-->
 		
 		<pathconvert property="linux.mf.classpath" pathsep=":">
@@ -114,11 +118,15 @@ echo "    permission java.security.AllPermission;" >> ${policy_file}
 echo "};" >>${policy_file}
 
 echo "grant codeBase \"${client_code_dir}\" {" >>${policy_file}
-echo "    permission java.io.FilePermission \"${PWD}/temp/*\", \"read,write\";" >> ${policy_file}
+echo "    permission java.io.FilePermission \"${PWD}/temp/-\", \"read,write\";" >> ${policy_file}
+echo "    permission java.io.FilePermission \"${PWD}/temp\", \"read\";" >> ${policy_file}
+echo "    permission java.util.PropertyPermission \"*\", \"read,write\";" >> %policy_file%
+echo "    permission java.lang.RuntimePermission \"createClassLoader\";" >> %policy_file%
+echo "    permission java.lang.RuntimePermission \"getClassLoader\";" >> %policy_file%
 echo "};" >>${policy_file}
 			
 LIB="${linux.mf.classpath}"
-java -Djava.security.manager -Djava.security.policy=$${policy_file} -cp $LIB:${jarfile} siddur.tool.jetty.JettyStart $*</echo>
+java -Dfile.encoding=UTF-8 -Djava.security.manager -Djava.security.policy=$${policy_file} -cp $LIB:${jarfile} siddur.tool.jetty.JettyStart $*</echo>
 		<!--end start.sh-->
 		
 		<!--start debug.bat-->
@@ -147,11 +155,15 @@ echo ^    permission java.security.AllPermission; >> %policy_file%
 echo }; >>%policy_file%
 
 echo grant codeBase "%client_code_dir%" { >>%policy_file%
-echo ^    permission java.io.FilePermission "%cd:\=/%/temp/*", "read,write"; >> %policy_file%
+echo ^    permission java.io.FilePermission "%cd:\=/%/temp/-", "read,write"; >> %policy_file%
+echo ^    permission java.io.FilePermission "%cd:\=/%/temp", "read"; >> %policy_file%
+echo ^    permission java.util.PropertyPermission "*", "read,write"; >> %policy_file%
+echo ^    permission java.lang.RuntimePermission "createClassLoader"; >> %policy_file%
+echo ^    permission java.lang.RuntimePermission "getClassLoader"; >> %policy_file%
 echo }; >>%policy_file%
 			
 set LIB=${win.mf.classpath}
-java -agentlib:jdwp=transport=dt_socket,address=8912,server=y,suspend=y -Djava.security.manager -Djava.security.policy=%policy_file% -cp %LIB%;${jarfile} siddur.tool.jetty.JettyStart %1 %2</echo>
+java -agentlib:jdwp=transport=dt_socket,address=8912,server=y,suspend=y -Dfile.encoding=UTF-8 -Djava.security.manager -Djava.security.policy=%policy_file% -cp %LIB%;${jarfile} siddur.tool.jetty.JettyStart %1 %2</echo>
 		<!--end debug.bat-->
 		
 		<pathconvert property="linux.mf.classpath" pathsep=":">
@@ -194,11 +206,15 @@ echo "    permission java.security.AllPermission;" >> ${policy_file}
 echo "};" >>${policy_file}
 
 echo "grant codeBase \"${client_code_dir}\" {" >>${policy_file}
-echo "    permission java.io.FilePermission \"${PWD}/temp/*\", \"read,write\";" >> ${policy_file}
+echo "    permission java.io.FilePermission \"${PWD}/temp/-\", \"read,write\";" >> ${policy_file}
+echo "    permission java.io.FilePermission \"${PWD}/temp\", \"read\";" >> ${policy_file}
+echo "    permission java.util.PropertyPermission \"*\", \"read,write\";" >> %policy_file%
+echo "    permission java.lang.RuntimePermission \"createClassLoader\";" >> %policy_file%
+echo "    permission java.lang.RuntimePermission \"getClassLoader\";" >> %policy_file%
 echo "};" >>${policy_file}
 			
 LIB="${linux.mf.classpath}"
-java -agentlib:jdwp=transport=dt_socket,address=8912,server=y,suspend=y -Djava.security.manager -Djava.security.policy=$${policy_file} -cp $LIB:${jarfile} siddur.tool.jetty.JettyStart $*</echo>
+java -agentlib:jdwp=transport=dt_socket,address=8912,server=y,suspend=y -Dfile.encoding=UTF-8 -Djava.security.manager -Djava.security.policy=$${policy_file} -cp $LIB:${jarfile} siddur.tool.jetty.JettyStart $*</echo>
 		<!--end debug.sh-->
 		
 		<copy todir="${standalone}/lib">
@@ -249,7 +265,7 @@ java -agentlib:jdwp=transport=dt_socket,address=8912,server=y,suspend=y -Djava.s
 		<mkdir dir="${dist_dir}"/>
 		<mkdir dir="${classes}"/>
 		
-		<javac srcdir="${src}" destdir="${classes}" includeantruntime="false" encoding="UTF-8">
+		<javac srcdir="${src}" destdir="${classes}" includeantruntime="false" encoding="UTF-8" debug="on">
 			<classpath refid="classpath"/>
 		</javac>
 		<!--

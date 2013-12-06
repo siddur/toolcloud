@@ -20,7 +20,6 @@ public class JettyStart {
 	public static void main(String[] args) throws Exception {
 		System.setProperty("org.apache.jasper.compiler.disablejsr199", "true");
 		
-		
 		int port = 80;
 		if(args.length > 0){
 			if(StringUtils.isNumeric(args[0])){
