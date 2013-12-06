@@ -8,7 +8,7 @@ import java.util.Properties;
 import org.apache.commons.exec.OS;
 import org.apache.commons.lang3.StringUtils;
 
-import siddur.common.miscellaneous.ToolUtil;
+import siddur.common.util.ToolUtil;
 import siddur.tool.core.data.DataTemplate;
 
 

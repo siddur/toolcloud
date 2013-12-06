@@ -11,7 +11,7 @@ import java.util.jar.JarFile;
 import org.apache.log4j.Logger;
 
 import siddur.common.miscellaneous.Constants;
-import siddur.common.miscellaneous.FileSystemUtil;
+import siddur.common.util.FileSystemUtil;
 import siddur.tool.core.data.ToolDescriptor;
 import siddur.tool.core.data.XmlUtil;
 

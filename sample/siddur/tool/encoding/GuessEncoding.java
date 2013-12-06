@@ -3,7 +3,7 @@ package siddur.tool.encoding;
 import java.io.UnsupportedEncodingException;
 import java.util.Map;
 
-import siddur.common.miscellaneous.ToolUtil;
+import siddur.common.util.ToolUtil;
 import siddur.tool.core.ITool;
 import siddur.tool.core.IToolWrapper;
 

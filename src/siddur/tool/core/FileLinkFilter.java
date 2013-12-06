@@ -7,7 +7,7 @@ import java.util.regex.Pattern;
 
 import org.apache.log4j.Logger;
 
-import siddur.common.miscellaneous.FileSystemUtil;
+import siddur.common.util.FileSystemUtil;
 
 /**
  *	Find file-like string, copy into fileserver/output,

@@ -4,7 +4,7 @@ import java.io.File;
 import java.util.Arrays;
 import java.util.Map;
 
-import siddur.common.miscellaneous.ToolUtil;
+import siddur.common.util.ToolUtil;
 import siddur.tool.core.ITool;
 import siddur.tool.core.IToolWrapper;
 import siddur.tool.core.TempFileUtil;

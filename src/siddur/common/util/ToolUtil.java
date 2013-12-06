@@ -1,4 +1,4 @@
-package siddur.common.miscellaneous;
+package siddur.common.util;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -24,6 +24,7 @@ import freemarker.template.Configuration;
 import freemarker.template.DefaultObjectWrapper;
 import freemarker.template.Template;
 
+import siddur.common.miscellaneous.Constants;
 import siddur.tool.core.IToolWrapper;
 import siddur.tool.core.ScriptUtil;
 import siddur.tool.core.TempFileUtil;

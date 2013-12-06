@@ -13,7 +13,7 @@ import java.util.Date;
 
 import org.apache.commons.io.FileUtils;
 
-import siddur.common.miscellaneous.FileSystemUtil;
+import siddur.common.util.FileSystemUtil;
 
 
 public class TempFileUtil {

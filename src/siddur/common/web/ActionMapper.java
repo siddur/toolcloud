@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.Writer;
 import java.lang.reflect.Method;
-import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -29,6 +28,9 @@ import siddur.common.security.PermissionManager;
 import siddur.common.security.PermissionManager.PermissionGroup;
 import siddur.common.security.RequestUtil;
 import siddur.common.security.UserInfo;
+import siddur.common.util.WebPointUtil;
+import siddur.common.util.WebPointUtil.WebPointFilter;
+import siddur.common.util.WebPointUtil.WebPointHandler;
 
 public class ActionMapper{
 	Logger log4j = Logger.getLogger(ActionMapper.class);
@@ -53,7 +55,7 @@ public class ActionMapper{
 		} catch (IOException e) {
 			log4j.warn("", e);
 		}
-			
+		
 		for(Object keyObj :p.keySet()){
 			String key = (String)keyObj;
 			String path = p.getProperty(key);
@@ -73,55 +75,14 @@ public class ActionMapper{
 				} catch (Exception e) {
 					log4j.warn(e);
 					continue;
-				} 
-				
-				DoNotAuthenticate classLevel = action.getClass().getAnnotation(DoNotAuthenticate.class);
-				boolean classAuthLevel = true;
-				if(classLevel != null && classLevel.value() == Boolean.TRUE){
-					classAuthLevel = false;
 				}
 				
 				if(path == null){
 					path = action.getPath();
 				}
 				path = "/" + path;
-				Method[] methods = clz.getDeclaredMethods();
-				for(Method m : methods){
-					if((m.getModifiers() & Modifier.PUBLIC) == 1){
-						Class<?>[] c = m.getParameterTypes();
-						if(Result.class.isAssignableFrom(m.getReturnType())
-								&& c.length == 2 
-								&& HttpServletRequest.class.isAssignableFrom(c[0]) 
-								&& HttpServletResponse.class.isAssignableFrom(c[1])){
-							String methodName = m.getName().toLowerCase(); 
-							/*
-							 *  /path/methodName
-							 */
-							String mpath = path + "/" + methodName;
-							mpath = mpath.replace("\\", "/").replace("//", "/");
-							methodMap.put(mpath, m);
-							actionMap.put(mpath, action);
-							
-							Perm perm = m.getAnnotation(Perm.class);
-							if(perm != null){
-								permMap.put(mpath, perm.value());
-							}
-							
-							DoNotAuthenticate methodLevel = m.getAnnotation(DoNotAuthenticate.class);
-							if(methodLevel == null){
-								if(!classAuthLevel){
-									excludeAuth.add(mpath);
-								}
-							}else{
-								if(methodLevel.value()){
-									excludeAuth.add(mpath);
-								}
-							}
-							
-							log4j.info("find method:" + m.getName());
-						}
-					}
-				}
+				WebPointUtil.parse(path, action, filter, handler);
+				
 			}
 				
 		}
@@ -271,6 +232,55 @@ public class ActionMapper{
 
 		return r;
 	}
+	
+	
+	WebPointHandler handler = new WebPointHandler(){
+
+		@Override
+		public void handle(Method method, Object instance, String path) {
+			Action action = (Action) instance;
+			methodMap.put(path, method);
+			actionMap.put(path, action);
+			
+			Perm perm = method.getAnnotation(Perm.class);
+			if(perm != null){
+				permMap.put(path, perm.value());
+			}
+			
+			//class level auth
+			DoNotAuthenticate classLevel = 
+					action.getClass().getAnnotation(DoNotAuthenticate.class);
+			boolean classAuthLevel = true;
+			if(classLevel != null && classLevel.value() == Boolean.TRUE){
+				classAuthLevel = false;
+			}
+			
+			//method level auth
+			DoNotAuthenticate methodLevel = method.getAnnotation(DoNotAuthenticate.class);
+			if(methodLevel == null){
+				if(!classAuthLevel){
+					excludeAuth.add(path);
+				}
+			}else{
+				if(methodLevel.value()){
+					excludeAuth.add(path);
+				}
+			}
+		}
+		
+	};
+	
+	WebPointFilter filter = new WebPointFilter() {
+		
+		@Override
+		public boolean filter(Method m) {
+			Class<?>[] c = m.getParameterTypes();
+			return Result.class.isAssignableFrom(m.getReturnType())
+					&& c.length == 2 
+					&& HttpServletRequest.class.isAssignableFrom(c[0]) 
+					&& HttpServletResponse.class.isAssignableFrom(c[1]);
+		}
+	};
 	
 	public enum ResultType{
 		ok, success, error, redirect, forward, invoke

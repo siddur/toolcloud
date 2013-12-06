@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-import siddur.common.miscellaneous.ToolUtil;
+import siddur.common.util.ToolUtil;
 
 public abstract class HtmlResponseTool extends ConsoleTool{
 

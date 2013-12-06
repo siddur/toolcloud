@@ -17,8 +17,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 
-import siddur.common.miscellaneous.FileSystemUtil;
 import siddur.common.security.DoNotAuthenticate;
+import siddur.common.util.FileSystemUtil;
 import siddur.common.web.Action;
 import siddur.common.web.ActionMapper.Result;
 

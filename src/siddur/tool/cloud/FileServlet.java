@@ -22,7 +22,7 @@ import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.eclipse.jetty.util.log.Log;
 
-import siddur.common.miscellaneous.FileSystemUtil;
+import siddur.common.util.FileSystemUtil;
 import siddur.tool.core.ZipUtil;
 
 import com.google.gson.JsonArray;

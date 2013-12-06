@@ -1,4 +1,4 @@
-package siddur.common.miscellaneous;
+package siddur.common.util;
 
 public class StringUtil {
 	

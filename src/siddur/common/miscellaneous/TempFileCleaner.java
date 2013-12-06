@@ -9,6 +9,8 @@ import java.util.TimerTask;
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 
+import siddur.common.util.FileSystemUtil;
+
 public class TempFileCleaner {
 	private static final Logger log4j = Logger.getLogger(TempFileCleaner.class);
 	private static final long ONE_DAY = 1000 * 60 * 60 * 24;

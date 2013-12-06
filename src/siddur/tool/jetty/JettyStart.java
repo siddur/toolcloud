@@ -13,7 +13,7 @@ import org.eclipse.jetty.webapp.WebAppContext;
 
 
 import siddur.common.miscellaneous.Constants;
-import siddur.common.miscellaneous.FileSystemUtil;
+import siddur.common.util.FileSystemUtil;
 
 
 public class JettyStart {
