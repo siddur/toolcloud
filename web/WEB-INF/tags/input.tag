@@ -48,7 +48,7 @@
 		function validate(){
 			validateResult = true;
 			$(".error").removeClass("error");
-			$("[name='input']").each(doValidate);
+			$("[name='input'], [name='file']").each(doValidate);
 			return validateResult;
 		}
 
@@ -86,6 +86,9 @@
 
 			if(item.type == "hidden"){
 				$(item).next().addClass("error");
+			}
+			if(item.name == "file"){
+				$(item).prev().addClass("error");
 			}else{
 				$(item).addClass("error");
 			}
