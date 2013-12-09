@@ -1,4 +1,4 @@
-package siddur.tool.core;
+package siddur.common.util;
 
 
 import java.io.FileInputStream;
@@ -8,7 +8,6 @@ import java.util.Properties;
 import org.apache.commons.exec.OS;
 import org.apache.commons.lang3.StringUtils;
 
-import siddur.common.util.ToolUtil;
 import siddur.tool.core.data.DataTemplate;
 
 
@@ -76,6 +75,7 @@ public class ScriptUtil {
 		appendQuot(sb);
 		sb.append(scriptFile);
 		appendQuot(sb);
+		sb.append(" ");
 		sb.append(overrideParam(template, params, tooldatas));
 		return sb.toString();
 	}

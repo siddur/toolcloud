@@ -15,20 +15,18 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.google.gson.Gson;
-
 import siddur.common.security.DoNotAuthenticate;
 import siddur.common.util.FileSystemUtil;
 import siddur.common.web.Action;
-import siddur.common.web.ActionMapper.Result;
+import siddur.common.web.Result;
 
 public class FileAction extends Action{
 
 	@DoNotAuthenticate
 	public Result dir(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
 		String relativePath = req.getParameter("path");
-		String result = getFileModel(relativePath);
-		return Result.ajax(result);
+		FileModel result = getFileModel(relativePath);
+		return Result.ajaxOK(result);
 	}
 	
 	@DoNotAuthenticate
@@ -36,7 +34,7 @@ public class FileAction extends Action{
 		String relativePath = req.getParameter("path");
 		File file = new File(FileSystemUtil.getTempDir(), relativePath);
 		if(file.isDirectory()){
-			return Result.ajax(new Gson().toJson(getFileModel(file, null)));
+			return Result.ajaxOK(getFileModel(file, null));
 		}
 		
 		ByteArrayOutputStream baos = new ByteArrayOutputStream((int)file.length());
@@ -50,10 +48,10 @@ public class FileAction extends Action{
 		}
 		r.close();
 		w.close();
-		return Result.ajax(baos.toString());
+		return Result.ajaxOK(baos.toString());
 	}
 	
-	private String getFileModel(String path) throws IOException{
+	private FileModel getFileModel(String path) throws IOException{
 		File file = new File(FileSystemUtil.getTempDir(), path);
 		FileModel fm = getFileModel(file, null);
 		
@@ -64,8 +62,7 @@ public class FileAction extends Action{
 			}
 		}
 		
-		String result = new Gson().toJson(javaFileModel);
-		return result;
+		return javaFileModel;
 	}
 	
 	private FileModel getFileModel(File f, FileModel parent) throws IOException{

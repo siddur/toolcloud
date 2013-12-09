@@ -6,6 +6,7 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 	<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
 	<script type="text/javascript" src="${root}/jquery/js/jquery-1.9.1.min.js"></script>
+	<script type="text/javascript" src="${root}/js/toolcloud.js"></script>
 	<script type="text/javascript" src="${root}/js/search.js"></script>
 	<link rel="stylesheet" type="text/css" href="${root}/css/common.css" />
 	<link rel="stylesheet" type="text/css" href="${root}/jqueryui/jquery-ui-1.10.3.custom.min.css" />

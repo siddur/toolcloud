@@ -12,12 +12,13 @@ import org.apache.log4j.Logger;
 public class JavaToolWrapper extends ToolWrapper{
 	private static Logger log4j = Logger.getLogger(JavaToolWrapper.class);
 	
-	private boolean cacheClass = true;
+	private boolean cacheClass = false;
 	private boolean singleton = false;
 	private WeakReference<Class<?>> toolClassRef;
 	private String classname;
 	private ITool tool;
 	private boolean firstLoad = true;
+	
 	
 	public Class<?> getToolClass() {
 		Class<?> clz = null;
@@ -27,7 +28,8 @@ public class JavaToolWrapper extends ToolWrapper{
 			}
 			if(clz == null){
 				clz = getToolClass(this);
-				cacheClass(clz);
+			}else{
+				log4j.info("Load class from cache");
 			}
 		} catch (Exception e) {
 			log4j.error("", e);
@@ -52,6 +54,7 @@ public class JavaToolWrapper extends ToolWrapper{
 		ITool t = null;
 		try {
 			t = (ITool) clz.newInstance();
+			t.init();
 		} catch (Exception e) {
 			log4j.error("", e);
 		} 
@@ -68,7 +71,7 @@ public class JavaToolWrapper extends ToolWrapper{
 	private void awareTool(ITool t, Class<?> clz){
 		if(t instanceof ISelfAware){
 			ISelfAware selfAware = (ISelfAware) t;
-			singleton = selfAware.cacheMyInstance();
+			singleton = selfAware.storeMyInstance();
 			cacheClass = selfAware.cacheMyClass();
 			
 			if(singleton){
@@ -84,7 +87,9 @@ public class JavaToolWrapper extends ToolWrapper{
 		this.classname = classname;
 	}
 
-	
+	/*
+	 * Load tool class by classname
+	 */
 	private static Class<?> getToolClass(JavaToolWrapper jtw) throws Exception{
 		File jarFile = new File(jtw.getToolfile());
 		File parent = jarFile.getParentFile();

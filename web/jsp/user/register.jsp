@@ -46,17 +46,15 @@
 	}
 
 	function getVerificationCode() {
-		var img = $("#img");
-		img.attr("src","${root}/ctrl/util/authenticode?a=" + new Date().getMilliseconds());
+		ToolCloud.Captcha.change();
 		$("#checkCodeMsg1").hide();
 		$("#checkCodeMsg2").hide();
 		correctCode = false;
 	}
 	
 	function verify(code){
-		var url = "${root}/ctrl/util/checkcode?authenticode=" + $.trim(code);
-		$.get(url, function(result){
-			if(result == "1"){
+		ToolCloud.Captcha.verify(code, function(isOk){
+			if(isOk){
 				$("#checkCodeMsg1").css("display", "inline-block");
 				$("#checkCodeMsg2").hide();
 				correctCode = true;
@@ -75,7 +73,7 @@
 			<form method="post" action="${root}/ctrl/user/register">
 				<div class="item">
 					Captcha
-					<input name="authenticode" id="verificationCode" onchange="verify(this.value)"/>
+					<input name="authenticode"  onchange="verify(this.value)"/>
 					<div id="checkCodeMsg1" class="ui-state-highlight">
 						<div class="ui-icon ui-icon-circle-check"></div>
 					</div>
@@ -83,8 +81,8 @@
 						<div class="ui-icon ui-icon-circle-close"></div>
 					</div>
 					&nbsp;&nbsp;
-					<img height="27px" src="${root}/ctrl/util/authenticode" id="img">
-					<a href="javascript:getVerificationCode()">Change it</a>
+					<img height="27px" id="captcha">
+					<a href="javascript:getVerificationCode()">换一张</a>
 				</div>
 				<div class="item">
 					Username<span class="asterisk">*</span>:

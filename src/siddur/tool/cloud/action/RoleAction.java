@@ -12,7 +12,7 @@ import siddur.common.security.Permission;
 import siddur.common.security.PermissionManager;
 import siddur.common.security.PermissionManager.PermissionGroup;
 import siddur.common.security.RoleInfo;
-import siddur.common.web.ActionMapper.Result;
+import siddur.common.web.Result;
 import siddur.common.web.DBAction;
 import siddur.common.web.Perm;
 

@@ -11,9 +11,9 @@ import java.util.Map;
 
 import org.apache.commons.io.FileUtils;
 
+import siddur.common.util.TempFileUtil;
 import siddur.tool.core.ConsoleTool;
 import siddur.tool.core.IToolWrapper;
-import siddur.tool.core.TempFileUtil;
 
 
 /**

@@ -4,10 +4,10 @@ import java.io.File;
 import java.util.Arrays;
 import java.util.Map;
 
+import siddur.common.util.TempFileUtil;
 import siddur.common.util.ToolUtil;
 import siddur.tool.core.ITool;
 import siddur.tool.core.IToolWrapper;
-import siddur.tool.core.TempFileUtil;
 
 public class File2Byte implements ITool{
 

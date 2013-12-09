@@ -17,10 +17,10 @@ import siddur.common.miscellaneous.Paging;
 import siddur.common.miscellaneous.QueryInfo;
 import siddur.common.security.DoNotAuthenticate;
 import siddur.common.security.Permission;
-import siddur.common.security.RequestUtil;
 import siddur.common.security.UserInfo;
+import siddur.common.util.RequestUtil;
 import siddur.common.web.DBAction;
-import siddur.common.web.ActionMapper.Result;
+import siddur.common.web.Result;
 import siddur.common.web.Perm;
 
 public class QueryAction extends DBAction<QueryInfo>{

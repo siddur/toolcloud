@@ -25,10 +25,11 @@ import siddur.common.miscellaneous.QueryInfo;
 import siddur.common.miscellaneous.RunInfo;
 import siddur.common.security.DoNotAuthenticate;
 import siddur.common.security.Permission;
-import siddur.common.security.RequestUtil;
 import siddur.common.security.UserInfo;
 import siddur.common.util.FileSystemUtil;
-import siddur.common.web.ActionMapper.Result;
+import siddur.common.util.RequestUtil;
+import siddur.common.util.ScriptUtil;
+import siddur.common.web.Result;
 import siddur.common.web.DBAction;
 import siddur.common.web.Perm;
 import siddur.tool.cloud.ToolInfo;
@@ -36,12 +37,8 @@ import siddur.tool.core.ConsoleTool;
 import siddur.tool.core.IToolManager;
 import siddur.tool.core.IToolWrapper;
 import siddur.tool.core.MemoryVisitor;
-import siddur.tool.core.ScriptUtil;
 import siddur.tool.core.data.DataTemplate;
 import siddur.tool.core.data.ToolDescriptor;
-
-import com.google.gson.Gson;
-
 
 public class ToolAction extends DBAction<Comment>{
 
@@ -316,7 +313,7 @@ public class ToolAction extends DBAction<Comment>{
 			results = tpm.run(toolID, params, context);
 		}catch(Exception e){
 			log4j.warn(e.getMessage(), e);
-			return Result.ajax("error=" + e.getMessage());
+			return Result.ajaxError(e.getMessage());
 		}finally{
 			run.setEndAt(new Date());
 			run.setSuccess(results != null);
@@ -330,7 +327,7 @@ public class ToolAction extends DBAction<Comment>{
 				}
 			}
 		}
-		return Result.ajax(new Gson().toJson(results));
+		return Result.ajaxOK(results);
 	}
 	
 	@DoNotAuthenticate

@@ -6,9 +6,9 @@ import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.util.Map;
 
+import siddur.common.util.TempFileUtil;
 import siddur.tool.core.ITool;
 import siddur.tool.core.IToolWrapper;
-import siddur.tool.core.TempFileUtil;
 
 public class FromFile implements ITool{
 

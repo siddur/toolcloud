@@ -8,6 +8,9 @@
 	.login-panel{
 		width: 400px;
 		margin: 50px auto;
+		-moz-box-shadow: 5px 5px 2px rgba(68, 68, 68, 0.5);
+		-webkit-box-shadow: 5px 5px 2px rgba(68, 68, 68, 0.5);
+		box-shadow: 5px 5px 2px rgba(68, 68, 68, 0.5);
 	}
 	.login-head{
 		border-radius: 4px 4px 0 0;
@@ -24,7 +27,7 @@
 		padding:25px;	
 	}
 	.input-item{
-		margin-bottom: 20px;
+		margin-bottom: 18px;
 		width:98%;
 		height:21px;
 	}
@@ -47,13 +50,18 @@
 <jsp:body>
 	<div class="login-panel">
 		<div class="login-head">
-			Login
+			登录
 		</div>
 		<div class="login-body">
 			<form method="post" action="${root}/ctrl/user/login">
-				<div>Username</div>
+				<div style="margin-bottom: 20px;">
+					验证码
+					<input style="height:21px;" name="authenticode" onchange="TC.Captcha.verify(this.value)"/>
+					<img id="captcha" align="top" border="1" onclick="TC.Captcha.change()">
+				</div>
+				<div>用户名</div>
 				<div><input class="input-item" name="username"></div>
-				<div>Password</div>
+				<div>密码</div>
 				<div><input class="input-item" name="password" type="password"></div>
 				<div><input class="login-btn" type="submit" value="submit"></div>
 			</form>

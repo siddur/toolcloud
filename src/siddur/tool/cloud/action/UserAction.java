@@ -14,10 +14,10 @@ import siddur.common.jpa.JPAUtil;
 import siddur.common.miscellaneous.Constants;
 import siddur.common.security.DoNotAuthenticate;
 import siddur.common.security.Permission;
-import siddur.common.security.RequestUtil;
 import siddur.common.security.RoleInfo;
 import siddur.common.security.UserInfo;
-import siddur.common.web.ActionMapper.Result;
+import siddur.common.util.RequestUtil;
+import siddur.common.web.Result;
 import siddur.common.web.DBAction;
 import siddur.common.web.Perm;
 
@@ -25,6 +25,8 @@ public class UserAction extends DBAction<UserInfo>{
 	
 	@DoNotAuthenticate
 	public Result login(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
+		RequestUtil.checkCaptcha(req);
+		
 		String username = req.getParameter("username");
 		String password = req.getParameter("password");
 		EntityManager em = getEntityManager(req);
@@ -78,15 +80,7 @@ public class UserAction extends DBAction<UserInfo>{
 	
 	@DoNotAuthenticate
 	public Result register(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
-		String input = req.getParameter(UtilAction.AUTHENTICODE);
-		String origin = (String)req.getSession().getAttribute(UtilAction.AUTHENTICODE);
-		boolean check = false;
-		if(input != null && input.equalsIgnoreCase(origin)){
-			check = true;
-		}
-		if(!check){
-			return Result.error("验证码不正确");
-		}
+		RequestUtil.checkCaptcha(req);
 		
 		UserInfo u = new UserInfo();
 		u.setUsername(req.getParameter("username"));

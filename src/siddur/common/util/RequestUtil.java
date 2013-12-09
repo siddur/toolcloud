@@ -1,11 +1,16 @@
-package siddur.common.security;
+package siddur.common.util;
 
 import java.util.StringTokenizer;
 
 import javax.servlet.http.HttpServletRequest;
 
 import siddur.common.miscellaneous.Constants;
+import siddur.common.security.Permission;
+import siddur.common.security.PermissionManager;
+import siddur.common.security.UserInfo;
 import siddur.common.security.PermissionManager.PermissionGroup;
+import siddur.tool.cloud.action.UtilAction;
+import siddur.tool.core.exception.ToolCloudException;
 
 
 public class RequestUtil {
@@ -104,6 +109,18 @@ public class RequestUtil {
 			}
 		}
 		return location;
+	}
+	
+	public static void checkCaptcha(HttpServletRequest req){
+		String input = req.getParameter(UtilAction.AUTHENTICODE);
+		String origin = (String)req.getSession().getAttribute(UtilAction.AUTHENTICODE);
+		boolean check = false;
+		if(input != null && input.equalsIgnoreCase(origin)){
+			check = true;
+		}
+		if(!check){
+			throw new ToolCloudException("验证码不正确");
+		}
 	}
 	
 	public static void main(String[] args) {

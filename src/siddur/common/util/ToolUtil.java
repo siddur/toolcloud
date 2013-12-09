@@ -26,8 +26,6 @@ import freemarker.template.Template;
 
 import siddur.common.miscellaneous.Constants;
 import siddur.tool.core.IToolWrapper;
-import siddur.tool.core.ScriptUtil;
-import siddur.tool.core.TempFileUtil;
 
 public class ToolUtil {
 

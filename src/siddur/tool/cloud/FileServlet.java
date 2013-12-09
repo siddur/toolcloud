@@ -23,7 +23,7 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.eclipse.jetty.util.log.Log;
 
 import siddur.common.util.FileSystemUtil;
-import siddur.tool.core.ZipUtil;
+import siddur.common.util.ZipUtil;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;

@@ -7,9 +7,9 @@ import java.util.Map;
 
 import org.mozilla.universalchardet.UniversalDetector;
 
+import siddur.common.util.TempFileUtil;
 import siddur.tool.core.ITool;
 import siddur.tool.core.IToolWrapper;
-import siddur.tool.core.TempFileUtil;
 
 public class DetectEncoding implements ITool{
 

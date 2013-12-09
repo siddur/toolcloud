@@ -15,9 +15,9 @@ import com.google.zxing.Result;
 import com.google.zxing.client.j2se.BufferedImageLuminanceSource;
 import com.google.zxing.common.GlobalHistogramBinarizer;
 
+import siddur.common.util.TempFileUtil;
 import siddur.tool.core.ITool;
 import siddur.tool.core.IToolWrapper;
-import siddur.tool.core.TempFileUtil;
 
 public class QRDecoder implements ITool{
 

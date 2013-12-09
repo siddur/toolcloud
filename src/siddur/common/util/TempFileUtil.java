@@ -1,4 +1,4 @@
-package siddur.tool.core;
+package siddur.common.util;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -13,7 +13,6 @@ import java.util.Date;
 
 import org.apache.commons.io.FileUtils;
 
-import siddur.common.util.FileSystemUtil;
 
 
 public class TempFileUtil {

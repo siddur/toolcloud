@@ -4,5 +4,5 @@ public interface ISelfAware {
 
 	public boolean cacheMyClass();
 	
-	public boolean cacheMyInstance();
+	public boolean storeMyInstance();
 }

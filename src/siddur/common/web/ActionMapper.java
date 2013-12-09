@@ -16,8 +16,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
+
+import com.google.gson.Gson;
 
 import siddur.common.jpa.EntityManagerWrapper;
 import siddur.common.jpa.JPAUtil;
@@ -26,14 +27,20 @@ import siddur.common.security.DoNotAuthenticate;
 import siddur.common.security.Permission;
 import siddur.common.security.PermissionManager;
 import siddur.common.security.PermissionManager.PermissionGroup;
-import siddur.common.security.RequestUtil;
 import siddur.common.security.UserInfo;
+import siddur.common.util.RequestUtil;
 import siddur.common.util.WebPointUtil;
+import siddur.common.util.WebPointUtil.DefaultWebPointFilter;
 import siddur.common.util.WebPointUtil.WebPointFilter;
 import siddur.common.util.WebPointUtil.WebPointHandler;
+import siddur.tool.core.AppTool;
+import siddur.tool.core.ITool;
+import siddur.tool.core.IToolManager;
 
 public class ActionMapper{
-	Logger log4j = Logger.getLogger(ActionMapper.class);
+	private static final Logger log4j = Logger.getLogger(ActionMapper.class);
+	private static ActionMapper instance;
+	
 	private static final String ACTION_CONFIG = "action-list";
 	
 	private Map<String, Method> methodMap = new HashMap<String, Method>();
@@ -41,10 +48,57 @@ public class ActionMapper{
 	private Map<String, Permission> permMap = new HashMap<String, Permission>();
 	private List<String> excludeAuth = new ArrayList<String>();
 	private EntityManagerWrapper emWrapper = null;
+	private IToolManager tm = null;
 	
+	private WebPointFilter filter = new DefaultWebPointFilter();
+	private WebPointHandler handler = new WebPointHandler(){
+
+		@Override
+		public void handle(Method method, Object instance, String path) {
+			Action action = (Action) instance;
+			methodMap.put(path, method);
+			actionMap.put(path, action);
+			
+			Perm perm = method.getAnnotation(Perm.class);
+			if(perm != null){
+				permMap.put(path, perm.value());
+			}
+			
+			//class level auth
+			DoNotAuthenticate classLevel = 
+					action.getClass().getAnnotation(DoNotAuthenticate.class);
+			boolean classAuthLevel = true;
+			if(classLevel != null && classLevel.value() == Boolean.TRUE){
+				classAuthLevel = false;
+			}
+			
+			//method level auth
+			DoNotAuthenticate methodLevel = method.getAnnotation(DoNotAuthenticate.class);
+			if(methodLevel == null){
+				if(!classAuthLevel){
+					excludeAuth.add(path);
+				}
+			}else{
+				if(methodLevel.value()){
+					excludeAuth.add(path);
+				}
+			}
+		}
+		
+	};
 	
-	public ActionMapper(Map<String, Object> context){
+	public static ActionMapper createInstance(Map<String, Object> context){
+		instance = new ActionMapper(context);
+		return instance;
+	}
+	
+	public static ActionMapper getInstance(){
+		return instance;
+	}
+	
+	private ActionMapper(Map<String, Object> context){
 		emWrapper = (EntityManagerWrapper) context.get(Constants.ENTITY_MANAGER_WRAPPER);
+		tm = (IToolManager) context.get(Constants.TOOL_PLUGIN_MANAGE);
 		
 		InputStream is = getClass().getResourceAsStream(ACTION_CONFIG);
 		Properties p = new Properties();
@@ -80,35 +134,40 @@ public class ActionMapper{
 				if(path == null){
 					path = action.getPath();
 				}
-				path = "/" + path;
+				if(!path.startsWith("/"))
+					path = "/" + path;
 				WebPointUtil.parse(path, action, filter, handler);
-				
 			}
-				
 		}
-		
 	}
 	
-	public void doAction(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
-		/*
-		 *  path = "/path/methodName"
-		 */
+	public void doAppAction(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
 		String pathInfo = req.getPathInfo();
-		String actionPath = null;
-		if(pathInfo != null){
-			actionPath = RequestUtil.getActionPath(req.getPathInfo());
-		}else{
-			///tool/detail/1380203034265.html
-			String url = req.getRequestURI();
-			if(url.startsWith("/query")){
-				actionPath = "/query/detail";
-			}else{
-				actionPath = "/tool/detail";
+		int slash = pathInfo.indexOf("/", 1);
+		String toolId = pathInfo.substring(1, slash);
+		ITool tool = tm.getToolWrapper(toolId).getTool();
+		if(tool instanceof AppTool){
+			Result r = null;
+			AppTool appTool = (AppTool) tool;
+			try {
+				r = appTool.invokeMethod(pathInfo.substring(slash), req, resp);
+			} catch (Exception e) {
+				log4j.warn(e.getCause(), e);
+				r = Result.error(e.getCause().getMessage());
 			}
+			handleResult(r, req, resp);
+			return;
 		}
+		req.setAttribute("error", "该tool不支持app功能");
+		req.getRequestDispatcher("/error.jsp").forward(req, resp);;
+	}
+	
+	
+	public void doAction(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
+		String actionPath = getActionPath(req);
 		
 		Permission perm = permMap.get(actionPath);
-		checkCookie(req);
+		checkUserInCookie(req);
 		
 		if(!excludeAuth.contains(actionPath)){
 			boolean hasUser = authenticate(req, resp);
@@ -131,11 +190,24 @@ public class ActionMapper{
 		} catch (Exception e) {
 			emWrapper.rollback(req);
 			log4j.error("An error occurs when invoking the action: " + actionPath, e);
-			r = Result.error(e.getMessage());
+			r = Result.error(e.getCause().getMessage());
 		} finally{
 			emWrapper.closeEntityManager(req);
 		}
-		if(r.isError()){
+		handleResult(r, req, resp);
+	}
+	
+	private void handleResult(Result r, HttpServletRequest req, HttpServletResponse resp)throws ServletException, IOException{
+		if(r.isAjax()){
+			resp.setContentType("text/plain; charset=utf-8");
+			Writer w = resp.getWriter();
+			String json = new Gson().toJson(r);
+			log4j.info(json);
+			w.write(json);
+			w.flush();
+			w.close();
+		}
+		else if(r.isError()){
 			req.setAttribute("error", r.message);
 			req.getRequestDispatcher("/error.jsp").forward(req, resp);
 		}
@@ -156,18 +228,9 @@ public class ActionMapper{
 			}
 			resp.sendRedirect(url);
 		}
-		else if(r.isAjax){
-			resp.setContentType("text/plain; charset=utf-8");
-			Writer w = resp.getWriter();
-			log4j.info(r.getMessage());
-			w.write(r.getMessage());
-			w.flush();
-			w.close();
-		}
 	}
 	
-	
-	private void checkCookie(HttpServletRequest req){
+	private void checkUserInCookie(HttpServletRequest req){
 		HttpSession s = req.getSession();
 		if(s.getAttribute(Constants.CHECHED) == null){
 			s.setAttribute(Constants.CHECHED, Constants.CHECHED_FLAG);
@@ -184,6 +247,28 @@ public class ActionMapper{
 				}
 			}
 		}
+	}
+	
+	private String getActionPath(HttpServletRequest req){
+		/*
+		 *  path = "/path/methodName"
+		 */
+		String pathInfo = req.getPathInfo();
+		String actionPath = null;
+		if(pathInfo != null){
+			actionPath = RequestUtil.getActionPath(req.getPathInfo());
+		}else{
+			///tool/detail/1380203034265.html
+			String url = req.getRequestURI();
+			int lastSlash = url.lastIndexOf("/");
+			if(lastSlash == 0){
+				actionPath = "/tool/detail";
+			}else{
+				actionPath = url.substring(0, lastSlash);
+				actionPath += "/detail";
+			}
+		}
+		return actionPath;
 	}
 	
 	private boolean authenticate(HttpServletRequest req, HttpServletResponse resp){
@@ -226,164 +311,11 @@ public class ActionMapper{
 		
 		Object obj = method.invoke(action, req, resp);
 		Result r = (Result) obj;
+		//invoke another method
 		if(r.isInvoke()){
 			r = exec(r.getMessage(), req, resp);
 		}
-
 		return r;
 	}
-	
-	
-	WebPointHandler handler = new WebPointHandler(){
-
-		@Override
-		public void handle(Method method, Object instance, String path) {
-			Action action = (Action) instance;
-			methodMap.put(path, method);
-			actionMap.put(path, action);
-			
-			Perm perm = method.getAnnotation(Perm.class);
-			if(perm != null){
-				permMap.put(path, perm.value());
-			}
-			
-			//class level auth
-			DoNotAuthenticate classLevel = 
-					action.getClass().getAnnotation(DoNotAuthenticate.class);
-			boolean classAuthLevel = true;
-			if(classLevel != null && classLevel.value() == Boolean.TRUE){
-				classAuthLevel = false;
-			}
-			
-			//method level auth
-			DoNotAuthenticate methodLevel = method.getAnnotation(DoNotAuthenticate.class);
-			if(methodLevel == null){
-				if(!classAuthLevel){
-					excludeAuth.add(path);
-				}
-			}else{
-				if(methodLevel.value()){
-					excludeAuth.add(path);
-				}
-			}
-		}
-		
-	};
-	
-	WebPointFilter filter = new WebPointFilter() {
-		
-		@Override
-		public boolean filter(Method m) {
-			Class<?>[] c = m.getParameterTypes();
-			return Result.class.isAssignableFrom(m.getReturnType())
-					&& c.length == 2 
-					&& HttpServletRequest.class.isAssignableFrom(c[0]) 
-					&& HttpServletResponse.class.isAssignableFrom(c[1]);
-		}
-	};
-	
-	public enum ResultType{
-		ok, success, error, redirect, forward, invoke
-	}
-	
-	
-	public static class Result {
-		public final static Result NotFound = new Result("404 not found", ResultType.error);
-		public final static Result Forbidden = new Result("not permitted", ResultType.error);
-		
-		private String message = "";
-		private ResultType type = ResultType.ok;
-		private boolean isAjax = false;
-		
-		public Result(String message) {
-			this.message = message;
-		}
-		
-		public Result(String message, ResultType type) {
-			this.message = message;
-			this.type = type;
-		}
-		
-
-		public static Result ok(String msg){
-			return new Result(msg, ResultType.ok);
-		}
-		
-		public static Result success(String msg){
-			return new Result(msg, ResultType.success);
-		}
-		
-		public static Result error(String msg){
-			if(StringUtils.isEmpty(msg)){
-				msg = "操作失败";
-			}
-			return new Result(msg, ResultType.error);
-		}
-		
-		public static Result redirect(String msg){
-			return new Result(msg, ResultType.redirect);
-		}
-		
-		public static Result invoke(String msg){
-			return new Result(msg, ResultType.invoke);
-		}
-		
-		public static Result ok(){
-			return ok(null);
-		}
-		
-		public static Result success(){
-			return success(null);
-		}
-		
-		public static Result error(){
-			return error(null);
-		}
-		
-		
-		public static Result forward(String msg){
-			return new Result(msg, ResultType.forward);
-		}
-		
-		public static Result ajax(String msg){
-			Result r = new Result(msg);
-			r.isAjax = true;
-			return r;
-		}
-		
-		public boolean isForward(){
-			return type == ResultType.forward;
-		}
-		
-		public boolean isRedirect(){
-			return type == ResultType.redirect;
-		}
-		
-		public boolean isInvoke(){
-			return type == ResultType.invoke;
-		}
-		
-		public boolean isOK(){
-			return type == ResultType.ok;
-		}
-		
-		public boolean isSuccessful(){
-			return type == ResultType.success;
-		}
-		
-		public boolean isError(){
-			return type == ResultType.error;
-		}
-		
-		
-		public String getMessage(){
-			return message;
-		}
-		
-		public boolean isAjax(){
-			return isAjax;
-		}
-	}
-	
 	
 }

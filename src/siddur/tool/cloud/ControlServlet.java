@@ -38,7 +38,7 @@ public class ControlServlet extends HttpServlet{
 		//init entitymanage wrapper
 		context.put(Constants.ENTITY_MANAGER_WRAPPER, new EntityManagerWrapper());
 		
-		actionMapper = new ActionMapper(context);
+		actionMapper = ActionMapper.createInstance(context);
 		
 		
 		//start temp file cleaner

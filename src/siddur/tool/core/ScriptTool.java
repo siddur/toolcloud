@@ -2,6 +2,7 @@ package siddur.tool.core;
 
 import java.io.File;
 
+import siddur.common.util.ScriptUtil;
 import siddur.tool.core.data.ToolDescriptor;
 
 

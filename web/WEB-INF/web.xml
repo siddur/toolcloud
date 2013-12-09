@@ -15,6 +15,12 @@
   </servlet>
   
   <servlet>
+  	<servlet-name>AppServlet</servlet-name>
+  	<servlet-class>siddur.tool.cloud.AppServlet</servlet-class>
+  	<load-on-startup>1</load-on-startup>
+  </servlet>
+  
+  <servlet>
   	<servlet-name>FileServlet</servlet-name>
   	<servlet-class>siddur.tool.cloud.FileServlet</servlet-class>
   </servlet>
@@ -36,6 +42,11 @@
   <servlet-mapping>
   	<servlet-name>ControlServlet</servlet-name>
   	<url-pattern>ctrl/*,*.html</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+  	<servlet-name>AppServlet</servlet-name>
+  	<url-pattern>app/*</url-pattern>
   </servlet-mapping>
   
   <servlet-mapping>

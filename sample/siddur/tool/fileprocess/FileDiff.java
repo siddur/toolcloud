@@ -14,9 +14,9 @@ import jlibdiff.Hunk;
 import jlibdiff.HunkAdd;
 import jlibdiff.HunkChange;
 import jlibdiff.HunkDel;
+import siddur.common.util.TempFileUtil;
 import siddur.tool.core.HtmlResponseTool;
 import siddur.tool.core.IToolWrapper;
-import siddur.tool.core.TempFileUtil;
 
 public class FileDiff extends HtmlResponseTool{
 

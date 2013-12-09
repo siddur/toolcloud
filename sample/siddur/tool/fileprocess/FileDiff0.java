@@ -3,9 +3,9 @@ package siddur.tool.fileprocess;
 import java.util.Map;
 import java.util.Vector;
 
+import siddur.common.util.TempFileUtil;
 import siddur.tool.core.ITool;
 import siddur.tool.core.IToolWrapper;
-import siddur.tool.core.TempFileUtil;
 import jlibdiff.Diff;
 import jlibdiff.Hunk;
 

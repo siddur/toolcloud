@@ -3,9 +3,9 @@ package siddur.tool.sample;
 import java.io.IOException;
 import java.util.Map;
 
+import siddur.common.util.TempFileUtil;
 import siddur.tool.core.ITool;
 import siddur.tool.core.IToolWrapper;
-import siddur.tool.core.TempFileUtil;
 
 public class ToFile implements ITool{
 

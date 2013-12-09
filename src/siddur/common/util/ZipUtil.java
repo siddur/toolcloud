@@ -1,4 +1,4 @@
-package siddur.tool.core;
+package siddur.common.util;
 
 import java.io.File;
 import java.io.FileOutputStream;

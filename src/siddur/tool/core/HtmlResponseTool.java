@@ -8,15 +8,27 @@ import java.util.HashMap;
 import java.util.Map;
 
 
+import siddur.common.util.TempFileUtil;
 import siddur.common.util.ToolUtil;
 
-public abstract class HtmlResponseTool extends ConsoleTool{
+public abstract class HtmlResponseTool implements ITool{
 
+	@Override
+	public void init() {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	@Override
+	public void destroy() {
+		// TODO Auto-generated method stub
+		
+	}
+	
 	@Override
 	public String[] execute(String[] inputs, IToolWrapper toolWrapper,
 			Map<String, Object> context) throws Exception {
 		File workspace = ToolUtil.buildWorkspace(toolWrapper);
-		log("Build workspace");
 		
 		File html = new File(workspace, "index.html");
 		html.createNewFile();

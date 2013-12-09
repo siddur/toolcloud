@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import siddur.common.security.DoNotAuthenticate;
 import siddur.common.web.Action;
-import siddur.common.web.ActionMapper.Result;
+import siddur.common.web.Result;
 
 public class UtilAction extends Action{
 	private static final int ICON_WIDTH = 64;
@@ -69,10 +69,10 @@ public class UtilAction extends Action{
 		String input = req.getParameter(AUTHENTICODE);
 		String origin = (String)req.getSession().getAttribute(AUTHENTICODE);
 		if(input != null && input.equalsIgnoreCase(origin)){
-			return Result.ajax("1");
+			return Result.ajaxOK("");
 		}
 		else{
-			return Result.ajax("0");
+			return Result.ajaxError("");
 		}
 	}
 	

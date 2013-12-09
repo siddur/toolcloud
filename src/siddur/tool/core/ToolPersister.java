@@ -7,6 +7,7 @@ import org.apache.log4j.Logger;
 
 import siddur.common.miscellaneous.Constants;
 import siddur.common.util.FileSystemUtil;
+import siddur.common.util.ZipUtil;
 import siddur.tool.cloud.ToolInfo;
 import siddur.tool.core.data.ToolDescriptor;
 import siddur.tool.core.data.XmlUtil;
