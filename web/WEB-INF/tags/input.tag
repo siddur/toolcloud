@@ -151,7 +151,7 @@
 						<label for="ch${index}">批量输入</label>
 						<span class="splitter_container" style="display:none">
 							<label for="${index}">分割符:</label>
-							<select id="${index}"  class="splitter">
+							<select id="${index}">
 								<option value=" ">空格</option>
 								<option value=",">逗号</option>
 								<option value=";">分号</option>
