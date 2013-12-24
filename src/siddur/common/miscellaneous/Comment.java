@@ -26,6 +26,7 @@ public class Comment {
 	@Column(length=1024 * 5)
 	private String content;
 	
+	//tooId or (r + resId)
 	@Column
 	private String subject;
 

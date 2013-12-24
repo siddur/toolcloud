@@ -8,10 +8,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-import siddur.common.util.StringUtil;
-
 @Entity
-public class QueryInfo {
+public class TextResource {
 	@Id 
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Integer id;
@@ -20,8 +18,10 @@ public class QueryInfo {
 	@Column private String saidBy;
 	@Column private String title;
 	
-	@Column(length=1024 * 20)
-	private String content;
+	//1=blog 2=needs 3=info(news) 4=document
+	@Column(length=1)
+	private Integer type;
+	
 	public Integer getId() {
 		return id;
 	}
@@ -46,17 +46,12 @@ public class QueryInfo {
 	public void setTitle(String title) {
 		this.title = title;
 	}
-	public String getContent() {
-		return content;
-	}
 	
-	public String getPlainContent(){
-		return StringUtil.escape(this.content);
+	public Integer getType() {
+		return type;
 	}
-	
-	public void setContent(String content) {
-		this.content = content;
+	public void setType(Integer type) {
+		this.type = type;
 	}
-	
 	
 }

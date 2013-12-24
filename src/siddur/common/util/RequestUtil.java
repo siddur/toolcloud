@@ -123,6 +123,17 @@ public class RequestUtil {
 		}
 	}
 	
+	public static String getAccesser(HttpServletRequest req){
+		String saidBy = null;
+		UserInfo u = (UserInfo) req.getSession().getAttribute(Constants.USER);
+		if(u != null){
+			saidBy = u.getName();
+		}else{
+			saidBy = req.getRemoteHost();
+		}
+		return saidBy;
+	}
+	
 	public static void main(String[] args) {
 		String path = "/a/b/123/de";
 		System.out.println(findLocation(path, 4));

@@ -16,7 +16,7 @@ public abstract class DBAction<E> extends Action{
 
 	public abstract Class<E> getEntityClass();
 	
-	private String getClassName(){
+	protected String getClassName(){
 		return getEntityClass().getSimpleName();
 	}
 	

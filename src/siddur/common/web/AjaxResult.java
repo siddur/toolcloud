@@ -2,10 +2,10 @@ package siddur.common.web;
 
 public class AjaxResult extends Result{
 	
-	Object message;
+	Object data;
 	
-	public AjaxResult(Object message, ResultType type) {
-		this.message = message;
+	public AjaxResult(Object data, ResultType type) {
+		this.data = data;
 		this.type = type;
 	}
 

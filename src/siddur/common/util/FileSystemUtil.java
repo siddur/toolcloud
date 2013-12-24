@@ -40,13 +40,9 @@ public class FileSystemUtil {
 		return file;
 	}
 	
-//	public static File getOutputDir(){
-//		File file = new File(getFileServer(), "output");
-//		if(!file.isDirectory()){
-//			file.mkdir();
-//		}
-//		return file;
-//	}
+	public static File getResourceDir(){
+		return getChildDir("resource");
+	}
 	
 	public static File getTempDir(){
 		return getChildDir("temp");
@@ -131,5 +127,15 @@ public class FileSystemUtil {
 		return !((s.startsWith("/") 
 				|| s.startsWith("\\") 
 				|| s.startsWith(":", 1)));//absolute path
+	}
+	
+	public static String getResourceContent(Object resId) throws IOException{
+		File htm = new File(getResourceDir(), resId + ".htm");
+		return FileUtils.readFileToString(htm);
+	}
+	
+	public static void setResourceContent(String data, Object resId) throws IOException{
+		File htm = new File(getResourceDir(), resId + ".htm");
+		FileUtils.write(htm, data);
 	}
 }

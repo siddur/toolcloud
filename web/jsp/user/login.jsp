@@ -7,7 +7,7 @@
 <style>
 	.login-panel{
 		width: 400px;
-		margin: 50px auto;
+		margin: 100px auto;
 		-moz-box-shadow: 5px 5px 2px rgba(68, 68, 68, 0.5);
 		-webkit-box-shadow: 5px 5px 2px rgba(68, 68, 68, 0.5);
 		box-shadow: 5px 5px 2px rgba(68, 68, 68, 0.5);
@@ -16,7 +16,6 @@
 		border-radius: 4px 4px 0 0;
 		background-color: #515151;
 		color:white;
-		font-size: 20px;
 		font-weight: bolder;
 		padding:10px;
 	}
@@ -49,9 +48,7 @@
 </jsp:attribute>
 <jsp:body>
 	<div class="login-panel">
-		<div class="login-head">
-			登录
-		</div>
+		<div class="login-head">登录</div>
 		<div class="login-body">
 			<form method="post" action="${root}/ctrl/user/login">
 				<div style="margin-bottom: 20px;">

@@ -206,6 +206,7 @@ public class ToolUtil {
 	public static String[] getEncodings(Map<String, Object> context){
 		return (String[])context.get(Constants.FILE_ENCODING);
 	}
+	
 
 	
 	public static void main(String[] args) throws IOException {

@@ -21,7 +21,7 @@ import siddur.common.miscellaneous.ClickInfo;
 import siddur.common.miscellaneous.Comment;
 import siddur.common.miscellaneous.Constants;
 import siddur.common.miscellaneous.Paging;
-import siddur.common.miscellaneous.QueryInfo;
+import siddur.common.miscellaneous.TextResource;
 import siddur.common.miscellaneous.RunInfo;
 import siddur.common.security.DoNotAuthenticate;
 import siddur.common.security.Permission;
@@ -54,9 +54,15 @@ public class ToolAction extends DBAction<Comment>{
 
 	@DoNotAuthenticate
 	public Result home(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
-		int maxRecord = 10;
+		int maxRecord = 15;
 		EntityManager em = getEntityManager(req);
-		TypedQuery<String> hotQ = em.createQuery("select t.id from ToolInfo t order by t.clicks desc", String.class);
+		
+		
+		//latest 15 tools
+		req.setAttribute("latest", getVisitor().findLatestOnes(maxRecord));
+		
+		
+		//favorite tools
 		TypedQuery<String> likeQ = null;
 		UserInfo u = (UserInfo)req.getSession().getAttribute("user");
 		if(u != null){
@@ -65,16 +71,25 @@ public class ToolAction extends DBAction<Comment>{
 			String ip = req.getRemoteAddr();
 			likeQ = em.createQuery("select r.target from RunInfo r where r.ip = '"+ip+"' group by r.target order by max(r.startAt) desc", String.class);
 		}
-		TypedQuery<QueryInfo> queryQ = em.createQuery("from QueryInfo q order by q.publishAt desc", QueryInfo.class);
 		
-		hotQ.setMaxResults(maxRecord);
 		likeQ.setMaxResults(maxRecord);
-		queryQ.setMaxResults(maxRecord);
-		
-		req.setAttribute("hottest", getVisitor().findAll(hotQ.getResultList()));
-		req.setAttribute("latest", getVisitor().findLatestOnes(maxRecord));
 		req.setAttribute("favorite", getVisitor().findAll(likeQ.getResultList()));
-		req.setAttribute("queries", queryQ.getResultList());
+		
+		//latest 15 news
+		TypedQuery<TextResource> newsQ = em.createQuery("from TextResource t where t.type = 3 order by t.publishAt desc", TextResource.class);
+		newsQ.setMaxResults(maxRecord);
+		req.setAttribute("news", newsQ.getResultList());
+		
+		
+		//latest 15 blogs
+		TypedQuery<TextResource> blogsQ = em.createQuery("from TextResource t where t.type = 1 order by t.publishAt desc", TextResource.class);
+		newsQ.setMaxResults(maxRecord);
+		req.setAttribute("blogs", blogsQ.getResultList());
+		
+		//latest 15 needs
+		TypedQuery<TextResource> needsQ = em.createQuery("from TextResource t where t.type = 2 order by t.publishAt desc", TextResource.class);
+		needsQ.setMaxResults(maxRecord);
+		req.setAttribute("needs", needsQ.getResultList());
 		
 		return Result.forward("/home.jsp");
 	}
@@ -82,7 +97,7 @@ public class ToolAction extends DBAction<Comment>{
 	@DoNotAuthenticate
 	public Result list(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
 		String key = req.getParameter("key");
-		int pageSize = 12;
+		int pageSize = 30;
 		int pageIndex = 1;
 		try {
 			pageSize = Integer.parseInt(req.getParameter("pageSize"));
