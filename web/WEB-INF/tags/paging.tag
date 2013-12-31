@@ -8,7 +8,7 @@
 	<%@ variable name-given="pages" scope="NESTED" %>
 	<%@ variable name-given="maxPages" scope="NESTED" %>
 	<c:set var="pages" value="<%=(int)Math.ceil((double)total/pageSize) %>"></c:set>
-	<c:set var="maxPages" value="20"></c:set>
+	<c:set var="maxPages" value="30"></c:set>
 	
 	<c:if test="${paging_tag != true }">
 		<c:set var="paging_tag" value="true" scope="request"></c:set>

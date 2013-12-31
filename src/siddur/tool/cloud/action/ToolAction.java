@@ -96,8 +96,27 @@ public class ToolAction extends DBAction<Comment>{
 	
 	@DoNotAuthenticate
 	public Result list(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
+		EntityManager em = getEntityManager(req);
+		//hottest tools
+		TypedQuery<String> hotQ = em
+				.createQuery("select t.id from ToolInfo t order by t.clicks desc", String.class);
+		hotQ.setMaxResults(20);
+		req.setAttribute("hottest", getVisitor().findAll(hotQ.getResultList()));
 		
+		//favorite tools
+		TypedQuery<String> likeQ = null;
+		UserInfo u = (UserInfo)req.getSession().getAttribute("user");
+		if(u != null){
+			likeQ = em.createQuery("select r.target from RunInfo r where r.who = '"+u.getUsername()+"' group by r.target order by max(r.startAt) desc", String.class);
+		}else{
+			String ip = req.getRemoteAddr();
+			likeQ = em.createQuery("select r.target from RunInfo r where r.ip = '"+ip+"' group by r.target order by max(r.startAt) desc", String.class);
+		}
 		
+		likeQ.setMaxResults(5);
+		req.setAttribute("favorite", getVisitor().findAll(likeQ.getResultList()));
+		
+		//tool list
 		String key = req.getParameter("key");
 		int pageSize = 30;
 		int pageIndex = 1;

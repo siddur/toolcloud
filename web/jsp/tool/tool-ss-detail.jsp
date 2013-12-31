@@ -247,7 +247,7 @@ iframe.output {
 				</div>
 		</div>
 		
-<!-- Baidu Button BEGIN -->
+<!-- Baidu Button BEGIN 
 <div id="bdshare" class="bdshare_t bds_tools get-codes-bdshare">
 <span class="bds_more">分享到：</span>
 <a class="bds_qzone"></a>
@@ -264,7 +264,7 @@ iframe.output {
 	document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?cdnversion="
 			+ Math.ceil(new Date() / 3600000)
 </script>
-<!-- Baidu Button END -->
+Baidu Button END -->
 		<div class="comments">
 			<c:forEach var="c" items="${comments}" varStatus="vs">
 				<s:comment comment="${c}" subjectId="${tool.descriptor.pluginID}"
