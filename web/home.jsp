@@ -32,7 +32,7 @@
 		<div class="w_title">
 			<span>在线工具</span>
 			<a href="#">发布工具</a>
-			<a class="more" href="/list">更多&gt;&gt;</a>
+			<a class="more" href="/ctrl/tool/list">更多&gt;&gt;</a>
 		</div>
 		<div class="w_list">
 		<c:forEach var="item" items="${latest}">

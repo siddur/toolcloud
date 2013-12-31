@@ -25,27 +25,31 @@ public class UserAction extends DBAction<UserInfo>{
 	
 	@DoNotAuthenticate
 	public Result login(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
-		RequestUtil.checkCaptcha(req);
-		
-		String username = req.getParameter("username");
-		String password = req.getParameter("password");
-		EntityManager em = getEntityManager(req);
-		TypedQuery<UserInfo> q = em.createQuery("from UserInfo u where u.username=?", UserInfo.class);
-		q.setParameter(1, username);
-		UserInfo u = null;
-		try {
-			u = q.getSingleResult();
-		} catch (Exception e) {
-		}
-		if(u != null){
-			if(u.getPassword().equals(password)){
-				req.getSession().setAttribute(Constants.USER, u);
-				Cookie c = new Cookie("username", username);
-				c.setPath(Constants.WEBSITE_ROOT + "/");
-				c.setMaxAge(60 * 60 * 24 * 7);
-				resp.addCookie(c);
-				return Result.redirect("tool/home");
+		if(!RequestUtil.checkCaptcha(req)){
+			req.setAttribute("msg", "验证码不正确");
+		}else{
+			String username = req.getParameter("username");
+			String password = req.getParameter("password");
+			EntityManager em = getEntityManager(req);
+			TypedQuery<UserInfo> q = em.createQuery("from UserInfo u where u.username=?", UserInfo.class);
+			q.setParameter(1, username);
+			UserInfo u = null;
+			try {
+				u = q.getSingleResult();
+			} catch (Exception e) {
 			}
+			if(u != null){
+				if(u.getPassword().equals(password)){
+					req.getSession().setAttribute(Constants.USER, u);
+					Cookie c = new Cookie("username", username);
+					c.setPath(Constants.WEBSITE_ROOT + "/");
+					c.setMaxAge(60 * 60 * 24 * 7);
+					resp.addCookie(c);
+					return Result.redirect("tool/home");
+				}
+			}
+			
+			req.setAttribute("msg", "用户名或密码不正确");
 		}
 		return Result.redirect("/jsp/user/login.jsp");
 	}
@@ -80,18 +84,29 @@ public class UserAction extends DBAction<UserInfo>{
 	
 	@DoNotAuthenticate
 	public Result register(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
-		RequestUtil.checkCaptcha(req);
-		
-		UserInfo u = new UserInfo();
-		u.setUsername(req.getParameter("username"));
-		u.setPassword(req.getParameter("password"));
-		RoleInfo role = getEntityManager(req).find(RoleInfo.class, 2);
-		u.setRole(role);
-		u.setEmail(req.getParameter("email"));
-		u.setNickname(req.getParameter("nickname"));
-		u.setRealname(req.getParameter("realname"));
-		getEntityManager(req, true).persist(u);
-		req.getRequestDispatcher("/index.jsp").forward(req, resp);
+		if(!RequestUtil.checkCaptcha(req)){
+			req.setAttribute("msg", "验证码不正确");
+			return Result.forward("/jsp/user/register.jsp");
+		}else{
+			String username = req.getParameter("username");
+			boolean exist = getEntityManager(req).createQuery("select count (u) from " + getClassName() + " u where u.username='" + username + "'",
+					Long.class).getSingleResult() == 1;
+			if(exist){
+				req.setAttribute("msg", "用户名已存在");
+				return Result.forward("/jsp/user/register.jsp");
+			}
+			
+			UserInfo u = new UserInfo();
+			u.setUsername(req.getParameter("username"));
+			u.setPassword(req.getParameter("password"));
+			RoleInfo role = getEntityManager(req).find(RoleInfo.class, 2);
+			u.setRole(role);
+			u.setEmail(req.getParameter("email"));
+			u.setNickname(req.getParameter("nickname"));
+			u.setRealname(req.getParameter("realname"));
+			getEntityManager(req, true).persist(u);
+			req.getRequestDispatcher("/index.jsp").forward(req, resp);
+		}
 		return Result.ok();
 	}
 	

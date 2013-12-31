@@ -11,6 +11,14 @@ ul{
 	padding: 0 0 0 40px;
 }
 
+/*flag <*/
+.asterisk{
+	color: red;
+	font-size: 10px;
+}
+
+/*flag >*/
+
 /*top <*/
 #top{
 	width: 100%;
@@ -21,6 +29,7 @@ ul{
 	position: absolute;
 	top: 0;
 	left: 0;
+	z-index: 10;
 	-moz-user-select: none;
 	-webkit-user-select: none;
 	user-select: none;
@@ -88,7 +97,7 @@ ul{
 	display: none;
 	color: #892304;
 	position: absolute;
-	padding: 0 0 5px;
+	padding: 0 0 1px;
 	background-color: #f68b09;
 	border-bottom: 1px solid #892304;
 	border-right: 1px solid #892304;
@@ -97,9 +106,9 @@ ul{
 	z-index: 999;
 }
 .sub_menu > div{
-	font-size: 16px;
 	cursor: pointer;
 	padding: 3px 6px;
+	white-space: nowrap;
 }
 .sub_menu > div:hover{
 	background-color: #892304;
@@ -117,6 +126,18 @@ ul{
 #username{
 	padding-left:18px;
 	font-size: 15px;
+}
+#msg_bar{
+	position: absolute;
+	min-width: 100px;
+	max-width: 400px;
+	padding: 10px 10px 15px;
+	background-color: #e2eef6;
+	border: 1px solid #6caad0;
+	border-radius: 0 0 6px 6px;
+	text-align: center;
+	z-index: 9;
+	top: 0;
 }
 
 /*top >*/
@@ -297,10 +318,15 @@ ul{
     color: #333333;
     cursor: pointer;
     font-size: 12px;
-    padding: 3px;
+    padding: 3px 3px 5px;
     margin: 3px;
     text-shadow: 0 1px 0 rgba(255, 255, 255, 0.9);
     white-space: nowrap;
+}
+.btn:hover{
+	background-color: #FFFFFF;
+    background-image: linear-gradient(#FFFFFF, #FAFAFA);
+    background-repeat: repeat-x;
 }
 .close_btn{
 	background-color:#000000;
@@ -308,6 +334,62 @@ ul{
 	padding:2px;
 	float:right;
 }
+
+.paging span{
+	padding: 3px 10px;
+	vertical-align: middle;
+	color:white;
+}
+
+.paging{
+	float: right;
+}
+
+span.selected{
+	background-color: #888888;
+	color:white;
+}
+
+span.unselected{
+	background-color: #000000;
+	cursor: pointer;
+	color:white;
+}
+
+.ui-datepicker{
+	font-size: 62.5%;
+	font-family: "Trebuchet MS", "Arial", "Helvetica", "Verdana", "sans-serif"; 
+}
+
+.ui-icon-search{
+	float:right;
+	width: 16px;
+	height: 16px;
+	background-image: url("../img/search.png");
+}
+
+.search {
+    background-color: white;
+    border-radius: 10px 10px 10px 10px;
+    margin-top: 1px;
+    padding: 1px 1px 1px 8px;
+    width: 200px;
+}
+
+.searchInput {
+	border: none;
+	width: 160px;
+	color: #9B9B9B;
+}
+
+.searchInput:focus {
+	color: black;
+}
+
+.search span {
+	cursor: pointer;
+}
+
 /*widget >*/
 
 /*list <*/

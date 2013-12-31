@@ -10,7 +10,6 @@ import siddur.common.security.PermissionManager;
 import siddur.common.security.UserInfo;
 import siddur.common.security.PermissionManager.PermissionGroup;
 import siddur.tool.cloud.action.UtilAction;
-import siddur.tool.core.exception.ToolCloudException;
 
 
 public class RequestUtil {
@@ -111,16 +110,13 @@ public class RequestUtil {
 		return location;
 	}
 	
-	public static void checkCaptcha(HttpServletRequest req){
+	public static boolean checkCaptcha(HttpServletRequest req){
 		String input = req.getParameter(UtilAction.AUTHENTICODE);
 		String origin = (String)req.getSession().getAttribute(UtilAction.AUTHENTICODE);
-		boolean check = false;
 		if(input != null && input.equalsIgnoreCase(origin)){
-			check = true;
+			return true;
 		}
-		if(!check){
-			throw new ToolCloudException("验证码不正确");
-		}
+		return false;
 	}
 	
 	public static String getAccesser(HttpServletRequest req){

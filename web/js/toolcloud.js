@@ -7,20 +7,29 @@ TC = ToolCloud;
 //Verification Code(Captcha)
 ToolCloud.Captcha = {
 	verify: function(code, callback){
+		var check = false;
 		var url = ToolCloud.root + "/ctrl/util/checkcode?authenticode=" + $.trim(code);
-		$.get(url, function(result){
-			eval('var r = ' + result);
-			var isOk = (r.type == "ok");
-			if(callback){
-				callback(isOk);
-			}else{
-				if(isOk){
-					$("#captcha").css("border", "none");
+		$.ajax({
+			url: url, 
+			success:function(result){
+				eval('var r = ' + result);
+				var isOk = (r.type == "ok");
+				if(callback){
+					callback(isOk);
 				}else{
-					$("#captcha").css("border", "solid 1px red");
+					if(isOk){
+						$("#captcha").css("border", "none");
+					}else{
+						$("#captcha").css("border", "solid 1px red");
+					}
 				}
-			}
-		})
+				check = isOk;
+			},
+			type: "GET",
+			async:false
+		});
+		
+		return check;
 	},
 	
 	change: function(){
@@ -30,6 +39,39 @@ ToolCloud.Captcha = {
 }
 $(document).ready(ToolCloud.Captcha.change);
 
+//tip
+ToolCloud.tip = {
+	err: function(msg){
+		this.show(msg, 'red');
+	},
+	
+	msg: function(msg){
+		this.show(msg, 'white');
+	},
+	
+	show: function(msg, color){
+		var bar = $("#msg_bar");
+		bar.css("color", color)
+			.html(msg)
+			.css('left', ($(window).width() - bar.width())/2)
+			.animate(
+				{top: '40px'},
+				'slow',
+				ToolCloud.tip.hide
+			);
+	},
+	
+	hide: function(){
+		var x = setTimeout('ToolCloud.tip._hide()', 5000);
+		$(window).one('click', function(){ToolCloud.tip._hide(); clearTimeout(x)});
+	},
+	
+	_hide: function(){
+		$("#msg_bar").animate({top: 0}, 'slow', function(){
+			$(this).html();
+		});
+	}
+}
 
 //search
 ToolCloud.Search = {
@@ -44,12 +86,12 @@ ToolCloud.Search = {
 	},
 	
 	search: function() {
-		var keyword = $("#keyword").value;
+		var keyword = $("#key").val();
 		window.location = ToolCloud.root + "/ctrl/tool/list?&key=" + keyword;
 	},
 	
 	keyEntry: function(){
-		$("#keyword").keypress(function(evt){
+		$("#key").keypress(function(evt){
 			if(evt.keyCode == 13){
 				ToolCloud.Search.search();
 			}

@@ -18,6 +18,11 @@
 <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
 <script type="text/javascript" src="${root}/jquery/js/jquery-1.9.1.min.js"></script>
 <script type="text/javascript" src="${root}/js/toolcloud.js"></script>
+<c:if test="${not empty msg}">
+<script>
+	$(function(){TC.tip.err("${msg}")});
+</script>
+</c:if>
 <link rel="stylesheet" type="text/css" href="${root}/css/toolcloud.css" />
 <jsp:invoke fragment="headPart"></jsp:invoke>
 </head>
@@ -26,7 +31,12 @@
 	<div id="logo">ToolCloud</div>
 	<ul id="menu">
 		<li <c:if test="${empty cp || cp == 0}">class="selected"</c:if>><span onclick="location.href='${root}/'">工具云</span></li>
-		<li <c:if test="${cp == 1}">class="selected"</c:if>><span>在线工具</span></li>
+		<li <c:if test="${cp == 1}">class="selected"</c:if>>
+			<span>在线工具</span>
+			<div class="sub_menu">
+				<div>我发布的工具</div>
+			</div>
+		</li>
 		<li <c:if test="${cp == 2}">class="selected"</c:if>><span>在线APP</span></li>
 		<li <c:if test="${cp == 3}">class="selected"</c:if>><span>开源信息</span></li>
 		<li <c:if test="${cp == 4}">class="selected"</c:if>><span>需求讨论</span></li>
@@ -71,5 +81,6 @@
 
 
 <jsp:doBody />
+<div id="msg_bar"></div>
 </body>
 </html>

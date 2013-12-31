@@ -96,6 +96,8 @@ public class ToolAction extends DBAction<Comment>{
 	
 	@DoNotAuthenticate
 	public Result list(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
+		
+		
 		String key = req.getParameter("key");
 		int pageSize = 30;
 		int pageIndex = 1;
@@ -107,8 +109,6 @@ public class ToolAction extends DBAction<Comment>{
 		Paging<IToolWrapper> paging = getVisitor().findAll(key, pageSize, pageIndex, true);
 		req.setAttribute("paging", paging);
 		req.setAttribute("key", key);
-		req.setAttribute("mine", false);
-		req.setAttribute("editable", false);
 		return Result.forward("/jsp/tool/tool-list.jsp");
 		
 	}

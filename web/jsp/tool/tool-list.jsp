@@ -7,28 +7,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <s:site>
 <jsp:attribute name="headPart">
-<link rel="stylesheet" type="text/css" href="${root}/css/tag.css" />
 <style>
-	.list{
-		margin:7px;
-		width:220px;
-		height:150px;
-		overflow: hidden;
-		background-color: #CDCDCD;
-		box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5) ;
-		padding:3px;
-	}
-	
-	.notApproved{
-	 	background-color: #22EEEE;
-	}
-	
-	
-	.list:hover{
-		cursor:pointer;
-		box-shadow: 2px 3px 3px rgba(100, 0, 0, 0.5) ;
-	}
-	
 	.paging{
 		clear:both;
 	}
@@ -37,18 +16,6 @@
 <script>
 	var isMine = ${mine};
 	var url = "${root}/ctrl/tool/";
-	var onlyForMine = function(obj){
-		pageIndex = 1;
-		pageSize = 12;
-		var aUrl = url;
-		if(obj.checked){
-			aUrl += "mine";
-		}else{
-			aUrl += "list";
-		}
-		aUrl += "?pageSize=" + pageSize + "&pageIndex=" + pageIndex;
-		location.href = aUrl;
-	}
 	
 	function changePage(){
 		var aUrl = url;
@@ -63,18 +30,30 @@
 </script>
 </jsp:attribute>
 <jsp:body>
-<div class="screen">
-	<div style="text-align:right">
-		<input type="checkbox" id="mytoolsck" onchange="onlyForMine(this)" <c:if test="${mine}">checked="checked"</c:if>>
-		<label for="mytoolsck" style="font-size: 15px;">仅显示我发布的工具</label>
+<div id="middle">
+	<div id="left">
+		
 	</div>
-	<c:forEach var="t" items="${paging.data}">
-		<c:if test="${t.status == 0}"></c:if>
-		<div class="list <c:if test="${t.status == 0}">notApproved</c:if> left_float" onclick="location.href='${root}/${t.descriptor.pluginID}.html';">
-			<s:tool_detail updatable="${editable}" toolDescriptor="${t.descriptor}"></s:tool_detail>
+	<div id="center">
+		<div class="static_window divide1">
+			<div class="w_title">
+				<s:serach></s:serach>
+			</div>
+			<div class="w_list">
+				<c:forEach var="item" items="${paging.data}">
+					<div class="tool_item">
+						<a href="/${item.descriptor.pluginID}.html">
+							<span class="title">
+								<span class="name">[${item.descriptor.pluginName}]</span>
+								<span>${item.descriptor.description}</span>
+							</span>
+						</a>
+					</div>
+				</c:forEach>
+			</div>
+			<s:paging pageIndex="${paging.pageIndex}" pageSize="${paging.pageSize}" total="${paging.total}"/>
 		</div>
-	</c:forEach>
-	<s:paging pageIndex="${paging.pageIndex}" pageSize="${paging.pageSize}" total="${paging.total}"/>
+	</div>
 </div>
 </jsp:body>
 </s:site>

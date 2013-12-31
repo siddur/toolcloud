@@ -60,7 +60,7 @@
 				<div><input class="input-item" name="username"></div>
 				<div>密码</div>
 				<div><input class="input-item" name="password" type="password"></div>
-				<div><input class="login-btn" type="submit" value="submit"></div>
+				<div><input class="login-btn" type="submit" value="submit" onclick="return TC.Captcha.verify(this.form.authenticode.value)"></div>
 			</form>
 		</div>
 	</div>
