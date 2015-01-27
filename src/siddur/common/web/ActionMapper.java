@@ -166,22 +166,22 @@ public class ActionMapper{
 	public void doAction(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
 		String actionPath = getActionPath(req);
 		
-		Permission perm = permMap.get(actionPath);
-		checkUserInCookie(req);
-		
-		if(!excludeAuth.contains(actionPath)){
-			boolean hasUser = authenticate(req, resp);
-			if(!hasUser){
-				req.getRequestDispatcher("/jsp/user/login.jsp").forward(req, resp);
-				return;
-			}
-			
-			if(!checkPermission(req, perm)){
-				req.setAttribute("error", "Not permitted!");
-				req.getRequestDispatcher("/error.jsp").forward(req, resp);
-				return;
-			}
-		}
+//		Permission perm = permMap.get(actionPath);
+//		checkUserInCookie(req);
+//		
+//		if(!excludeAuth.contains(actionPath)){
+//			boolean hasUser = authenticate(req, resp);
+//			if(!hasUser){
+//				req.getRequestDispatcher("/jsp/user/login.jsp").forward(req, resp);
+//				return;
+//			}
+//			
+//			if(!checkPermission(req, perm)){
+//				req.setAttribute("error", "Not permitted!");
+//				req.getRequestDispatcher("/error.jsp").forward(req, resp);
+//				return;
+//			}
+//		}
 		
 		Result r;
 		try {

@@ -46,7 +46,8 @@ public class JettyStart {
 		app.setHandler(requestLogHandler);
 		
 		//must not change context path:Constants.WEBSITE_ROOT
-		app.setContextPath(Constants.WEBSITE_ROOT);
+		//app.setContextPath(Constants.WEBSITE_ROOT);
+		app.setContextPath("/globaltrak");
 		
 		ResourceHandler rh = new ResourceHandler();
 		rh.setDirectoriesListed(true);
