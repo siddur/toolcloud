@@ -16,7 +16,7 @@
 		$(".tableHidden").each(function(idx, item){
 			item.setValue();
 		});
-		if(!validate()) return;
+		if(typeof validate != 'undefined' && !validate()) return;
 		$("#run_btn").attr("disabled", true);
 		
 		var ticket = new Date().getTime();
